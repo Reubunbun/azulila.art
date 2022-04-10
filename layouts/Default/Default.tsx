@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, FC } from 'react';
 import Head from 'next/head';
 import NavBar from '../../components/NavBar/NavBar';
 
@@ -7,7 +7,7 @@ interface Props {
   title: string;
 };
 
-const DefaultLayout = ({children, title}: Props) => {
+const DefaultLayout: FC<Props> = ({children, title}) => {
   return (
     <>
       <Head>

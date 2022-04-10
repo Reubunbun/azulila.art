@@ -1,9 +1,9 @@
-import { useContext, memo } from 'react';
+import type { FC } from 'react';
+import { useState, memo } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import AppStateContext from '../../context/AppStateProvider';
 import BurgerButton from '../BurgerButton/BurgerButton';
 import styles from './NavBar.module.css';
 
@@ -20,8 +20,8 @@ const allPaths: Path[] = [
   {display: 'FAQ', pathname: '/FAQ'},
 ];
 
-const NavBar = () => {
-  const {navOpen, setNavOpen} = useContext(AppStateContext);
+const NavBar: FC = () => {
+  const [navOpen, setNavOpen] = useState<boolean>(false);
   const router = useRouter();
 
   return (
@@ -36,7 +36,7 @@ const NavBar = () => {
             />
           </div>
           <h1>Azulilah</h1>
-          <BurgerButton onClick={() => setNavOpen(!navOpen)} />
+          <BurgerButton onClick={() => setNavOpen(prev => !prev)} />
         </div>
       </div>
       <ul className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}>

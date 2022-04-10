@@ -1,12 +1,10 @@
-import type { NextPage } from 'next';
-import DefaultLayout from '../../layouts/Default/Default';
+import type { Page } from '../../interfaces/index';
 
-const FAQ: NextPage = () => {
+const FAQ: Page = () => {
   return (
-    <DefaultLayout title='Frequently Asked Questions'>
-      <div>FAQ</div>
-    </DefaultLayout>
+    <div>FAQ</div>
   );
 };
+FAQ.title = 'Frequently Asked Questions';
 
 export default FAQ;

@@ -1,12 +1,10 @@
-import type { NextPage } from 'next';
-import DefaultLayout from '../../layouts/Default/Default';
+import type { Page } from '../../interfaces/index';
 
-const Gallery: NextPage = () => {
+const Gallery: Page = () => {
   return (
-    <DefaultLayout title='Gallery'>
-      <div>Gallery</div>
-    </DefaultLayout>
+    <div>Gallery</div>
   );
 };
+Gallery.title = 'Gallery';
 
 export default Gallery;

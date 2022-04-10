@@ -1,12 +1,10 @@
-import type { NextPage } from 'next';
-import DefaultLayout from '../../layouts/Default/Default';
+import type { Page } from '../../interfaces/index';
 
-const Work: NextPage = () => {
+const Work: Page = () => {
   return (
-    <DefaultLayout title='My Work'>
-      <div>Work page</div>
-    </DefaultLayout>
+    <div>Work page</div>
   );
 };
+Work.title = 'My Work';
 
 export default Work;

@@ -1,16 +1,21 @@
 import type { AppProps } from 'next/app';
+import type { Page } from '../interfaces/index';
 import { AnimateSharedLayout } from 'framer-motion';
-import { AppStateProvider } from '../context/AppStateProvider';
+import DefaultLayout from '../layouts/Default/Default';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
+interface CustomAppProps extends AppProps {
+  Component: Page;
+};
+
+function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
     <AnimateSharedLayout>
-      <AppStateProvider>
+      <DefaultLayout title={Component.title}>
         <Component {...pageProps} />
-      </AppStateProvider>
+      </DefaultLayout>
     </AnimateSharedLayout>
   );
 }
 
-export default MyApp
+export default MyApp;

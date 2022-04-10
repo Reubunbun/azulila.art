@@ -1,5 +1,4 @@
-import { useState, useContext, memo } from 'react';
-import AppStateContext from '../../context/AppStateProvider';
+import { useState, memo } from 'react';
 import styles from './BurgerButton.module.css';
 
 interface Props {
@@ -7,12 +6,13 @@ interface Props {
 };
 
 const BurgerButton = ({ onClick }: Props) => {
-  const {navOpen} = useContext(AppStateContext);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div
-      className={`${styles.burgerBtn} ${navOpen ? styles.open : ''}`}
+      className={`${styles.burgerBtn} ${open ? styles.open : ''}`}
       onClick={() => {
+        setOpen(prev => !prev);
         onClick();
       }}
     >

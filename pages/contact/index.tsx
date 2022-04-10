@@ -1,12 +1,10 @@
-import type { NextPage } from 'next';
-import DefaultLayout from '../../layouts/Default/Default';
+import type { Page } from '../../interfaces/index';
 
-const Contact: NextPage = () => {
+const Contact: Page = () => {
   return (
-    <DefaultLayout title='Contact Me'>
-      <div>Contact</div>
-    </DefaultLayout>
+    <div>Contact</div>
   );
 };
+Contact.title = 'Contact Me';
 
 export default Contact;
