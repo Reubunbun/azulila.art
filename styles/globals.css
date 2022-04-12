@@ -4,6 +4,9 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-image: url('https://assets.bigcartel.com/theme_images/48216620/BIG.png?auto=format&fit=max&h=200&w=200');
+  background-repeat: repeat;
+  background-size: 200px 200px;
 }
 
 a {
@@ -13,4 +16,23 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --highlight: #f33d86;
+  --base: #783c55;
+  --header-height: 15vh;
+  --main-margin-offset: 0rem;
+  --links-open-height: 15rem;
+}
+
+h2 {
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--base);
+  font-family: 'Concert One', cursive;
+  font-size: 2rem;
+  text-shadow:
+      0.05em 0.05em 0 rgb(255, 171, 251);
 }

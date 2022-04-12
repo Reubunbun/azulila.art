@@ -1,0 +1,7 @@
+.main {
+    margin-top: calc(
+        calc(var(--header-height) + var(--main-margin-offset)) +
+        .5rem
+    );
+    transition: margin 0.5s ease-in-out;
+}

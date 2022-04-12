@@ -36,7 +36,22 @@ const NavBar: FC = () => {
             />
           </div>
           <h1>Azulilah</h1>
-          <BurgerButton onClick={() => setNavOpen(prev => !prev)} />
+          <BurgerButton onClick={() => {
+            const isOpen = !navOpen;
+            setNavOpen(isOpen);
+
+            if (typeof document !== 'undefined') {
+              const rootElement = document.querySelector<HTMLElement>(':root');
+              if (rootElement && isOpen) {
+                const openLinksHeight = getComputedStyle(rootElement)
+                  .getPropertyValue('--links-open-height');
+                rootElement.style.setProperty('--main-margin-offset', openLinksHeight);
+              }
+              if (rootElement && !isOpen) {
+                rootElement.style.setProperty('--main-margin-offset', '0rem');
+              }
+            }
+          }} />
         </div>
       </div>
       <ul className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}>
