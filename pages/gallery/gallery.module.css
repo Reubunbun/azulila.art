@@ -1,0 +1,46 @@
+.galleryContainer {
+    padding: 0 .8rem;
+}
+
+.containerAllColumns {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+}
+
+.containerColumn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media only screen and (min-width: 700px) {
+    .galleryContainer {
+        padding: 0 1.2rem;
+    }
+
+    .containerAllColumns {
+        gap: 1.2rem;
+    }
+
+    .containerColumn {
+        width: calc(50% - 1.2rem);
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    .galleryContainer {
+        padding: 0 2rem;
+    }
+
+    .containerAllColumns {
+        gap: 2rem;
+    }
+
+    .containerColumn {
+        width: calc(33% - 2rem);
+    }
+}

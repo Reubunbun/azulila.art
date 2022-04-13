@@ -22,6 +22,8 @@ const COL_TITLE = 'title';
 const COL_DESCRIPTION = 'description';
 const COL_TAGS = 'tags';
 const COL_PRIORITY = 'priority';
+const COL_WIDTH = 'width';
+const COL_HEIGHT = 'height';
 
 interface ImageRow {
     [COL_IMG_ID]: number;
@@ -31,6 +33,8 @@ interface ImageRow {
     [COL_DESCRIPTION]: string;
     [COL_TAGS]: number;
     [COL_PRIORITY]: number;
+    [COL_WIDTH]: number;
+    [COL_HEIGHT]: number;
 };
 interface CountRow {
     'count(*)': number;
@@ -126,6 +130,8 @@ class PortfolioImages {
                     .map((char, i) => tagsSwapped[(+char) * 2**i])
                     .filter(bit => bit),
                 priority: img[COL_PRIORITY],
+                width: img[COL_WIDTH],
+                height: img[COL_HEIGHT],
             })),
             totalCount: countResult[0]['count(*)'],
         };

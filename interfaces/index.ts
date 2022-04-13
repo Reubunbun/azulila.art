@@ -11,6 +11,14 @@ export type Image = {
     description: string;
     tags: string[];
     priority: number;
+    width: number;
+    height: number;
+};
+
+export enum ScreenType {
+    mobile,
+    tablet,
+    desktop,
 };
 
 /**

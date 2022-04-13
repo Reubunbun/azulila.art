@@ -1,0 +1,26 @@
+.containerImageItem {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .8rem;
+}
+
+.imageItem{
+    width: 100%;
+    border-radius: .3rem;
+    cursor: pointer;
+    transition: transform .15s ease-in;
+    border: 2px solid violet;
+    box-shadow: 4px 4px 16px rgb(3, 3, 41);
+}
+
+@media only screen and (min-width: 700px) {
+    .containerImageItem {
+        margin-bottom: 1.2rem;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    .containerImageItem {
+        margin-bottom: 2rem;
+    }
+}
