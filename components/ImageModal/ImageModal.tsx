@@ -1,10 +1,12 @@
 import type { FC } from 'react';
 import { Image as ImageType, ScreenType } from '../../interfaces';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
 import useScreenType from '../../hooks/useScreenType';
 import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
 import styles from './ImageModal.module.css';
+
 
 enum Direction {
   Forward,
@@ -14,7 +16,7 @@ enum Direction {
 interface Props {
   image: ImageType;
   close: () => void;
-  getNextImage: (dir: Direction) => ImageType;
+  getNextImage?: (dir: Direction) => ImageType;
 };
 
 const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
@@ -42,12 +44,12 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
           onClick={e => {
             e.stopPropagation();
             setImageDirection(Direction.Backward);
-            getNextImage(imageDirection);
+            // getNextImage(imageDirection);
           }}
         >
           &lt;
         </button>
-        <AnimatePresence exitBeforeEnter>
+        <CustomAnimatePresence exitBeforeEnter custom={imageDirection}>
           <motion.div
             className={styles.containerImg}
             key={image.url}
@@ -88,13 +90,13 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
               onClick={e => e.stopPropagation()}
             />
           </motion.div>
-        </AnimatePresence>
+        </CustomAnimatePresence>
         <button
           className={`${styles.modalBtn} ${styles.rightBtn}`}
           onClick={e => {
             e.stopPropagation();
             setImageDirection(Direction.Forward);
-            getNextImage(imageDirection);
+            // getNextImage(imageDirection);
           }}
         >
           &gt;

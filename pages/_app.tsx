@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import type { Page } from '../interfaces/index';
-import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
+import { AnimateSharedLayout, motion } from 'framer-motion';
+import CustomAnimatePresence from '../components/CustomAnimatePresence/CustomAnimatePresence';
 import DefaultLayout from '../layouts/Default/Default';
 import '../styles/globals.css';
 
@@ -13,7 +14,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
     <AnimateSharedLayout>
       <DefaultLayout title={Component.title}>
-        <AnimatePresence exitBeforeEnter>
+        <CustomAnimatePresence exitBeforeEnter>
           <motion.div
             key={Component.title}
             initial={{opacity: 0}}
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
           >
             <Component {...pageProps} />
           </motion.div>
-        </AnimatePresence>
+        </CustomAnimatePresence>
       </DefaultLayout>
     </AnimateSharedLayout>
   );

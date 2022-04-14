@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, Fragment } from 'react';
 import type { Page, Image, ImagesData } from '../../interfaces/index';
-import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import useGetScreenType from '../../hooks/useScreenType';
 import { ScreenType } from '../../interfaces/index';
 import ImageItem from '../../components/ImageItem/ImageItem';
@@ -184,7 +184,7 @@ const Gallery: Page = () => {
           />
         }
       </div>
-      <AnimatePresence
+      <CustomAnimatePresence
         initial={false}
         exitBeforeEnter={true}
         onExitComplete={() => null}
@@ -193,10 +193,9 @@ const Gallery: Page = () => {
           <ImageModal
             image={selectedImage}
             close={() => setSelectedImage(null)}
-            getNextImage={() => {}}
           />
         }
-      </AnimatePresence>
+      </CustomAnimatePresence>
     </>
   );
 };
