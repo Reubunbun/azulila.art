@@ -76,7 +76,7 @@ const Gallery: Page = () => {
   useEffect(() => {
     if (initialLoad.current) {
       initialLoad.current = false;
-      return;
+      // return;
     }
 
     axios({
