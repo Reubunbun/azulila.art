@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import { Image as ImageType, ScreenType } from '../../interfaces';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import useScreenType from '../../hooks/useScreenType';
 import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
 import styles from './ImageModal.module.css';
@@ -48,7 +47,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
         >
           &lt;
         </button>
-        <AnimatePresence exitBeforeEnter custom={imageDirection}>
+        <AnimatePresence exitBeforeEnter>
           <motion.div
             className={styles.containerImg}
             key={image.url}
