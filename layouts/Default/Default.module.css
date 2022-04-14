@@ -9,7 +9,7 @@
 @media only screen and (min-width: 1300px) {
     .main {
         margin-top: calc(
-            calc(var(--header-height) + 3.25rem)
+            calc(var(--header-height) + 4.5rem)
         );
     }
 }

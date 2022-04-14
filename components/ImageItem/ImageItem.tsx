@@ -5,9 +5,9 @@ import type { Image } from '../../interfaces';
 import styles from './ImageItem.module.css';
 
 interface Props {
-    clickImage: (image: Image) => void;
-    delay: number;
-    image: Image;
+  clickImage: (image: Image) => void;
+  delay: number;
+  image: Image;
 };
 
 const c_intDelay: number = 0.25;
