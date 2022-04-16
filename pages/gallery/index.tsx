@@ -1,13 +1,15 @@
 import { useEffect, useState, useRef, Fragment } from 'react';
-import type { Page, Image, ImagesData } from '../../interfaces/index';
+import { motion, useAnimation } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
-import { Direction } from '../../interfaces/index';
+import type { Page, Image, ImagesData } from '../../interfaces/index';
+import { Direction, ScreenType } from '../../interfaces/index';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import useGetScreenType from '../../hooks/useScreenType';
-import { ScreenType } from '../../interfaces/index';
+import BurgerButton from '../../components/BurgerButton/BurgerButton';
 import ImageItem from '../../components/ImageItem/ImageItem';
 import ImageModal from '../../components/ImageModal/ImageModal';
+import Filters from '../../components/Filters/Filters';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import styles from './gallery.module.css';
 
@@ -43,6 +45,7 @@ const Gallery: Page = () => {
     c_genNewColumns(screenType),
   );
 
+  const [hideFilters, setHideFilters] = useState<boolean>(true);
   const [selectedImage, setSelectedImage] = useState<Image | null | false>(null);
   const [isLoading, _setIsLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<string[]>([]);
@@ -55,6 +58,8 @@ const Gallery: Page = () => {
   const isLoadingRef = useRef<boolean>(true);
   const uniqueImages = useRef<{[key: string]: boolean}>({});
   const firstColDiv = useRef<HTMLDivElement | null>(null);
+
+  const filterAnimation = useAnimation();
 
   const setIsLoading = (newLoadingState: boolean): void => {
     isLoadingRef.current = newLoadingState;
@@ -128,6 +133,24 @@ const Gallery: Page = () => {
   }, []);
 
   useEffect(() => {
+    if (screenType === ScreenType.mobile) {
+      filterAnimation.start({
+        opacity: 0,
+        maxHeight: '0rem',
+        transition: {
+          duration: 0.35,
+        }
+      });
+    } else {
+      filterAnimation.start({
+        opacity: 1,
+        maxHeight: '10rem',
+        transition: {
+          duration: 0.35,
+        }
+      });
+    }
+
     const newColumns = c_genNewColumns(screenType);
     const allImages: DisplayImage[] = imageColumns
       .reduce(
@@ -162,7 +185,41 @@ const Gallery: Page = () => {
   return (
     <>
       <div className={styles.galleryContainer}>
-        <h2>Gallery</h2>
+        <div className={styles.containerTitle}>
+          {screenType === ScreenType.mobile &&
+            <BurgerButton
+              onClick={() => {
+                if (!hideFilters) {
+                  filterAnimation.start({
+                    opacity: 0,
+                    maxHeight: '0rem',
+                    transition: {
+                      duration: 0.35,
+                    },
+                  });
+                } else {
+                  filterAnimation.start({
+                    opacity: 1,
+                    maxHeight: '10rem',
+                    transition: {
+                      duration: 0.35,
+                    },
+                  });
+                }
+                setHideFilters(prev => !prev);
+              }}
+            />
+          }
+          <h2>Gallery</h2>
+        </div>
+        <motion.div
+          className={styles.containerToggleFilters}
+          initial={{opacity: 0, maxHeight: '0rem'}}
+          animate={filterAnimation}
+          exit={{opacity: 0, maxHeight: '0rem'}}
+        >
+          <Filters filters={tags} />
+        </motion.div>
         <div className={styles.containerAllColumns}>
           {imageColumns.map((column, i) => (
             <div

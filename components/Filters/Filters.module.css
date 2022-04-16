@@ -1,0 +1,45 @@
+.containerFilters {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.containerHelpers {
+    display: flex;
+    justify-content: center;
+    margin-bottom: .4rem;
+    gap: .4rem;
+}
+
+.containerHelpers button {
+    background: slateblue;
+    border-radius: .3rem;
+    border: 2px solid #2d2858;
+    box-shadow: 4px 4px 16px rgb(3, 3, 41);
+    font-size: clamp(1rem, 0.6000rem + 1.3333vw, 1.3rem);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all .2s ease-out;
+}
+.containerHelpers button:hover {
+    background: #483f8d;
+    box-shadow: 4px 4px 4px rgb(3, 3, 41);
+}
+
+.containerOptions {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: .4rem;
+    flex-wrap: wrap;
+}
+.containerOptions button {
+    cursor: pointer;
+    border: 2px solid #483f8d;
+    transition: all .2s ease-out;
+    border-radius: .3rem;
+    font-size: clamp(1rem, 0.8085rem + 0.8511vw, 1.5rem);
+}
+.containerOptions button:not(.selected) {
+    box-shadow: 4px 4px 16px rgb(3, 3, 41);
+}

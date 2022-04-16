@@ -30,9 +30,13 @@ a {
   --links-open-height: 15rem;
 }
 
-h1, h2, h3, p, b, a, label {
+h1, h2, h3, p, b, a, label, button {
   font-family: 'Concert One', cursive;
   color: var(--base);
+}
+
+button {
+  padding-bottom: .5rem;
 }
 
 h2 {
