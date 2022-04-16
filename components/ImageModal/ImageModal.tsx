@@ -36,17 +36,17 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
         >
           X
         </button>
-        <button
-          className={`${styles.modalBtn} ${styles.leftBtn}`}
-          onClick={e => {
-            e.stopPropagation();
-            if (image) {
+        {image &&
+          <button
+            className={`${styles.modalBtn} ${styles.leftBtn}`}
+            onClick={e => {
+              e.stopPropagation();
               getNextImage(Direction.Backward);
-            }
-          }}
-        >
-          &lt;
-        </button>
+            }}
+          >
+            &lt;
+          </button>
+        }
         <CustomAnimatePresence exitBeforeEnter>
           {image &&
             <motion.div
@@ -107,17 +107,17 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
             </motion.div>
           }
         </CustomAnimatePresence>
-        <button
-          className={`${styles.modalBtn} ${styles.rightBtn}`}
-          onClick={e => {
-            e.stopPropagation();
-            if (image) {
+        {image &&
+          <button
+            className={`${styles.modalBtn} ${styles.rightBtn}`}
+            onClick={e => {
+              e.stopPropagation();
               getNextImage(Direction.Forward);
-            }
-          }}
-        >
-          &gt;
-        </button>
+            }}
+          >
+            &gt;
+          </button>
+        }
       </motion.div>
     </ModalBackdrop>
   );
