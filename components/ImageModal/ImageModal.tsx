@@ -1,27 +1,24 @@
-import type { FC } from 'react';
+import { FC, useLayoutEffect } from 'react';
 import { Image as ImageType, ScreenType } from '../../interfaces';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { Direction } from '../../interfaces';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
 import useScreenType from '../../hooks/useScreenType';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
 import styles from './ImageModal.module.css';
 
-
-enum Direction {
-  Forward,
-  Backward,
-};
-
 interface Props {
-  image: ImageType;
+  image: ImageType | false;
   close: () => void;
-  getNextImage?: (dir: Direction) => ImageType;
+  getNextImage: (dir: Direction) => void;
 };
 
 const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
   const screenType = useScreenType();
-  const [imageDirection, setImageDirection] = useState<Direction>(Direction.Forward);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   const [showDescription, setShowDescription] = useState<boolean>(false);
 
   return (
@@ -29,9 +26,9 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
       <motion.div
         onClick={close}
         className={styles.containerImgModal}
-        initial={{scale: 0, opacity: 0}}
-        animate={{scale: 1, opacity: 1}}
-        exit={{scale: 0, opacity: 0}}
+        initial={{opacity: 0}}
+        animate={{opacity: 1}}
+        exit={{opacity: 0}}
       >
         <button
           onClick={close}
@@ -43,60 +40,80 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
           className={`${styles.modalBtn} ${styles.leftBtn}`}
           onClick={e => {
             e.stopPropagation();
-            setImageDirection(Direction.Backward);
-            // getNextImage(imageDirection);
+            if (image) {
+              getNextImage(Direction.Backward);
+            }
           }}
         >
           &lt;
         </button>
-        <CustomAnimatePresence exitBeforeEnter custom={imageDirection}>
-          <motion.div
-            className={styles.containerImg}
-            key={image.url}
-            custom={imageDirection}
-            variants={{
-              initial: (dir: Direction) => ({
-                x: dir === Direction.Forward ? '100vw' : '-100vw',
-                opacity: 0,
-              }),
-              animate: {
-                zIndex: 1,
-                x: 0,
-                opacity: 1,
-              },
-              exit: (dir: Direction) => ({
-                zIndex: 0,
-                x: dir === Direction.Forward ? '-100vw' : '100vw',
-                opacity: 0,
-              }),
-            }}
-          >
-            <h3>{image.title}</h3>
-            <div
-              className={`
-                ${styles.containerDescription}
-                ${screenType === ScreenType.mobile ? styles.active : ''}
-              `}
-              onClick={e => {
-                e.stopPropagation();
-                setShowDescription(prev => !prev);
-              }}
+        <CustomAnimatePresence exitBeforeEnter>
+          {image &&
+            <motion.div
+              className={styles.containerImg}
+              key={image.url}
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
             >
-              <p>{image.description}</p>
-            </div>
-            <motion.img
-              src={image.url}
-              alt={image.description}
-              onClick={e => e.stopPropagation()}
-            />
-          </motion.div>
+              <h3 style={{display: screenType !== ScreenType.mobile ? 'none' : undefined}}>
+                {image.title}
+              </h3>
+              <div
+                ref={divRef}
+                className={`
+                  ${styles.containerDescription}
+                  ${screenType === ScreenType.mobile && showDescription ? styles.active : ''}
+                `}
+                onClick={e => {
+                  e.stopPropagation();
+                  setShowDescription(prev => !prev);
+                }}
+              >
+                <h3 style={{display: screenType === ScreenType.mobile ? 'none' : undefined}}>
+                  {image.title}
+                </h3>
+                <p>ffdsja fjdsp afpdko saofkds opkgt e[pqfp[dlp fe[wladsdjfjdsja   jsai JDSIAJ JDsija JDS SFJ  FKa kfofKK dokf aofk dksapfd as</p>
+              </div>
+              <img
+                ref={imgRef}
+                src={image.url}
+                alt={image.description}
+                onClick={e => e.stopPropagation()}
+                onLoad={() => {
+                  if (!divRef.current || !imgRef.current) return;
+
+                  if (screenType !== ScreenType.mobile) {
+                    divRef.current.style.setProperty('height', null);
+                    return;
+                  }
+
+                  divRef.current.style.setProperty(
+                    'height',
+                    `${imgRef.current.offsetHeight}px`,
+                  );
+                }}
+              />
+            </motion.div>
+          }
+          {!image &&
+            <motion.div
+              key='loading'
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+            >
+              <LoadingSpinner loadingText='Loading more...' />
+            </motion.div>
+          }
         </CustomAnimatePresence>
         <button
           className={`${styles.modalBtn} ${styles.rightBtn}`}
           onClick={e => {
             e.stopPropagation();
-            setImageDirection(Direction.Forward);
-            // getNextImage(imageDirection);
+            if (image) {
+              getNextImage(Direction.Forward);
+            }
           }}
         >
           &gt;

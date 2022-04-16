@@ -7,7 +7,7 @@
     background-size: 200px 200px;
     border-bottom: 2px solid var(--highlight);
     top: 0;
-    z-index: 100;
+    z-index: 5;
 }
 
 .headerWrapper {

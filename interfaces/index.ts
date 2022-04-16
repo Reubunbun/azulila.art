@@ -22,6 +22,11 @@ export enum ScreenType {
     desktop,
 };
 
+export enum Direction {
+    Forward,
+    Backward,
+};
+
 /**
  * API RESPONSES
  */

@@ -1,13 +1,14 @@
 import { memo } from 'react';
 import { motion } from 'framer-motion';
 import type { FC } from 'react';
-import type { Image } from '../../interfaces';
+import type { Image as ImageType } from '../../interfaces';
+import Image from 'next/image';
 import styles from './ImageItem.module.css';
 
 interface Props {
-  clickImage: (image: Image) => void;
+  clickImage: (image: ImageType) => void;
   delay: number;
-  image: Image;
+  image: ImageType;
 };
 
 const c_intDelay: number = 0.25;
@@ -28,14 +29,15 @@ const ImageItem: FC<Props> = ({clickImage, delay, image}) => {
       }}
       className={styles.containerImageItem}
     >
-      <motion.img
-        whileTap={{scale: 0.98}}
-        whileHover={{scale: 1.02}}
+      <img
         className={styles.imageItem}
         src={image.url}
         alt={image.description}
         onClick={() => clickImage(image)}
       />
+      <div className={styles.imageHover} onClick={() => clickImage(image)}>
+        <p>{image.title}</p>
+      </div>
     </motion.div>
   );
 };

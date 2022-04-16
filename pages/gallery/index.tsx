@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, Fragment } from 'react';
 import type { Page, Image, ImagesData } from '../../interfaces/index';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
+import { Direction } from '../../interfaces/index';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import useGetScreenType from '../../hooks/useScreenType';
 import { ScreenType } from '../../interfaces/index';
@@ -42,7 +43,7 @@ const Gallery: Page = () => {
     c_genNewColumns(screenType),
   );
 
-  const [selectedImage, setSelectedImage] = useState<Image | null>()
+  const [selectedImage, setSelectedImage] = useState<Image | null | false>(null);
   const [isLoading, _setIsLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<string[]>([]);
   const [{page, filter}, setQueryParams] = useState<QueryParams>({
@@ -52,7 +53,6 @@ const Gallery: Page = () => {
 
   const totalCountRef = useRef<number | null>(null);
   const isLoadingRef = useRef<boolean>(true);
-  const initialLoad = useRef<boolean>(true);
   const uniqueImages = useRef<{[key: string]: boolean}>({});
   const firstColDiv = useRef<HTMLDivElement | null>(null);
 
@@ -74,11 +74,7 @@ const Gallery: Page = () => {
   };
 
   useEffect(() => {
-    if (initialLoad.current) {
-      initialLoad.current = false;
-      // return;
-    }
-
+    const shouldUpdateSelected: boolean = selectedImage === false;
     axios({
       url: `/api/images?page=${page}&limit=${c_intLimit}&filter=${filter.join(',')}`,
       method: 'GET',
@@ -95,9 +91,9 @@ const Gallery: Page = () => {
           }
           uniqueImages.current[image.url] = true;
 
-          const intOrigImgWidth = image.width;
-          const flPercentChange = (intOrigImgWidth - (colWidth || 0)) / intOrigImgWidth;
-          const actualHeight = image.height - (image.height * flPercentChange);
+          const origImgWidth = image.width;
+          const percentChange = (origImgWidth - (colWidth || 0)) / origImgWidth;
+          const actualHeight = image.height - (image.height * percentChange);
 
           const smallestColumn = newColumns.reduce(
             (prev, curr) => (prev.height < curr.height) ? prev : curr,
@@ -112,6 +108,9 @@ const Gallery: Page = () => {
         setImageColumns(newColumns);
         setTags(data.tags);
         totalCountRef.current = data.totalCount;
+        if (shouldUpdateSelected) {
+          setSelectedImage(data.images[0]);
+        }
       })
       .catch(console.dir)
       .finally(() => setIsLoading(false));
@@ -141,12 +140,18 @@ const Gallery: Page = () => {
 
     while (allImages.length) {
       const nextBatch = allImages.splice(0, 10);
+      const colWidth = firstColDiv.current?.offsetWidth;
       for (const image of nextBatch) {
         const smallestColumn = newColumns.reduce(
           (prev, curr) => prev.height < curr.height ? prev : curr,
         );
 
+        const origImgWidth = image.width;
+        const percentChange = (origImgWidth - (colWidth || 0)) / origImgWidth;
+        const actualHeight = image.height - (image.height * percentChange);
+
         smallestColumn.items.push(image);
+        image.height = actualHeight;
         smallestColumn.height += image.height;
       }
     }
@@ -189,10 +194,44 @@ const Gallery: Page = () => {
         exitBeforeEnter={true}
         onExitComplete={() => null}
       >
-        {selectedImage &&
+        {selectedImage !== null &&
           <ImageModal
             image={selectedImage}
             close={() => setSelectedImage(null)}
+            getNextImage={dir => {
+              if (!selectedImage || !totalCountRef.current) return;
+
+              const allImages: DisplayImage[] = imageColumns
+                .reduce(
+                  (prev, curr) => [...prev, ...curr.items],
+                  [] as DisplayImage[],
+                )
+                .sort((a, b) => a.priority - b.priority);
+
+              const currImageIndex = allImages.findIndex(img => img.url === selectedImage.url);
+              if (dir === Direction.Forward) {
+                if (currImageIndex + 1 === allImages.length) {
+                  if (Object.keys(uniqueImages.current).length >= totalCountRef.current) {
+                    setSelectedImage(null);
+                    return;
+                  }
+                  setSelectedImage(false);
+                  loadNextPage();
+                  return;
+                }
+
+                setSelectedImage(allImages[currImageIndex + 1]);
+              }
+
+              if (dir === Direction.Backward) {
+                if (currImageIndex - 1 === 0) {
+                  setSelectedImage(null);
+                  return;
+                }
+
+                setSelectedImage(allImages[currImageIndex - 1]);
+              }
+            }}
           />
         }
       </CustomAnimatePresence>
