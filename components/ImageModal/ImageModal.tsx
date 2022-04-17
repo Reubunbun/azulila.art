@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect } from 'react';
+import type { FC } from 'react';
 import { Image as ImageType, ScreenType } from '../../interfaces';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
@@ -73,7 +73,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
                 <h3 style={{display: screenType === ScreenType.mobile ? 'none' : undefined}}>
                   {image.title}
                 </h3>
-                <p>ffdsja fjdsp afpdko saofkds opkgt e[pqfp[dlp fe[wladsdjfjdsja   jsai JDSIAJ JDsija JDS SFJ  FKa kfofKK dokf aofk dksapfd as</p>
+                <p>{image.description}</p>
               </div>
               <img
                 ref={imgRef}

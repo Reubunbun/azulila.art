@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, Fragment } from 'react';
+import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import useGetScreenType from '../../hooks/useScreenType';
 import BurgerButton from '../../components/BurgerButton/BurgerButton';
 import ImageItem from '../../components/ImageItem/ImageItem';
 import ImageModal from '../../components/ImageModal/ImageModal';
-import Filters from '../../components/Filters/Filters';
+import Filters, { FilterOption } from '../../components/Filters/Filters';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import styles from './gallery.module.css';
 
@@ -77,6 +77,25 @@ const Gallery: Page = () => {
       setQueryParams(prev => ({...prev, page: prev.page + 1}));
     }
   };
+
+  const callbackChangeFilters = useCallback((selected: FilterOption[]) => {
+    if (isLoadingRef.current) {
+      return;
+    }
+    console.log({selected});
+    uniqueImages.current = {};
+    setIsLoading(true);
+    setImageColumns(c_genNewColumns(screenType));
+    setQueryParams({
+      page: 0,
+      filter: selected.filter(({selected}) => selected).map(({name}) => name),
+    })
+  }, []);
+
+  const callbackClickImage = useCallback(
+    (image: Image) => setSelectedImage(image),
+    [],
+  );
 
   useEffect(() => {
     const shouldUpdateSelected: boolean = selectedImage === false;
@@ -218,7 +237,10 @@ const Gallery: Page = () => {
           animate={filterAnimation}
           exit={{opacity: 0, maxHeight: '0rem'}}
         >
-          <Filters filters={tags} />
+          <Filters
+            filters={tags}
+            changeSelected={callbackChangeFilters}
+          />
         </motion.div>
         <div className={styles.containerAllColumns}>
           {imageColumns.map((column, i) => (
@@ -232,7 +254,7 @@ const Gallery: Page = () => {
                   <ImageItem
                     image={image}
                     delay={image.loadNum}
-                    clickImage={image => setSelectedImage(image)}
+                    clickImage={callbackClickImage}
                   />
                 </Fragment>
               ))}
@@ -281,7 +303,7 @@ const Gallery: Page = () => {
               }
 
               if (dir === Direction.Backward) {
-                if (currImageIndex - 1 === 0) {
+                if (currImageIndex === 0) {
                   setSelectedImage(null);
                   return;
                 }

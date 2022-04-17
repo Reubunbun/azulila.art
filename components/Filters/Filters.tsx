@@ -3,21 +3,19 @@ import { useState, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Filters.module.css';
 
-interface Props {
-  filters: string[];
-  changeSelected?: (filters: string[]) => void;
-};
-
-interface FilterOption {
+export interface FilterOption {
   name: string;
   selected: boolean;
+};
+interface Props {
+  filters: string[];
+  changeSelected: (filters: FilterOption[]) => void;
 };
 
 const Filters: FC<Props> = ({filters, changeSelected}) => {
   const [selected, setSelected] = useState<FilterOption[]>([]);
 
   const disabledBtns = useRef<{[key: string]: boolean}>({});
-  const firstRender = useRef<boolean>(true);
 
   useEffect(() => {
     setSelected(
@@ -31,9 +29,6 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
   return (
     <motion.div
       className={styles.containerFilters}
-    //   initial={{height: 0, opacity: 0}}
-    //   animate={{height: 'auto', opacity: 0}}
-    //   exit={{height: 0, opacity: 0}}
       transition={{
         duration: 0.4,
         type: 'tween',
@@ -45,12 +40,12 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
             onClick={() => {
               const anyNotSelected = selected.some(({selected}) => !selected);
               if (anyNotSelected) {
-                setSelected(
-                  prev => prev.map(({name}) => ({
-                    name,
-                    selected: true,
-                  })),
-                );
+                const newSelected = selected.map(({name}) => ({
+                  name,
+                  selected: true,
+                }));
+                changeSelected(newSelected);
+                setSelected(newSelected);
               }
             }}
           >
@@ -60,12 +55,13 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
             onClick={() => {
               const anySelected = selected.some(({selected}) => selected);
               if (anySelected) {
-                setSelected(
-                  prev => prev.map(({name}) => ({
-                    name,
-                    selected: false,
-                  })),
-                );
+                const newSelected = selected.map(({name}) => ({
+                  name,
+                  selected: false,
+                }));
+
+                changeSelected(newSelected);
+                setSelected(newSelected);
               }
             }}
           >
@@ -100,6 +96,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
                 return {name, selected};
               });
 
+              changeSelected(newSelected);
               setSelected(newSelected);
             }}
           >
@@ -111,4 +108,8 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
   );
 };
 
-export default memo(Filters);
+export default memo(
+  Filters,
+  ({filters: prevFilters}, {filters: currFilters}) =>
+    JSON.stringify(prevFilters) === JSON.stringify(currFilters),
+);

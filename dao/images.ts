@@ -1,29 +1,17 @@
-import type { Connection } from 'mysql';
-import type { Knex } from 'knex';
 import type { Image } from '../interfaces';
-import Util from 'util';
-import KnexInitialiser from 'knex';
-
-interface Tags {
-    [key: string]: number;
-}
-
-const COL_TAG_NAME = 'tag_name';
-const COL_BIT_FLAG = 'bit_flag';
-interface TagRow {
-    [COL_TAG_NAME]: string,
-    [COL_BIT_FLAG]: number,
-};
+import AbstractDao from './abstract';
+import DaoTags from './tags';
 
 const COL_IMG_ID = 'image_id';
 const COL_KEY = 'key';
 const COL_URL = 'url';
 const COL_TITLE = 'title';
 const COL_DESCRIPTION = 'description';
-const COL_TAGS = 'tags';
 const COL_PRIORITY = 'priority';
 const COL_WIDTH = 'width';
 const COL_HEIGHT = 'height';
+
+const RES_TOTAL_COUNT = 'TotalCount';
 
 interface ImageRow {
     [COL_IMG_ID]: number;
@@ -31,111 +19,112 @@ interface ImageRow {
     [COL_URL]: string;
     [COL_TITLE]: string;
     [COL_DESCRIPTION]: string;
-    [COL_TAGS]: number;
     [COL_PRIORITY]: number;
     [COL_WIDTH]: number;
     [COL_HEIGHT]: number;
+    [DaoTags.COL_TAG_NAME]: string;
 };
 interface CountRow {
-    'count(*)': number;
+    [RES_TOTAL_COUNT]: number;
 };
 interface ImagesResults {
     images: Image[],
     totalCount: number,
 };
 
-class PortfolioImages {
-    private createQuery: (query: string) => Promise<any>;
-    private knexClient: Knex;
-
+export default class PortfolioImages extends AbstractDao {
     static readonly TABLE_NAME: string = 'tania_portfolio_images';
-    static readonly TAGS_TABLE_NAME: string = 'tania_portfolio_tags';
 
-    constructor(connSQL: Connection) {
-        this.createQuery = Util.promisify(connSQL.query).bind(connSQL);
-        this.knexClient = KnexInitialiser({
-            client: require('knex-serverless-mysql')
-        });
-    }
-
-    async getTags(): Promise<Tags> {
-        const query = this.knexClient(PortfolioImages.TAGS_TABLE_NAME)
-            .select()
-            .toString();
-
-        const allRows = await this.createQuery(query) as TagRow[];
-
-        if (!allRows || !allRows.length) {
-            return {};
-        }
-
-        return allRows.reduce((prev: Tags, curr: TagRow): Tags => ({
-            ...prev,
-            [curr[COL_TAG_NAME]]: curr[COL_BIT_FLAG],
-        }), {});
-    }
-
-    async getImages(
-        tagBits: number,
+    async getAllByTags(
         page: number,
         limit: number,
-        tags: Tags,
+        tags: string[] | null,
     ) : Promise<ImagesResults>
     {
-        const selectQuery = this.knexClient(PortfolioImages.TABLE_NAME)
-            .select();
+        const selectQuery = this.knexClient(PortfolioImages.TABLE_NAME);
         const countQuery = this.knexClient(PortfolioImages.TABLE_NAME)
-            .count('*');
+            .countDistinct(`${COL_URL} as ${RES_TOTAL_COUNT}`);
 
-        if (tagBits) {
-            selectQuery.where(
-                this.knexClient.raw(`${COL_TAGS} & ${tagBits} > 0`),
-            );
-            countQuery.where(
-                this.knexClient.raw(`${COL_TAGS} & ${tagBits} > 0`),
-            );
+        if (tags) {
+            countQuery
+                .leftJoin(
+                    DaoTags.TABLE_NAME,
+                    `${PortfolioImages.TABLE_NAME}.${COL_IMG_ID}`,
+                    `${DaoTags.TABLE_NAME}.${DaoTags.COL_IMAGE_ID}`
+                )
+                .whereIn(DaoTags.COL_TAG_NAME, tags);
+
+            selectQuery
+                .select(this.knexClient.raw(
+                    `${PortfolioImages.TABLE_NAME}.*, ${DaoTags.TABLE_NAME}.${DaoTags.COL_TAG_NAME}`
+                ))
+                .leftJoin(
+                    DaoTags.TABLE_NAME,
+                    `${PortfolioImages.TABLE_NAME}.${COL_IMG_ID}`,
+                    `${DaoTags.TABLE_NAME}.${DaoTags.COL_IMAGE_ID}`
+                )
+                .whereIn(DaoTags.COL_TAG_NAME, tags);
+        } else {
+            selectQuery.select();
         }
 
-        selectQuery
-            .orderBy(COL_PRIORITY, 'asc')
-            .limit(limit)
-            .offset(page * limit);
+        selectQuery.limit(limit).offset(page * limit);
 
-        const imgResults: ImageRow[] = [];
-        const countResult: CountRow[] = [];
+        let imagesResults: ImageRow[] = [];
+        let countResult: CountRow[] = [];
+
         await Promise.all([
-            this.createQuery(selectQuery.toString())
-                .then((res: ImageRow[]) => imgResults.push(...res)),
             this.createQuery(countQuery.toString())
-                .then((res: CountRow[]) => countResult.push(...res)),
+                .then(res => countResult.push(...res)),
+            this.createQuery(selectQuery.toString())
+                .then(res => imagesResults.push(...res)),
         ]);
 
-        const tagsSwapped: {[key: number]: string} = Object.keys(tags).reduce(
-            (prev: object, curr: string): object => ({
-                ...prev,
-                [tags[curr]]: curr,
-            }),
-            {},
+        const indexedImages = imagesResults.reduce(
+            (indexedImages, imageRow) => {
+                const currImgId = imageRow[COL_IMG_ID];
+                const image = indexedImages[currImgId];
+
+                if (image) {
+                    return {
+                        ...indexedImages,
+                        [currImgId]: {
+                            ...image,
+                            tags: [
+                                ...(image.tags || []),
+                                imageRow[DaoTags.COL_TAG_NAME],
+                            ]
+                        },
+                    };
+                }
+
+                return {
+                    ...indexedImages,
+                    [currImgId]: {
+                        id: imageRow[COL_IMG_ID],
+                        url: imageRow[COL_URL],
+                        title: imageRow[COL_TITLE],
+                        description: imageRow[COL_DESCRIPTION],
+                        priority: imageRow[COL_PRIORITY],
+                        width: imageRow[COL_WIDTH],
+                        height: imageRow[COL_HEIGHT],
+                        tags: [],
+                    },
+                };
+            },
+            {} as {[imageId: number]: Image}
         );
 
         return {
-            images: imgResults.map(img => ({
-                id: img[COL_IMG_ID],
-                url: img[COL_URL],
-                title: img[COL_TITLE],
-                description: img[COL_DESCRIPTION],
-                tags: img[COL_TAGS]
-                    .toString(2)
-                    .split('')
-                    .map((char, i) => tagsSwapped[(+char) * 2**i])
-                    .filter(bit => bit),
-                priority: img[COL_PRIORITY],
-                width: img[COL_WIDTH],
-                height: img[COL_HEIGHT],
-            })),
-            totalCount: countResult[0]['count(*)'],
-        };
+            images: Object.values(indexedImages)
+                .sort((a, b) => a[COL_PRIORITY] - b[COL_PRIORITY])
+                .map(
+                    image => ({
+                        ...image,
+                        tags: image.tags.filter(tag=>tag),
+                    }),
+                ),
+            totalCount: countResult[0][RES_TOTAL_COUNT],
+        }
     }
 }
-
-export default PortfolioImages;

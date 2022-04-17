@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import type { ImagesData, GenericError } from '../../interfaces';
 import sql from 'mysql';
 import DaoPortfolioImages from '../../dao/images';
+import DaoTags from '../../dao/tags';
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,7 +23,7 @@ export default async function handler(
 
   try {
     const daoPortfolioImages = new DaoPortfolioImages(connSQL);
-    const tags = await daoPortfolioImages.getTags();
+    const daoTags = new DaoTags(connSQL);
 
     const page = Number(req.query.page);
     const limit = Number(req.query.limit);
@@ -34,23 +35,19 @@ export default async function handler(
       });
     }
 
-    const filters = (rawFilter && rawFilter.split(',')) || [];
-    const bits: number = filters.reduce(
-      (prev: number, curr: string) => prev + tags[curr],
-      0,
-    );
+    const filters = (rawFilter && rawFilter.split(',')) || null;
 
-    const {images, totalCount} = await daoPortfolioImages.getImages(
-      bits,
+    const {images, totalCount} = await daoPortfolioImages.getAllByTags(
       page,
       limit,
-      tags,
+      filters,
     );
+    const tags = await daoTags.getAll();
 
     return res.status(200).json({
       images,
       totalCount,
-      tags: Object.keys(tags),
+      tags: tags,
     });
   } catch (err) {
     console.log(err);
