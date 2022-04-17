@@ -29,6 +29,7 @@ const c_intLimit: number = 10;
 const c_columnMap: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
+  [ScreenType.smallDesktop]: 3,
   [ScreenType.desktop]: 3,
 };
 const c_genNewColumns = (screenType: ScreenType): Column[] => {
