@@ -50,7 +50,10 @@ export default async function handler(
         if (fs.statSync(dirPath + "/" + file).isDirectory()) {
           arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
         } else {
-          console.log(path.join(__dirname, dirPath, "/", file));
+          const nextPath = path.join(__dirname, dirPath, "/", file);
+          if (nextPath.includes('handlebars')) {
+            console.log(nextPath);
+          }
           arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
         }
       })
@@ -58,6 +61,7 @@ export default async function handler(
       return arrayOfFiles
     }
     getAllFiles(process.cwd());
+    console.log('done');
 
     const rawTemplate = fs.readFileSync(
       './templates/contact.handlebars',
