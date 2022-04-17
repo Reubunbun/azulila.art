@@ -6,19 +6,25 @@ export default function useScreenType() : ScreenType {
     typeof window === 'undefined'
       ? ScreenType.desktop
       : window.innerWidth <= 758
-          ? ScreenType.mobile
-          : window.innerWidth <= 1024
-            ? ScreenType.tablet
+        ? ScreenType.mobile
+        : window.innerWidth <= 1024
+          ? ScreenType.tablet
+          : window.innerWidth <= 1450
+            ? ScreenType.smallDesktop
             : ScreenType.desktop,
   );
 
   useEffect(() => {
     const resize = () => setScreenType(
-      window.innerWidth <= 758
-      ? ScreenType.mobile
-      : window.innerWidth <= 1300
-        ? ScreenType.tablet
-        : ScreenType.desktop,
+      typeof window === 'undefined'
+        ? ScreenType.desktop
+        : window.innerWidth <= 758
+          ? ScreenType.mobile
+          : window.innerWidth <= 1024
+            ? ScreenType.tablet
+            : window.innerWidth <= 1450
+              ? ScreenType.smallDesktop
+              : ScreenType.desktop,
     );
 
     window.addEventListener('resize', resize);

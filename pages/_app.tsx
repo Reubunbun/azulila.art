@@ -14,7 +14,6 @@ const c_pageTransitionTime = 0.5 // seconds
 fixTransition(c_pageTransitionTime * 1000);
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
-  console.log('in app!');
   return (
     <AnimateSharedLayout>
       <DefaultLayout title={Component.title}>

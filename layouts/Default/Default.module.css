@@ -9,7 +9,7 @@
     );
 }
 
-@media only screen and (min-width: 1300px) {
+@media only screen and (min-width: 1024px) {
     .main {
         margin-top: calc(var(--header-height) + 5.5rem);
         border-radius: 3rem;

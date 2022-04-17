@@ -40,7 +40,7 @@
 
 }
 
-@media only screen and (min-width: 1300px) {
+@media only screen and (min-width: 1024px) {
     .containerImageItem {
         margin-bottom: 2rem;
     }

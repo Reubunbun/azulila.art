@@ -19,6 +19,7 @@ export type Image = {
 export enum ScreenType {
     mobile,
     tablet,
+    smallDesktop,
     desktop,
 };
 
