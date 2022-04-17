@@ -57,6 +57,7 @@ export default async function handler(
 
       return arrayOfFiles
     }
+    getAllFiles(process.cwd());
 
     const rawTemplate = fs.readFileSync(
       './templates/contact.handlebars',
