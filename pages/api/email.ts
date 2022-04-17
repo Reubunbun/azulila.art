@@ -39,6 +39,25 @@ export default async function handler(
 
     console.log(process.cwd());
     console.log(__dirname);
+
+    const path = require("path");
+    const getAllFiles = function(dirPath: any, arrayOfFiles?: any): any {
+      const files = fs.readdirSync(dirPath)
+
+      arrayOfFiles = arrayOfFiles || []
+
+      files.forEach(function(file: any) {
+        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+          arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
+        } else {
+          console.log(path.join(__dirname, dirPath, "/", file));
+          arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
+        }
+      })
+
+      return arrayOfFiles
+    }
+
     const rawTemplate = fs.readFileSync(
       './templates/contact.handlebars',
       'utf-8',

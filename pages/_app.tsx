@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
       <DefaultLayout title={Component.title}>
         <CustomAnimatePresence exitBeforeEnter>
           <motion.div
+            className='page-content'
             key={Component.title}
             initial={{opacity: 0}}
             animate={{opacity: 1}}

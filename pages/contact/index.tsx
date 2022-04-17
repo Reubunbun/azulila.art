@@ -145,7 +145,6 @@ const Contact: Page = () => {
                       display: reCaptchaToken ? 'none' : 'block'
                     }}
                   >
-                    <p>above recaptcha iframe</p>
                     <ReCAPTCHA
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_KEY || ''}
                       ref={reCaptchaInput}
