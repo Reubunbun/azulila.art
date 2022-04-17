@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app';
 import type { Page } from '../interfaces/index';
 import { AnimateSharedLayout, motion } from 'framer-motion';
+import { fixTransition } from '../helpers/fixTransition';
 import CustomAnimatePresence from '../components/CustomAnimatePresence/CustomAnimatePresence';
 import DefaultLayout from '../layouts/Default/Default';
 import '../styles/globals.css';
@@ -8,6 +9,9 @@ import '../styles/globals.css';
 interface CustomAppProps extends AppProps {
   Component: Page;
 };
+
+const c_pageTransitionTime = 0.5 // seconds
+fixTransition(c_pageTransitionTime * 1000);
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
   console.log('in app!');
@@ -21,6 +25,9 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
             initial={{opacity: 0}}
             animate={{opacity: 1}}
             exit={{opacity: 0}}
+            transition={{
+              duration: c_pageTransitionTime
+            }}
           >
             <Component {...pageProps} />
           </motion.div>
