@@ -38,34 +38,8 @@ export default async function handler(
       return res.status(401).json({message: 'Unable To Validate Recaptcha'});
     }
 
-    console.log(process.cwd());
-    console.log(__dirname);
-
-    const path = require("path");
-    const getAllFiles = function(dirPath: any, arrayOfFiles?: any): any {
-      const files = fs.readdirSync(dirPath)
-
-      arrayOfFiles = arrayOfFiles || []
-
-      files.forEach(function(file: any) {
-        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-          arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
-        } else {
-          const nextPath = path.join(__dirname, dirPath, "/", file);
-          if (nextPath.includes('handlebars') && !nextPath.includes('node_modules')) {
-            console.log(nextPath);
-          }
-          arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
-        }
-      })
-
-      return arrayOfFiles
-    }
-    getAllFiles(process.cwd());
-    console.log('done');
-
     const rawTemplate = fs.readFileSync(
-      path.join(process.cwd(), '../static/templates/contact.handlebars'),
+      path.resolve('./templates', 'contact.handlebars'),
       'utf-8',
     );
     const html = Handlebars.compile(rawTemplate)({
