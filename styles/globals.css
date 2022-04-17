@@ -24,14 +24,15 @@ a {
 }
 
 :root {
+  --num-links: 0;
   --font-highlight: #f33f87;
   --font-base: #783c55;
   --font-warning: #af2638;
   --bg: #fca7bc;
   --bg-transparent: #fca7bc50;
-  --header-height: 15vh;
+  --header-height: 20vh;
   --main-margin-offset: 0rem;
-  --links-open-height: 15rem;
+  --links-open-height: calc(var(--num-links) * 3rem);
 }
 
 h1, h2, h3, p, b, a, label, button {

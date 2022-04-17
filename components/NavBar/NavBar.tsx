@@ -18,7 +18,12 @@ const allPaths: Path[] = [
   {display: 'About', pathname: '/about'},
   {display: 'Contact', pathname: '/contact'},
   {display: 'FAQ', pathname: '/FAQ'},
+  {display: 'Commission', pathname: '/commission'},
 ];
+
+const c_twitterLink = 'https://twitter.com/azulilah';
+const c_instaLink = 'https://www.instagram.com/azulilah';
+const c_tumblrLink = 'https://azulila.tumblr.com';
 
 const NavBar: FC = () => {
   const [navOpen, setNavOpen] = useState<boolean>(false);
@@ -35,13 +40,39 @@ const NavBar: FC = () => {
               layout='fill'
             />
           </div>
-          <h1>Azulilah</h1>
+          <div className={styles.containerTitleAndSocials}>
+            <h1>Azulilah</h1>
+            <div className={styles.containerSocials}>
+              <a href={c_twitterLink} target='_blank' rel='noreferrer'>
+                <embed src='/social-twitter.svg' />
+              </a>
+              <div className={styles.desktopSocials}>
+                <a href={c_instaLink} target='_blank' rel='noreferrer'>
+                  <embed src='/social-insta.svg' />
+                </a>
+                <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
+                  <embed src='/social-tumblr.svg' />
+                </a>
+              </div>
+              <a href={c_instaLink} target='_blank' rel='noreferrer'>
+                <embed src='/social-insta.svg' className={styles.mobInsta} />
+              </a>
+              <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
+                <embed src='/social-tumblr.svg' className={styles.mobTumblr} />
+              </a>
+            </div>
+          </div>
           <BurgerButton onClick={() => {
             const isOpen = !navOpen;
             setNavOpen(isOpen);
 
             if (typeof document !== 'undefined') {
               const rootElement = document.querySelector<HTMLElement>(':root');
+              rootElement?.style.setProperty(
+                '--num-links',
+                String(allPaths.length),
+              );
+
               if (rootElement && isOpen) {
                 const openLinksHeight = getComputedStyle(rootElement)
                   .getPropertyValue('--links-open-height');

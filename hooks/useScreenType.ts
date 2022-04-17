@@ -7,7 +7,7 @@ export default function useScreenType() : ScreenType {
       ? ScreenType.desktop
       : window.innerWidth <= 758
           ? ScreenType.mobile
-          : window.innerWidth <= 1300
+          : window.innerWidth <= 1024
             ? ScreenType.tablet
             : ScreenType.desktop,
   );
