@@ -12,8 +12,10 @@
 .containerTitle h2 {
     text-align: center;
     margin: .7rem auto;
-    margin-bottom: 1.25rem;
     transform: translateX(-25%);
+}
+.containerTitle {
+    margin-bottom: 1.25rem;
 }
 
 .containerAllColumns {
@@ -48,10 +50,12 @@
 @media only screen and (min-width: 768px) {
     .containerTitle h2 {
         margin: unset;
-        margin-bottom: 1.75rem;
         text-align: center;
         margin-right: unset;
         transform: unset;
+    }
+    .containerTitle {
+        margin-bottom: 1.75rem;
     }
 }
 
