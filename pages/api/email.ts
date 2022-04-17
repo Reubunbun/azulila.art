@@ -57,7 +57,7 @@ export default async function handler(
     try {
       await sesClient.sendEmail({
         Destination: {
-          ToAddresses: ['reuben.luke.p@gmail.com'],
+          ToAddresses: ['reuben.luke.p@gmail.com', 'azulilah.art@gmail.com'],
         },
         Message: {
           Body: {
