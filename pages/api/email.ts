@@ -3,6 +3,7 @@ import type { GenericError } from '../../interfaces';
 import aws from 'aws-sdk';
 import Handlebars from 'handlebars';
 import fs from 'fs';
+import path from 'path';
 import axios from 'axios';
 
 export default async function handler(
@@ -51,7 +52,7 @@ export default async function handler(
           arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles)
         } else {
           const nextPath = path.join(__dirname, dirPath, "/", file);
-          if (nextPath.includes('handlebars')) {
+          if (nextPath.includes('handlebars') && !nextPath.includes('node_modules')) {
             console.log(nextPath);
           }
           arrayOfFiles.push(path.join(__dirname, dirPath, "/", file))
@@ -64,7 +65,7 @@ export default async function handler(
     console.log('done');
 
     const rawTemplate = fs.readFileSync(
-      './templates/contact.handlebars',
+      path.join(process.cwd(), '../static/templates/contact.handlebars'),
       'utf-8',
     );
     const html = Handlebars.compile(rawTemplate)({
