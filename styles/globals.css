@@ -24,8 +24,11 @@ a {
 }
 
 :root {
-  --highlight: #f33d86;
-  --base: #783c55;
+  --font-highlight: #f33f87;
+  --font-base: #783c55;
+  --font-warning: #af2638;
+  --bg: #fca7bc;
+  --bg-transparent: #fca7bc50;
   --header-height: 15vh;
   --main-margin-offset: 0rem;
   --links-open-height: 15rem;
@@ -33,7 +36,11 @@ a {
 
 h1, h2, h3, p, b, a, label, button {
   font-family: 'Concert One', cursive;
-  color: var(--base);
+  color: var(--font-base);
+}
+
+.highlight-text {
+  color: var(--font-highlight);
 }
 
 button {
@@ -44,8 +51,121 @@ h2 {
   font-weight: 600;
   text-transform: uppercase;
   text-align: center;
-  color: var(--base);
-  font-size: 2rem;
+  color: var(--font-base);
+  font-size: clamp(2.25rem, 2.0202rem + 1.0213vw, 2.85rem);
+  margin-top: .3rem;
+  margin-bottom: .3rem;
   text-shadow:
-      0.05em 0.05em 0 rgb(255, 171, 251);
+    0.05em 0.05em 0 rgb(255, 171, 251);
+}
+
+input[type="text"].warning::placeholder,
+textarea.warning::placeholder {
+  color: var(--font-warning);
+  opacity: 1;
+}
+
+input[type="text"].warning:-ms-input-placeholder,
+textarea.warning:-ms-input-placeholder {
+  color: var(--font-warning);
+}
+
+input[type="text"].warning::-ms-input-placeholder,
+textarea.warning::-ms-input-placeholder {
+  color: var(--font-warning);
+}
+::placeholder {
+  color: var(--font-highlight);
+  font-family: 'Concert One', cursive;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: var(--font-highlight);
+  font-family: 'Concert One', cursive;
+}
+
+::-ms-input-placeholder {
+  color: var(--font-highlight);
+  font-family: 'Concert One', cursive;
+}
+
+input[type="text"], textarea {
+  padding-top: .2rem;
+  padding-bottom: .35rem;
+  padding-left: .2rem;
+  padding-right: .2rem;
+  border-radius: .5rem;
+  border: 1px solid var(--font-highlight);
+  background-color: var(--bg);
+  color: var(--font-base);
+  font-weight: bold;
+  font-size: clamp(1.05rem, 1.0010rem + 0.2449vw, 1.2rem);
+}
+
+textarea {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+input[type="text"].warning,
+textarea.warning {
+  animation: inputError .82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.submitBtn {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: .35rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .3rem;
+  background-color: var(--bg);
+  color: var(--font-base);
+  border: 2px solid var(--font-highlight);
+  border-radius: .3rem;
+  transition: all .3s ease-out;
+  cursor: pointer;
+  font-size: clamp(1.25rem, 1.0704rem + 0.8980vw, 1.8rem);
+}
+.submitBtn:hover {
+  background: var(--font-highlight);
+  color: darkmagenta;
+}
+
+
+@keyframes inputError {
+  10%, 90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(4px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-8px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+
+@media only screen and (min-width: 1300px) {
+  h2 {
+    margin-top: .7rem;
+    margin-bottom: .7rem;
+  }
+
+  .submitBtn {
+    padding-top: .5rem;
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

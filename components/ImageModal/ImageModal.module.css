@@ -171,9 +171,9 @@
         align-items: unset;
     }
     .containerDescription h3 {
-        color: var(--highlight);
+        color: var(--font-highlight);
     }
     .containerDescription p {
-        color: var(--base);
+        color: var(--font-base);
     }
 }

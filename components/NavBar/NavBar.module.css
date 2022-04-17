@@ -5,7 +5,7 @@
     background-image: url('/main-bg.gif');
     background-repeat: repeat;
     background-size: 200px 200px;
-    border-bottom: 2px solid var(--highlight);
+    border-bottom: 2px solid var(--font-highlight);
     top: 0;
     z-index: 5;
 }
@@ -27,7 +27,7 @@
     width: 5rem;
     height: 5rem;
     border-radius: 100%;
-    border: 2px solid var(--base);
+    border: 2px solid var(--font-base);
     position: relative;
 }
 
@@ -36,9 +36,10 @@
     font-weight: 600;
     text-transform: uppercase;
     text-align: center;
-    color: var(--base);
+    color: var(--font-base);
     text-shadow: 0.05em 0.05em 0 rgb(255, 171, 251);
-    font-size: 2rem;
+    font-size: clamp(2.25rem, 1.5153rem + 3.6735vw, 4.5rem);
+    letter-spacing: clamp(0rem, -0.5224rem + 2.6122vw, 1.6rem);
     font-family: 'Concert One', cursive;
     height: 15vh;
     display: flex;
@@ -76,7 +77,7 @@
     height: 3rem;
     position: relative;
     text-decoration: none;
-    color: var(--base);
+    color: var(--font-base);
     font-weight: bold;
     font-size: large;
     cursor: pointer;
@@ -117,17 +118,12 @@
         justify-content: center !important;
     }
 
-    .headerWrapper h1 {
-        font-size: calc(2rem + 2vw);
-        letter-spacing: 1.6rem;
-    }
-
     .logoWrapper {
         position: relative;
         width: 8rem;
         height: 8rem;
         margin: 1.5rem 3rem 1rem 0;
-        border: 4px solid var(--base);
+        border: 4px solid var(--font-base);
         box-shadow: 0 0 3rem rgb(255, 171, 251);
     }
 
@@ -160,7 +156,7 @@
         cursor: pointer;
     }
     .linkItem p:hover {
-        color: #bea5fa;
+        color: var(--font-highlight);
     }
 
     .linkUnderline {
@@ -171,6 +167,6 @@
         right: 0;
         height: 4px;
         border: none;
-        background-color: var(--highlight);
+        background-color: var(--font-highlight);
     }
 }

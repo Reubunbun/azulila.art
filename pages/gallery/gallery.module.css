@@ -11,7 +11,8 @@
 }
 .containerTitle h2 {
     text-align: center;
-    margin: auto;
+    margin: .7rem auto;
+    margin-bottom: 1.25rem;
     transform: translateX(-25%);
 }
 
