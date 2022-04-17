@@ -82,7 +82,7 @@ const Gallery: Page = () => {
     if (isLoadingRef.current) {
       return;
     }
-    console.log({selected});
+
     uniqueImages.current = {};
     setIsLoading(true);
     setImageColumns(c_genNewColumns(screenType));
