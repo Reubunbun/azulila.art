@@ -16,11 +16,13 @@ const ImageItem: FC<Props> = ({clickImage, delay, image}) => {
   const fadeAnimation = useAnimation();
 
   return (
-    <div className={styles.containerImageItem}>
-      <motion.img
-        initial={{ opacity: 0 }}
-        animate={fadeAnimation}
-        exit={{opacity: 0}}
+    <motion.div
+      className={styles.containerImageItem}
+      initial={{ opacity: 0 }}
+      animate={fadeAnimation}
+      exit={{opacity: 0}}
+    >
+      <img
         className={styles.imageItem}
         src={image.url}
         alt={image.description}
@@ -39,7 +41,7 @@ const ImageItem: FC<Props> = ({clickImage, delay, image}) => {
       <div className={styles.imageHover} onClick={() => clickImage(image)}>
         <p>{image.title}</p>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
