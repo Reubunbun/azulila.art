@@ -40,3 +40,7 @@ export type ImagesData = {
     tags: string[];
     totalCount: number;
 };
+
+export type CommissionData = {
+    spaces: number;
+};

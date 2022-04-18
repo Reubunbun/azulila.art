@@ -18,6 +18,7 @@ interface Path {
 type ViewportWidth = `${number}vw`;
 type ViewportHeight = `${number}vh`;
 type REM = `${number}rem`;
+type Pixels = `${number}px`;
 type HexColour = `#${string}`;
 
 const allPaths: Path[] = [
@@ -68,6 +69,11 @@ const NavBar: FC = () => {
     scrollY,
     c_scrollAnimRange,
     ['0rem', '-8rem'],
+  );
+  const socialsSize = useTransform<number, Pixels>(
+    scrollY,
+    c_scrollAnimRange,
+    ['50px', '40px'],
   );
   const socialsTransLeft = useTransform<number, REM>(
     scrollY,
@@ -128,14 +134,35 @@ const NavBar: FC = () => {
               }
             >
               <a href={c_twitterLink} target='_blank' rel='noreferrer'>
-                <embed src='/social-twitter.svg' />
+                <motion.embed
+                  src='/social-twitter.svg'
+                  style={
+                    screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                      ? {width: socialsSize, height: socialsSize}
+                      : {}
+                  }
+                />
               </a>
               <div className={styles.desktopSocials}>
                 <a href={c_instaLink} target='_blank' rel='noreferrer'>
-                  <embed src='/social-insta.svg' />
+                  <motion.embed
+                    src='/social-insta.svg'
+                    style={
+                      screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                        ? {width: socialsSize, height: socialsSize}
+                        : {}
+                    }
+                  />
                 </a>
                 <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
-                  <embed src='/social-tumblr.svg' />
+                  <motion.embed
+                    src='/social-tumblr.svg'
+                    style={
+                      screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                        ? {width: socialsSize, height: socialsSize}
+                        : {}
+                    }
+                  />
                 </a>
               </div>
               <a href={c_instaLink} target='_blank' rel='noreferrer'>
