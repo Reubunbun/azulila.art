@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import dynamic from 'next/dynamic';
-import { useState, useEffect, memo } from 'react';
+import { useState, memo } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Image from 'next/image';

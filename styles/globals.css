@@ -79,16 +79,25 @@ textarea.warning::-ms-input-placeholder {
   color: var(--font-highlight);
   font-family: 'Concert One', cursive;
   opacity: 1;
+  overflow: visible;
 }
 
 :-ms-input-placeholder {
   color: var(--font-highlight);
   font-family: 'Concert One', cursive;
+  overflow: visible;
 }
 
 ::-ms-input-placeholder {
   color: var(--font-highlight);
   font-family: 'Concert One', cursive;
+  overflow: visible;
+}
+
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 2pt var(--font-base);
+  outline: none;
 }
 
 input[type="text"], textarea {

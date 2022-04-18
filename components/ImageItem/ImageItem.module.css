@@ -6,9 +6,10 @@
 }
 
 
-.imageItem{
+.imageItem {
     width: 100%;
     cursor: pointer;
+    border-radius: .5rem;
 }
 .imageHover {
     display: none;

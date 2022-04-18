@@ -198,7 +198,7 @@
         align-items: none;
         justify-content: none;
         width: auto;
-        height: auto;
+        height: 100%;
         pointer-events: auto;
     }
     .linkItem p {
@@ -208,17 +208,18 @@
         transition: color 0.2s ease-in-out;
         cursor: pointer;
     }
-    .linkItem p:hover {
-        color: var(--font-highlight);
+    .linkItem:hover p {
+        color: var(--font-highlight) !important;
     }
 
     .linkUnderline {
+        pointer-events: none;
         position: relative;
         width: 100%;
-        top: 2px;
+        top: 8px;
         left: 0;
         right: 0;
-        height: 4px;
+        height: 10px;
         border: none;
         background-color: var(--font-highlight);
     }

@@ -34,7 +34,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
         type: 'tween',
       }}
     >
-      {selected.length &&
+      {selected.length ?
         <div className={styles.containerHelpers}>
           <button
             onClick={() => {
@@ -68,6 +68,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
             Remove All
           </button>
         </div>
+        : <></>
       }
       <div className={styles.containerOptions}>
         {selected.map(({name: currName, selected: currSelected}) => (

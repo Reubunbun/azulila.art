@@ -34,7 +34,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
           onClick={close}
           className={`${styles.modalBtn} ${styles.closeBtn}`}
         >
-          X
+          <p>X</p>
         </button>
         {image &&
           <button
@@ -44,7 +44,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
               getNextImage(Direction.Backward);
             }}
           >
-            &lt;
+            <p>&lt;</p>
           </button>
         }
         <CustomAnimatePresence exitBeforeEnter>
@@ -115,7 +115,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
               getNextImage(Direction.Forward);
             }}
           >
-            &gt;
+            <p>&gt;</p>
           </button>
         }
       </motion.div>
