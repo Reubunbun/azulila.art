@@ -23,7 +23,7 @@
 .inputBlock label,
 .areaBlock label {
     text-align: left;
-    margin-bottom: .2rem;
+    margin-bottom: .4rem;
     font-size: clamp(1.1rem, 0.9277rem + 0.7660vw, 1.55rem);
     font-weight: bold;
 }
