@@ -21,7 +21,6 @@
     color: darkslategray;
 }
 
-
 .closeBtn {
     top: 0;
     right: .5rem;
@@ -226,5 +225,7 @@
     }
     .containerDescription p {
         color: var(--font-base);
+        width: 100%;
+        transform: unset;
     }
 }
