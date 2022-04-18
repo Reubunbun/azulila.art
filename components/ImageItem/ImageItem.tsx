@@ -1,8 +1,7 @@
 import { memo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import type { FC } from 'react';
 import type { Image as ImageType } from '../../interfaces';
-import Image from 'next/image';
 import styles from './ImageItem.module.css';
 
 interface Props {
@@ -14,31 +13,33 @@ interface Props {
 const c_intDelay: number = 0.25;
 
 const ImageItem: FC<Props> = ({clickImage, delay, image}) => {
+  const fadeAnimation = useAnimation();
+
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      animate={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.4,
-        type: 'tween',
-        delay: delay * c_intDelay,
-      }}
-      className={styles.containerImageItem}
-    >
-      <img
+    <div className={styles.containerImageItem}>
+      <motion.img
+        initial={{ opacity: 0 }}
+        animate={fadeAnimation}
+        exit={{opacity: 0}}
         className={styles.imageItem}
         src={image.url}
         alt={image.description}
         onClick={() => clickImage(image)}
+        onLoad={() => {
+          fadeAnimation.start({
+            opacity: 1,
+            transition: {
+              duration: 0.8,
+              type: 'tween',
+              delay: delay * c_intDelay,
+            }
+          });
+        }}
       />
       <div className={styles.imageHover} onClick={() => clickImage(image)}>
         <p>{image.title}</p>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -68,8 +68,12 @@ export default class PortfolioImages extends AbstractDao {
             selectQuery.select();
         }
 
-        selectQuery.limit(limit).offset(page * limit);
+        selectQuery
+            .orderBy(COL_PRIORITY)
+            .limit(limit)
+            .offset(page * limit);
 
+        console.log(selectQuery.toString());
         let imagesResults: ImageRow[] = [];
         let countResult: CountRow[] = [];
 

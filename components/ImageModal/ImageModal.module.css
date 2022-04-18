@@ -18,24 +18,26 @@
 
 .modalBtn p {
     margin: 0;
+    color: darkslategray;
 }
 
 
 .closeBtn {
     top: 0;
-    right: 0;
+    right: .5rem;
     height: 3rem;
     width: 3rem;
-    color: #1e1a3b;
-    border: 2px solid #483f8d;
-    background: #be87c9;
+    background: transparent;
+    border: none;
     border-radius: 1rem;
     padding: .4rem .8rem;
-    transition: all .2s ease-out;
 }
 .closeBtn p {
     margin-top: 0;
     margin-bottom: .2rem;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--font-base);
 }
 
 .leftBtn {
@@ -137,14 +139,16 @@
         border-radius: .3rem;
         border: none;
         background: none;
-        color: darkslategray;
         font-weight: 900;
         font-size: 4em;
         z-index: 12;
     }
-    .closeBtn:hover {
+    .closeBtn p {
+        transition: color .3s ease-out;
+    }
+    .closeBtn:hover p {
         background: none;
-        color: violet;
+        color: var(--font-highlight);
     }
 
     .leftBtn {
@@ -175,7 +179,7 @@
     .leftBtn:hover p,
     .rightBtn:hover p {
         background: #1a1a1a00;
-        color: rgb(134, 65, 225);
+        color: var(--font-highlight);
     }
     .btnLeft:disabled p,
     .btnRight:disabled p {
