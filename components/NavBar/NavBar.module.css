@@ -49,9 +49,9 @@
     max-height: 0;
     background: linear-gradient(
         0deg,
-        rgba(64, 101, 211, 0.2) 0%,
-        rgba(64, 101, 211, 0.2) 80%,
-        rgba(64, 101, 211, 0.1) 95%,
+        rgba(180, 121, 219, 0.35) 0%,
+        rgba(180, 121, 219, 0.35) 80%,
+        rgba(180, 121, 219, 0.15) 95%,
         rgba(0, 0, 0, 0) 100%
     );
     display: flex;
@@ -107,7 +107,7 @@
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0)  0%,
-            #dca6ff 100%
+            rgb(220, 166, 255) 100%
         );
         top: -1px;
         position: fixed;
