@@ -85,9 +85,7 @@
     margin-top: 0;
     margin-bottom: 5px !important;
 }
-.linkSelected {
-    color: var(--font-highlight) !important;
-}
+
 .linkItem embed {
     width: 35px;
     height: 35px;
@@ -109,7 +107,7 @@
         background: linear-gradient(
             0deg,
             rgba(0, 0, 0, 0)  0%,
-            #752ff7 100%
+            #dca6ff 100%
         );
         top: -1px;
         position: fixed;
@@ -119,6 +117,10 @@
     }
     .nav a {
         pointer-events: auto;
+    }
+
+    .linkSelected {
+        color: var(--font-highlight) !important;
     }
 
     .headerWrapper {

@@ -16,7 +16,6 @@ interface Path {
   external?: boolean;
 };
 
-type ViewportWidth = `${number}vw`;
 type Pixels = `${number}px`;
 type ViewportHeight = `${number}vh`;
 type REM = `${number}rem`;
@@ -75,16 +74,6 @@ const NavBar: FC = () => {
     scrollY,
     c_scrollAnimRange,
     ['0rem', '-14.5rem'],
-  );
-  const linksColour = useTransform<number, HexColour>(
-    scrollY,
-    c_scrollAnimRange,
-    ['#783c55', '#fca7bc'],
-  );
-  const selectedColour = useTransform<number, HexColour>(
-    scrollY,
-    c_scrollAnimRange,
-    ['#f33f87', '#fca7bc'],
   );
   // Scroll animation values
 
@@ -171,15 +160,7 @@ const NavBar: FC = () => {
               }}
             >
               <motion.p
-                style={
-                  router.pathname === path.pathname
-                    ? screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                      ? {color: selectedColour}
-                      : {}
-                    : screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                      ? {color: linksColour}
-                      : {}
-                }
+                className={router.pathname === path.pathname ? styles.linkSelected : ''}
               >
                 {path.display}
               </motion.p>
@@ -192,11 +173,6 @@ const NavBar: FC = () => {
                   }}
                   className={styles.linkUnderline}
                   layoutId='underline'
-                  style={
-                    screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                      ? {color: selectedColour}
-                      : {}
-                  }
                 />
               }
             </div>
