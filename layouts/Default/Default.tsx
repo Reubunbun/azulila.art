@@ -8,14 +8,34 @@ interface Props {
   title: string;
 };
 
+
+const c_twitterLink: string = 'https://twitter.com/azulilah';
+const c_instaLink: string = 'https://www.instagram.com/azulilah';
+const c_tumblrLink: string = 'https://azulila.tumblr.com';
+
 const DefaultLayout: FC<Props> = ({children, title}) => {
   return (
     <>
       <Head>
         <title>{title}</title>
       </Head>
-      <NavBar/>
-      <main className={styles.main}>{children}</main>
+      <div className={styles.pageContent}>
+        <NavBar/>
+        <main className={styles.main}>
+          {children}
+        </main>
+      </div>
+      <footer className={styles.footer}>
+        <a href={c_twitterLink} target='_blank' rel='noreferrer'>
+          <embed src='social-twitter.svg' />
+        </a>
+        <a href={c_instaLink} target='_blank' rel='noreferrer'>
+          <embed src='social-insta.svg' />
+        </a>
+        <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
+          <embed src='social-tumblr.svg' />
+        </a>
+      </footer>
     </>
   );
 };

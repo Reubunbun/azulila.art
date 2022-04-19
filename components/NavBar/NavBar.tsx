@@ -13,26 +13,24 @@ import { ScreenType } from '../../interfaces';
 interface Path {
   display: string;
   pathname: string;
+  external?: boolean;
 };
 
 type ViewportWidth = `${number}vw`;
+type Pixels = `${number}px`;
 type ViewportHeight = `${number}vh`;
 type REM = `${number}rem`;
-type Pixels = `${number}px`;
 type HexColour = `#${string}`;
 
 const allPaths: Path[] = [
   {display: 'Work', pathname: '/work'},
   {display: 'Gallery', pathname: '/gallery'},
+  {display: 'Popslinger', pathname: '/work/popslinger'},
   {display: 'About', pathname: '/about'},
-  {display: 'Contact', pathname: '/contact'},
-  {display: 'FAQ', pathname: '/FAQ'},
   {display: 'Commission', pathname: '/commission'},
+  {display: 'Contact', pathname: '/contact'},
+  {display: 'Shop', pathname: 'https://azulila.bigcartel.com/', external: true},
 ];
-
-const c_twitterLink: string = 'https://twitter.com/azulilah';
-const c_instaLink: string = 'https://www.instagram.com/azulilah';
-const c_tumblrLink: string = 'https://azulila.tumblr.com';
 
 const c_scrollAnimRange: number[] = [0, 200];
 
@@ -48,17 +46,25 @@ const NavBar: FC = () => {
     c_scrollAnimRange,
     [1, 0],
   );
-  const navPadding = useTransform<number, ViewportWidth>(
+  const navWidth = useTransform<number, Pixels>(
     scrollY,
-    c_scrollAnimRange,
-    screenType === ScreenType.desktop
-      ? ['0vw', '30vw']
-      : ['0vw', '20vw'],
+    yPos => {
+      const percentCompletion = Math.min(
+        yPos / c_scrollAnimRange[1],
+        1
+      );
+
+      const vwWidthToShrink = 50;
+      const currShrinkAmount = vwWidthToShrink * percentCompletion;
+      const newWidth = window.innerWidth * ((100 - currShrinkAmount) / 100);
+
+      return `${Math.max(newWidth, 900)}px`;
+    },
   );
   const navTransBottom = useTransform<number, ViewportHeight>(
     scrollY,
     c_scrollAnimRange,
-    ['0vh', '-12.5vh'],
+    ['0vh', '-13vh'],
   )
   const logoMaxWidth = useTransform<number, REM>(
     scrollY,
@@ -68,27 +74,17 @@ const NavBar: FC = () => {
   const logoTransRight = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
-    ['0rem', '-8rem'],
-  );
-  const socialsSize = useTransform<number, Pixels>(
-    scrollY,
-    c_scrollAnimRange,
-    ['50px', '40px'],
-  );
-  const socialsTransLeft = useTransform<number, REM>(
-    scrollY,
-    c_scrollAnimRange,
-    ['0rem', '8rem'],
+    ['0rem', '-14.5rem'],
   );
   const linksColour = useTransform<number, HexColour>(
     scrollY,
     c_scrollAnimRange,
-    ['#783c55', '#ffabfb'],
+    ['#783c55', '#fca7bc'],
   );
-  const underlineColour = useTransform<number, HexColour>(
+  const selectedColour = useTransform<number, HexColour>(
     scrollY,
     c_scrollAnimRange,
-    ['#f33d86', '#783c55'],
+    ['#f33f87', '#fca7bc'],
   );
   // Scroll animation values
 
@@ -99,13 +95,15 @@ const NavBar: FC = () => {
           <motion.div
             className={styles.logoWrapper}
             style={
-              screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+              screenType === ScreenType.desktop
                 ? {
-                    maxWidth: logoMaxWidth,
-                    maxHeight: logoMaxWidth,
+                    minWidth: logoMaxWidth,
+                    minHeight: logoMaxWidth,
                     x: logoTransRight,
                   }
-                : {}
+                : screenType === ScreenType.smallDesktop
+                  ? {opacity: titleOpacity}
+                  : {}
             }
           >
             <Image
@@ -125,53 +123,6 @@ const NavBar: FC = () => {
             >
               Azulilah
             </motion.h1>
-            <motion.div
-              className={styles.containerSocials}
-              style={
-                screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                  ? {x: socialsTransLeft}
-                  : {}
-              }
-            >
-              <a href={c_twitterLink} target='_blank' rel='noreferrer'>
-                <motion.embed
-                  src='/social-twitter.svg'
-                  style={
-                    screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                      ? {width: socialsSize, height: socialsSize}
-                      : {}
-                  }
-                />
-              </a>
-              <div className={styles.desktopSocials}>
-                <a href={c_instaLink} target='_blank' rel='noreferrer'>
-                  <motion.embed
-                    src='/social-insta.svg'
-                    style={
-                      screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                        ? {width: socialsSize, height: socialsSize}
-                        : {}
-                    }
-                  />
-                </a>
-                <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
-                  <motion.embed
-                    src='/social-tumblr.svg'
-                    style={
-                      screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                        ? {width: socialsSize, height: socialsSize}
-                        : {}
-                    }
-                  />
-                </a>
-              </div>
-              <a href={c_instaLink} target='_blank' rel='noreferrer'>
-                <embed src='/social-insta.svg' className={styles.mobInsta} />
-              </a>
-              <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
-                <embed src='/social-tumblr.svg' className={styles.mobTumblr} />
-              </a>
-            </motion.div>
           </div>
           <BurgerButton onClick={() => {
             const isOpen = !navOpen;
@@ -202,32 +153,37 @@ const NavBar: FC = () => {
           screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
             ? {
                 y: navTransBottom,
-                paddingLeft: navPadding,
-                paddingRight: navPadding,
+                width: navWidth,
               }
             : {}
         }
       >
         {allPaths.map((path: Path) => (
-          <li
-            key={path.pathname}
-            className={router.pathname === path.pathname ? styles.linkSelected : ''}
-          >
+          <li key={path.pathname}>
             <div
               className={styles.linkItem}
               onClick={() => {
+                if (path.external) {
+                  window.open(path.pathname, '_blank')?.focus();
+                  return;
+                }
                 scrollToTop().then(() => router.push(path.pathname));
               }}
             >
               <motion.p
                 style={
-                  screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                    ? {color: linksColour}
-                    : {}
+                  router.pathname === path.pathname
+                    ? screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                      ? {color: selectedColour}
+                      : {}
+                    : screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                      ? {color: linksColour}
+                      : {}
                 }
               >
                 {path.display}
               </motion.p>
+              {path.external && <embed src='/external.svg' />}
               {router.pathname === path.pathname &&
                 <motion.div
                   transition={{
@@ -238,7 +194,7 @@ const NavBar: FC = () => {
                   layoutId='underline'
                   style={
                     screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
-                      ? {color: underlineColour}
+                      ? {color: selectedColour}
                       : {}
                   }
                 />
