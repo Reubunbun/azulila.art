@@ -34,42 +34,6 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
         type: 'tween',
       }}
     >
-      {selected.length ?
-        <div className={styles.containerHelpers}>
-          <button
-            onClick={() => {
-              const anyNotSelected = selected.some(({selected}) => !selected);
-              if (anyNotSelected) {
-                const newSelected = selected.map(({name}) => ({
-                  name,
-                  selected: true,
-                }));
-                changeSelected(newSelected);
-                setSelected(newSelected);
-              }
-            }}
-          >
-            Select All
-          </button>
-          <button
-            onClick={() => {
-              const anySelected = selected.some(({selected}) => selected);
-              if (anySelected) {
-                const newSelected = selected.map(({name}) => ({
-                  name,
-                  selected: false,
-                }));
-
-                changeSelected(newSelected);
-                setSelected(newSelected);
-              }
-            }}
-          >
-            Remove All
-          </button>
-        </div>
-        : <></>
-      }
       <div className={styles.containerOptions}>
         {selected.map(({name: currName, selected: currSelected}) => (
           <button
@@ -94,7 +58,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
                   };
                 }
 
-                return {name, selected};
+                return {name, selected: false};
               });
 
               changeSelected(newSelected);

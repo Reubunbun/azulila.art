@@ -263,10 +263,18 @@ const Gallery: Page = () => {
           ))}
         </div>
         {isLoading &&
-          <LoadingSpinner
-            loadingText='Getting my latest work for you...'
-            width={screenType === ScreenType.mobile ? '8rem' : '10rem'}
-          />
+          <CustomAnimatePresence exitBeforeEnter>
+            <motion.div
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+            >
+              <LoadingSpinner
+                loadingText='Getting my latest work for you...'
+                width={screenType === ScreenType.mobile ? '8rem' : '10rem'}
+              />
+            </motion.div>
+          </CustomAnimatePresence>
         }
       </div>
       <CustomAnimatePresence

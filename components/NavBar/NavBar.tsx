@@ -19,7 +19,6 @@ interface Path {
 type Pixels = `${number}px`;
 type ViewportHeight = `${number}vh`;
 type REM = `${number}rem`;
-type HexColour = `#${string}`;
 
 const allPaths: Path[] = [
   {display: 'Work', pathname: '/work'},
@@ -60,25 +59,47 @@ const NavBar: FC = () => {
       return `${Math.max(newWidth, 900)}px`;
     },
   );
+  const navHeight = useTransform<number, ViewportHeight>(
+    scrollY,
+    c_scrollAnimRange,
+    ['20vh', '12.5vh'],
+  );
   const navTransBottom = useTransform<number, ViewportHeight>(
     scrollY,
     c_scrollAnimRange,
-    ['0vh', '-13vh'],
+    ['0vh', '-16vh'],
   )
   const logoMaxWidth = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
     ['8rem', '6rem'],
   );
+  const logoMaxWidthMob = useTransform<number, REM>(
+    scrollY,
+    c_scrollAnimRange,
+    ['6rem', '4rem'],
+  );
   const logoTransRight = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
     ['0rem', '-14.5rem'],
   );
+  const logoTransUp = useTransform<number, REM>(
+    scrollY,
+    c_scrollAnimRange,
+    ['0rem', '-1.5rem'],
+  );
   // Scroll animation values
 
   return (
-    <nav className={styles.nav}>
+    <motion.nav
+      className={styles.nav}
+      style={
+        screenType !== ScreenType.desktop && screenType !== ScreenType.smallDesktop
+          ? {'--header-height': navHeight}
+          : {}
+      }
+    >
       <div className={styles.headerWrapper}>
         <div>
           <motion.div
@@ -89,17 +110,17 @@ const NavBar: FC = () => {
                     minWidth: logoMaxWidth,
                     minHeight: logoMaxWidth,
                     x: logoTransRight,
+                    y: logoTransUp,
                   }
                 : screenType === ScreenType.smallDesktop
                   ? {opacity: titleOpacity}
-                  : {}
+                  : {minWidth: logoMaxWidthMob, minHeight: logoMaxWidthMob}
             }
           >
             <Image
               src='/favicon.ico'
               alt='Logo for Azulilah'
               layout='fill'
-
             />
           </motion.div>
           <div className={styles.containerTitleAndSocials}>
@@ -164,7 +185,6 @@ const NavBar: FC = () => {
               >
                 {path.display}
               </motion.p>
-              {path.external && <embed src='/external.svg' />}
               {router.pathname === path.pathname &&
                 <motion.div
                   transition={{
@@ -179,7 +199,7 @@ const NavBar: FC = () => {
           </li>
         ))}
       </motion.ul>
-    </nav>
+    </motion.nav>
   );
 };
 

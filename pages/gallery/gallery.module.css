@@ -63,6 +63,7 @@
     .galleryContainer {
         padding: 0 2rem;
         padding-bottom: 2rem;
+        min-height: 80vh;
     }
 
     .containerAllColumns {

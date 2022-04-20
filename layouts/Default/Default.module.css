@@ -1,7 +1,3 @@
-.pageContent {
-    flex: 1 0 auto;
-}
-
 .pageContent main {
     margin-top: calc(var(--header-height) + var(--main-margin-offset));
     transition: margin 0.5s ease-in-out;
@@ -16,15 +12,13 @@
 .footer {
     --icon-height: 40px;
 
-    flex-shrink: 0;
     width: 100vw;
-    height: calc(var(--icon-height) * 2.5);
     display: flex;
     justify-content: space-evenly;
     align-items: flex-end;
+    margin-bottom: .2rem;
 }
 .footer embed {
-    transform: translateY(-50%);
     width: var(--icon-height);
     height: var(--icon-height);
 }
@@ -46,8 +40,6 @@
 
         justify-content: center;
         gap: calc(var(--icon-height) * .75);
-    }
-    .footer embed {
-        transform: translateY(-35%);
+        margin-top: .2rem;
     }
 }

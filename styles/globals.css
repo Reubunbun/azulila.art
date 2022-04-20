@@ -8,16 +8,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-html,
-body,
-#__next {
-  height: 100%;
-}
-
-#__next {
-  display: flex; flex-direction: column;
-}
-
 html {
   background-image: url('/main-bg.gif');
   background-repeat: repeat;
@@ -46,6 +36,10 @@ a {
   --font-warning: #af2638;
   --bg: #fca7bc;
   --bg-transparent: #fca7bc50;
+  --bg-header: #dca6ff;
+  --bg-icon-shadow: #f108e6;
+  --icon-shadow-spread: 3rem;
+  --image-border-radius: 0.5rem;
   --header-height: 20vh;
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;
