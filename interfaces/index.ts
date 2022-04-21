@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 
 export type Page = NextPage & {
     title: string;
-    safeHydrate?: boolean;
 };
 
 export type Image = {
@@ -16,16 +15,12 @@ export type Image = {
     height: number;
 };
 
-export enum ScreenType {
-    mobile,
-    tablet,
-    smallDesktop,
-    desktop,
-};
-
-export enum Direction {
-    Forward,
-    Backward,
+export interface CommissionType {
+    id: number;
+    display: string;
+    price: number;
+    offer: number | null;
+    exampleImage: string;
 };
 
 /**
@@ -42,5 +37,21 @@ export type ImagesData = {
 };
 
 export type CommissionData = {
-    spaces: number;
+    spaces: number | null;
+    baseTypes: CommissionType[];
+    backgroundTypes: CommissionType[];
+};
+
+/**
+ * ENUMS
+ */
+export enum ScreenType {
+    mobile,
+    tablet,
+    desktop,
+};
+
+export enum Direction {
+    Forward,
+    Backward,
 };

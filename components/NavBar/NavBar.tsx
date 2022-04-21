@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import dynamic from 'next/dynamic';
-import { useState, memo } from 'react';
+import { useState, memo, useRef } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -30,6 +30,12 @@ const allPaths: Path[] = [
   {display: 'Shop', pathname: 'https://azulila.bigcartel.com/', external: true},
 ];
 
+const c_comparePath = (currUrl: string, pathname: string) : boolean => (
+  currUrl === '/work/popslinger'
+    ? pathname === '/work/popslinger'
+    : currUrl.startsWith(pathname)
+);
+
 const c_scrollAnimRange: number[] = [0, 200];
 
 const NavBar: FC = () => {
@@ -43,6 +49,11 @@ const NavBar: FC = () => {
     scrollY,
     c_scrollAnimRange,
     [1, 0],
+  );
+  const textShadowOpacity = useTransform<number, number>(
+    scrollY,
+    c_scrollAnimRange,
+    [0, 1],
   );
   const navWidth = useTransform<number, Pixels>(
     scrollY,
@@ -87,7 +98,7 @@ const NavBar: FC = () => {
   const logoTransUp = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
-    ['0rem', '-1.5rem'],
+    ['0rem', '-1.75rem'],
   );
   // Scroll animation values
 
@@ -95,7 +106,7 @@ const NavBar: FC = () => {
     <motion.nav
       className={styles.nav}
       style={
-        screenType !== ScreenType.desktop && screenType !== ScreenType.smallDesktop
+        screenType !== ScreenType.desktop
           ? {'--header-height': navHeight}
           : {}
       }
@@ -112,7 +123,7 @@ const NavBar: FC = () => {
                     x: logoTransRight,
                     y: logoTransUp,
                   }
-                : screenType === ScreenType.smallDesktop
+                : screenType === ScreenType.tablet
                   ? {opacity: titleOpacity}
                   : {minWidth: logoMaxWidthMob, minHeight: logoMaxWidthMob}
             }
@@ -126,7 +137,7 @@ const NavBar: FC = () => {
           <div className={styles.containerTitleAndSocials}>
             <motion.h1
               style={
-                screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+                screenType === ScreenType.desktop
                   ? {opacity: titleOpacity}
                   : {}
               }
@@ -160,7 +171,7 @@ const NavBar: FC = () => {
       <motion.ul
         className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}
         style={
-          screenType === ScreenType.desktop || screenType === ScreenType.smallDesktop
+          screenType === ScreenType.desktop
             ? {
                 y: navTransBottom,
                 width: navWidth,
@@ -173,6 +184,7 @@ const NavBar: FC = () => {
             <div
               className={styles.linkItem}
               onClick={() => {
+                console.log('clicked', path);
                 if (path.external) {
                   window.open(path.pathname, '_blank')?.focus();
                   return;
@@ -181,11 +193,16 @@ const NavBar: FC = () => {
               }}
             >
               <motion.p
-                className={router.pathname === path.pathname ? styles.linkSelected : ''}
+                className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
+                style={
+                  screenType === ScreenType.desktop
+                    ? {'--link-opacity': textShadowOpacity}
+                    : {}
+                }
               >
                 {path.display}
               </motion.p>
-              {router.pathname === path.pathname &&
+              {c_comparePath(router.pathname, path.pathname) &&
                 <motion.div
                   transition={{
                     duration: 0.8,

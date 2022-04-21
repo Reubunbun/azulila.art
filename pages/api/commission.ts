@@ -1,7 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { CommissionData, GenericError } from '../../interfaces';
+import type { CommissionData, GenericError, CommissionType } from '../../interfaces';
 import sql from 'mysql';
 import DaoCommissionSpaces from '../../dao/commissions';
+import DaoCommissionBaseType from '../../dao/CommissionBaseType';
+import DaoCommissionBackgroundType from '../../dao/CommissionBackgroundType';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,8 +23,24 @@ export default async function handler(
 
   try {
     const daoCommissionSpaces = new DaoCommissionSpaces(connSQL);
-    const numSpaces = await daoCommissionSpaces.getNumSpaces();
-    return res.status(200).json({spaces: numSpaces});
+    const daoCommissionBaseType = new DaoCommissionBaseType(connSQL);
+    const daoCommissionBackgroundType = new DaoCommissionBackgroundType(connSQL);
+
+    let numSpaces: number = 0;
+    const commissionBaseTypes: CommissionType[] = [];
+    const commissionBackgroundTypes: CommissionType[] = [];
+
+    await Promise.all([
+      daoCommissionSpaces.getNumSpaces().then(res => numSpaces = res),
+      daoCommissionBaseType.getAll().then(res => commissionBaseTypes.push(...res)),
+      daoCommissionBackgroundType.getAll().then(res => commissionBackgroundTypes.push(...res)),
+    ]);
+
+    return res.status(200).json({
+      spaces: numSpaces,
+      baseTypes: commissionBaseTypes,
+      backgroundTypes: commissionBackgroundTypes,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({message: 'Unknown Server Error'});

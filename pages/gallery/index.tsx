@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import axios from 'axios';
 import type { Page, Image, ImagesData } from '../../interfaces/index';
 import { Direction, ScreenType } from '../../interfaces/index';
+import { useAppContext } from '../../context/AppContext';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import useGetScreenType from '../../hooks/useScreenType';
 import BurgerButton from '../../components/BurgerButton/BurgerButton';
@@ -29,7 +30,6 @@ const c_intLimit: number = 10;
 const c_columnMap: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
-  [ScreenType.smallDesktop]: 3,
   [ScreenType.desktop]: 3,
 };
 const c_genNewColumns = (screenType: ScreenType): Column[] => {
@@ -327,7 +327,6 @@ const Gallery: Page = () => {
   );
 };
 Gallery.title = 'Gallery';
-Gallery.safeHydrate = true;
 
 export default dynamic(
   () => Promise.resolve(Gallery),

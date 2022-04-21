@@ -107,6 +107,7 @@ const Contact: Page = () => {
             <input
               ref={emailInput}
               name='email-input'
+              className='hasPlaceholder'
               value={email}
               onChange={e => setEmail(e.target.value)}
               type='text'

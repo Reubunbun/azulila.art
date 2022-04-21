@@ -61,6 +61,21 @@ h1, h2, h3, p, b, a, label, button {
 
 button {
   padding-bottom: .5rem;
+  cursor: pointer;
+}
+.commission-btn {
+  margin-top: .75rem;
+  margin-bottom: .75rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  background-color: var(--bg);
+  border: 1px solid var(--font-highlight);
+  border-radius: .2rem;
+  font-size: clamp(1.5rem, 1.1735rem + 1.6327vw, 2.5rem);
+  transition: background-color .3s ease-out;
+}
+.commission-btn:hover {
+  background-color: #ffc6d4;
 }
 
 h2 {
@@ -127,6 +142,9 @@ input[type="text"], textarea {
   font-weight: bold;
   font-size: clamp(1.05rem, 1.0010rem + 0.2449vw, 1.2rem);
 }
+input[type="text"].hasPlaceholder {
+  padding-bottom: .6rem;
+}
 
 textarea {
   max-width: 100%;
@@ -191,5 +209,15 @@ textarea.warning {
     padding-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .commission-btn {
+    margin-top: 1rem;
+    margin-bottom: .2rem;
+    padding-top: .25rem;
+    padding-bottom: 1rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    border: 2px solid var(--font-highlight);
   }
 }

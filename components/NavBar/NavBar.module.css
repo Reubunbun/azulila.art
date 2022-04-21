@@ -41,6 +41,7 @@
     letter-spacing: clamp(0rem, -0.5224rem + 2.6122vw, 1.6rem);
     font-family: 'Concert One', cursive;
     margin: 0;
+    margin-bottom: .5rem;
     align-items: center;
     text-align: center;
 }
@@ -145,6 +146,7 @@
 
     .headerWrapper h1 {
         margin-right: 1.5rem;
+        margin-bottom: unset;
     }
 
     .linksList {
@@ -180,6 +182,16 @@
         font-weight: 600;
         font-size: x-large;
         transition: color 0.2s ease-in-out;
+        text-shadow:
+            0
+            0
+            10px
+            rgb(241 8 230 / var(--link-opacity, 0));
+
+        --link-opacity: 0;
+    }
+    .linkItem p.linkSelected {
+        --link-opacity: 0 !important;
     }
     .linkItem:hover p {
         color: var(--font-highlight) !important;
