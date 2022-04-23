@@ -14,6 +14,7 @@ export default abstract class CommissionTypeAbstract extends AbstractDao {
     return await this.createQuery(
       this.knexClient(this.getTableName())
         .select()
+        .orderBy('price', 'asc')
         .toString(),
     );
   }

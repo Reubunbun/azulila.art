@@ -33,12 +33,6 @@
     font-size: clamp(1.2rem, 1.0694rem + 0.6531vw, 1.6rem);
 }
 
-.containerButton {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
 @media only screen and (min-width: 1024px) {
     .containerTerms {
         margin-top: 1.5rem;

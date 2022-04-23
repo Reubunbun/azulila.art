@@ -1,0 +1,40 @@
+.containerOptions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.containerExample {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: .75rem;
+}
+
+.containerExample img {
+    display: block;
+    max-width: 95%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+@media only screen and (min-width: 1024px) {
+    .containerOptionsAndImage {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .containerOptions {
+        width: 30%;
+    }
+
+    .containerExample {
+        height: 50vh;
+        width: 50%;
+    }
+}

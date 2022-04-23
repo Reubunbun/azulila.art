@@ -1,0 +1,72 @@
+.containerHeader {
+    width: 100%;
+    margin-bottom: .8rem;
+}
+
+.containerHeader p {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem);
+}
+
+.containerFinaliseCommission {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.containerAllInputs {
+    width: 95%;
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .3rem;
+}
+.inputBlock label {
+    text-align: left;
+    margin-bottom: .4rem;
+    font-size: clamp(1.1rem, 0.9277rem + 0.7660vw, 1.55rem);
+    font-weight: bold;
+}
+
+.containerPermissionOptions p {
+    font-size: clamp(1.2rem, 1.0041rem + 0.9796vw, 1.8rem);
+    font-weight: bold;
+}
+
+.containerPermissionButtons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+@media only screen and (min-width: 1024px) {
+    .containerAllInputs {
+        width: 75%;
+    }
+
+    .inputBlock {
+        margin-bottom: 1rem;
+    }
+
+    .inputBlock label {
+        margin-bottom: .6rem;
+    }
+
+    .inputBlock textarea {
+        min-height: 8.5rem;
+    }
+
+    .containerPermissionOptions p {
+        margin-top: 0;
+    }
+
+    .containerPermissions {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}

@@ -11,13 +11,14 @@ interface Option<T extends OptionValue> {
 
 interface Props<T extends OptionValue> {
   groupName: string;
+  small?: boolean;
   options: Option<T>[];
   onValueSelected: (optionSelected: T) => void;
   selected?: T;
 };
 
 const RadioButtons = <T extends OptionValue>(
-  {selected, groupName, options, onValueSelected}: Props<T> & { children?: ReactNode }
+  {selected, small, groupName, options, onValueSelected}: Props<T> & { children?: ReactNode }
 ) => {
 
   return (
@@ -35,7 +36,10 @@ const RadioButtons = <T extends OptionValue>(
             />
             <span className={styles.radioDot} />
           </label>
-          <label className={styles.radioText} htmlFor={option.value as string}>
+          <label
+            className={`${styles.radioText} ${small ? styles.small : ''}`}
+            htmlFor={option.value as string}
+          >
             {option.display}
           </label>
         </div>

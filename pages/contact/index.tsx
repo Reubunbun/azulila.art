@@ -171,5 +171,6 @@ const Contact: Page = () => {
   );
 };
 Contact.title = 'Contact Me';
+Contact.dontStick = true;
 
 export default Contact;

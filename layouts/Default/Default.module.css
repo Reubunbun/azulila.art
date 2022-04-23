@@ -25,6 +25,7 @@
 
 @media only screen and (min-width: 1024px) {
     .pageContent main {
+        transition: unset;
         margin-top: calc(var(--header-height) + 5.5rem);
         border-radius: 3rem;
         padding: 2rem 0;
@@ -33,6 +34,10 @@
         border: 3px solid var(--font-highlight);
         background: var(--bg-transparent);
         padding: 1rem;
+    }
+
+    .pageContent main.dontStick {
+        margin-top: unset;
     }
 
     .footer {

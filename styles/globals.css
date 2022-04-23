@@ -36,7 +36,7 @@ a {
   --font-warning: #af2638;
   --bg: #fca7bc;
   --bg-transparent: #fca7bc50;
-  --bg-header: #dca6ff;
+  --bg-header: #ffa3dc;
   --bg-icon-shadow: #f108e6;
   --icon-shadow-spread: 3rem;
   --image-border-radius: 0.5rem;
@@ -74,7 +74,7 @@ button {
   font-size: clamp(1.5rem, 1.1735rem + 1.6327vw, 2.5rem);
   transition: background-color .3s ease-out;
 }
-.commission-btn:hover {
+.commission-btn:not(:disabled):hover {
   background-color: #ffc6d4;
 }
 
@@ -149,6 +149,7 @@ input[type="text"].hasPlaceholder {
 textarea {
   max-width: 100%;
   min-width: 100%;
+  resize: vertical;
 }
 
 input[type="text"].warning,
@@ -198,6 +199,13 @@ textarea.warning {
   }
 }
 
+.commissionsContainerButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: .75rem;
+}
+
 @media only screen and (min-width: 1024px) {
   h2 {
     margin-top: .7rem;
@@ -219,5 +227,12 @@ textarea.warning {
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     border: 2px solid var(--font-highlight);
+  }
+
+  .commissionsContainerButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
   }
 }

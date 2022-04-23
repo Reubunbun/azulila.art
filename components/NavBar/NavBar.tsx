@@ -1,14 +1,19 @@
 import type { FC } from 'react';
 import dynamic from 'next/dynamic';
-import { useState, memo, useRef } from 'react';
+import { useState, memo } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { ScreenType } from '../../interfaces';
+import { useCommissionContext } from '../../context/CommissionContext';
 import scrollToTop from '../../helpers/smoothScroll';
 import useScreenType from '../../hooks/useScreenType';
 import BurgerButton from '../BurgerButton/BurgerButton';
 import styles from './NavBar.module.css';
-import { ScreenType } from '../../interfaces';
+
+interface Props {
+  dontStick: boolean;
+};
 
 interface Path {
   display: string;
@@ -38,10 +43,16 @@ const c_comparePath = (currUrl: string, pathname: string) : boolean => (
 
 const c_scrollAnimRange: number[] = [0, 200];
 
-const NavBar: FC = () => {
-  const [navOpen, setNavOpen] = useState<boolean>(false);
+const NavBar: FC<Props> = ({dontStick}) => {
   const screenType = useScreenType();
   const router = useRouter();
+  const dontAnimate = (
+    screenType !== ScreenType.mobile &&
+    dontStick
+  );
+  const [navOpen, setNavOpen] = useState<boolean>(false);
+
+  const { pageProgress: lastCommissionPath } = useCommissionContext();
 
   // Scroll animation values
   const { scrollY } = useViewportScroll();
@@ -61,7 +72,7 @@ const NavBar: FC = () => {
       const percentCompletion = Math.min(
         yPos / c_scrollAnimRange[1],
         1
-      );
+      )
 
       const vwWidthToShrink = 50;
       const currShrinkAmount = vwWidthToShrink * percentCompletion;
@@ -104,9 +115,9 @@ const NavBar: FC = () => {
 
   return (
     <motion.nav
-      className={styles.nav}
+      className={`${styles.nav} ${dontAnimate ? styles.dontStick : ''}`}
       style={
-        screenType !== ScreenType.desktop
+        !dontAnimate && screenType !== ScreenType.desktop
           ? {'--header-height': navHeight}
           : {}
       }
@@ -116,16 +127,19 @@ const NavBar: FC = () => {
           <motion.div
             className={styles.logoWrapper}
             style={
-              screenType === ScreenType.desktop
-                ? {
-                    minWidth: logoMaxWidth,
-                    minHeight: logoMaxWidth,
-                    x: logoTransRight,
-                    y: logoTransUp,
-                  }
-                : screenType === ScreenType.tablet
-                  ? {opacity: titleOpacity}
-                  : {minWidth: logoMaxWidthMob, minHeight: logoMaxWidthMob}
+              dontAnimate
+                ? {}
+                : screenType === ScreenType.desktop
+                    ? {
+                        minWidth: logoMaxWidth,
+                        minHeight: logoMaxWidth,
+                        x: logoTransRight,
+                        y: logoTransUp,
+                      }
+                    : screenType === ScreenType.tablet
+                      ? {opacity: titleOpacity}
+                      : {minWidth: logoMaxWidthMob, minHeight: logoMaxWidthMob}
+
             }
           >
             <Image
@@ -137,7 +151,7 @@ const NavBar: FC = () => {
           <div className={styles.containerTitleAndSocials}>
             <motion.h1
               style={
-                screenType === ScreenType.desktop
+                !dontAnimate && screenType === ScreenType.desktop
                   ? {opacity: titleOpacity}
                   : {}
               }
@@ -171,7 +185,7 @@ const NavBar: FC = () => {
       <motion.ul
         className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}
         style={
-          screenType === ScreenType.desktop
+          !dontAnimate && screenType === ScreenType.desktop
             ? {
                 y: navTransBottom,
                 width: navWidth,
@@ -184,18 +198,27 @@ const NavBar: FC = () => {
             <div
               className={styles.linkItem}
               onClick={() => {
-                console.log('clicked', path);
                 if (path.external) {
                   window.open(path.pathname, '_blank')?.focus();
                   return;
                 }
+
+                if (path.pathname === '/commission') {
+                  if (!lastCommissionPath) {
+                    scrollToTop().then(() => router.push(path.pathname));
+                    return;
+                  }
+                  scrollToTop().then(() => router.push(lastCommissionPath));
+                  return;
+                }
+
                 scrollToTop().then(() => router.push(path.pathname));
               }}
             >
               <motion.p
                 className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
-                  screenType === ScreenType.desktop
+                  !dontAnimate && screenType === ScreenType.desktop
                     ? {'--link-opacity': textShadowOpacity}
                     : {}
                 }

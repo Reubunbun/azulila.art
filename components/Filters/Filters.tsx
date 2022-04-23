@@ -9,7 +9,7 @@ export interface FilterOption {
 };
 interface Props {
   filters: string[];
-  changeSelected: (filters: FilterOption[]) => void;
+  changeSelected: (filters: string | null) => void;
 };
 
 const Filters: FC<Props> = ({filters, changeSelected}) => {
@@ -44,8 +44,13 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
                 return;
               }
 
+              let newFilter: string | null = null;
               const newSelected = selected.map(({name, selected}): FilterOption => {
                 if (currName === name) {
+                  if (!selected) {
+                    newFilter = name;
+                  }
+
                   disabledBtns.current[currName] = true;
                   setTimeout(
                     () => disabledBtns.current[currName] = false,
@@ -61,7 +66,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
                 return {name, selected: false};
               });
 
-              changeSelected(newSelected);
+              changeSelected(newFilter);
               setSelected(newSelected);
             }}
           >

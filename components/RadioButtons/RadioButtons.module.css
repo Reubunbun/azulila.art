@@ -1,0 +1,75 @@
+.containerRadioButton {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+    margin-bottom: .7rem;
+}
+
+.containerRadioButton .radioText {
+    font-size: clamp(1.2rem, 0.2250rem + 4.3333vw, 2.5rem);
+    line-height: clamp(1.2rem, 0.2250rem + 4.3333vw, 2.5rem);
+    width: 80%;
+    transform: translateY(-.25rem);
+}
+
+.containerRadioButton .radioText.small {
+    font-size: clamp(1.2rem, 0.9388rem + 1.3061vw, 2rem);
+}
+
+.containerRadioButton .radioButton {
+    cursor: pointer;
+    min-width: 30px;
+    min-height: 30px;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--font-base);
+    border-radius: 50%;
+    background-color: var(--bg-transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerRadioButton .radioButton input {
+    display: none;
+}
+
+.containerRadioButton .radioButton .radioDot {
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    background-color: var(--font-base);
+    border-radius: 50%;
+    display: inline-block;
+    transform: scale(0);
+    opacity: 0;
+    transition: all .2s ease-out;
+}
+
+.containerRadioButton .radioButton input:checked + .radioDot {
+    transform: scale(1);
+    opacity: 1;
+}
+
+@media only screen and (min-width: 1024px) {
+    .containerRadioButton {
+        margin-bottom: 2.25rem;
+    }
+
+    .containerRadioButton .radioText {
+        transform: translateY(-.6rem);
+        width: unset;
+    }
+
+    .containerRadioButton .radioButton {
+        min-width: 45px;
+        min-height: 45px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .containerRadioButton .radioButton .radioDot {
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+    }
+
+}

@@ -4,19 +4,18 @@ import dynamic from 'next/dynamic';
 import axios from 'axios';
 import type { Page, Image, ImagesData } from '../../interfaces/index';
 import { Direction, ScreenType } from '../../interfaces/index';
-import { useAppContext } from '../../context/AppContext';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import useGetScreenType from '../../hooks/useScreenType';
 import BurgerButton from '../../components/BurgerButton/BurgerButton';
 import ImageItem from '../../components/ImageItem/ImageItem';
 import ImageModal from '../../components/ImageModal/ImageModal';
-import Filters, { FilterOption } from '../../components/Filters/Filters';
+import Filters from '../../components/Filters/Filters';
 import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import styles from './gallery.module.css';
 
 interface QueryParams {
   page: number;
-  filter: string[];
+  filter: string | null;
 };
 interface Column {
   items: DisplayImage[];
@@ -52,7 +51,7 @@ const Gallery: Page = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [{page, filter}, setQueryParams] = useState<QueryParams>({
     page: 0,
-    filter: [],
+    filter: null,
   });
 
   const totalCountRef = useRef<number | null>(null);
@@ -79,7 +78,7 @@ const Gallery: Page = () => {
     }
   };
 
-  const callbackChangeFilters = useCallback((selected: FilterOption[]) => {
+  const callbackChangeFilters = useCallback((selected: string | null) => {
     if (isLoadingRef.current) {
       return;
     }
@@ -89,7 +88,7 @@ const Gallery: Page = () => {
     setImageColumns(c_genNewColumns(screenType));
     setQueryParams({
       page: 0,
-      filter: selected.filter(({selected}) => selected).map(({name}) => name),
+      filter: selected,
     })
   }, []);
 
@@ -100,8 +99,14 @@ const Gallery: Page = () => {
 
   useEffect(() => {
     const shouldUpdateSelected: boolean = selectedImage === false;
+    console.log('starting req', window.navigatingTo);
+    if (window.navigatingTo !== Gallery.title) {
+      console.log('not making req!');
+    } else {
+      console.log('will make req!');
+    }
     axios({
-      url: `/api/images?page=${page}&limit=${c_intLimit}&filter=${filter.join(',')}`,
+      url: `/api/images?page=${page}&limit=${c_intLimit}&filter=${filter || ''}`,
       method: 'GET',
     })
       .then(({data}: {data: ImagesData}) => {
@@ -138,7 +143,9 @@ const Gallery: Page = () => {
         }
       })
       .catch(console.dir)
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [page, filter]);
 
   useEffect(() => {
@@ -201,6 +208,12 @@ const Gallery: Page = () => {
 
     setImageColumns(newColumns);
   }, [screenType]);
+
+  if (typeof window !== 'undefined') {
+    if (window.navigatingTo !== Gallery.title) {
+      return <></>;
+    }
+  }
 
   return (
     <>
@@ -328,9 +341,4 @@ const Gallery: Page = () => {
 };
 Gallery.title = 'Gallery';
 
-export default dynamic(
-  () => Promise.resolve(Gallery),
-  {
-    ssr: false,
-  },
-);
+export default Gallery;

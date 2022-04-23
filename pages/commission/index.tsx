@@ -2,7 +2,7 @@ import type { Page } from '../../interfaces/index';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { useAppContext } from '../../context/AppContext';
+import { useCommissionContext } from '../../context/CommissionContext';
 import scrollToTop from '../../helpers/smoothScroll';
 import styles from './Commission.module.css';
 
@@ -21,11 +21,16 @@ const c_ToSList: string[] = [
 
 const Commission: Page = () => {
   const router = useRouter();
-  const { fetchCommissionData } = useAppContext('commissionData');
+  const {
+    fetchCommissionData,
+    dispatchUserState,
+  } = useCommissionContext();
 
   useEffect(() => {
     fetchCommissionData();
+    dispatchUserState({type: 'PAGE', payload: router.pathname});
   }, []);
+
 
   return (
     <>
@@ -43,7 +48,7 @@ const Commission: Page = () => {
         </div>
         <p>If you have further questions, feel free to <Link href='/contact'><a className='highlight-text'>send me an e-mail</a></Link> and I will respond as soon as I&apos;m available.</p>
         <p>Once form is sent, I will contact you personally to ask for details and send you an invoice via Paypal <small>(@taniareyesramirez@gmail.com)</small>.</p>
-        <div className={styles.containerButton}>
+        <div className='commissionsContainerButton'>
           <button
             onClick={() => {
               scrollToTop().then(() => router.push('/commission/selectType'));

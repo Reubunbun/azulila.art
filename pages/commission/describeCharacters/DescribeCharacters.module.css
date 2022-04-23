@@ -1,0 +1,177 @@
+.containerDescribeCharacters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerCharacterList {
+    width: 98%;
+}
+
+.containerCharacterInfo {
+    border: 2px solid var(--font-highlight);
+    border-radius: .3rem;
+    padding: .3rem;
+    margin-bottom: 1.5rem;
+}
+.containerCharacterInfo:last-child {
+    margin-bottom: 0;
+}
+
+.containerCharacterHeader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: .5rem;
+    margin-bottom: .4rem;
+}
+
+.containerCharacterHeader b {
+    font-size: clamp(1.2rem, 1.0041rem + 0.9796vw, 1.8rem);
+    margin-bottom: .3rem;
+}
+
+.containerCharacterHeader button {
+    padding: 0;
+    padding-bottom: .3rem;
+    padding-left: .2rem;
+    padding-right: .2rem;
+    font-size: clamp(0.95rem, 0.8357rem + 0.5714vw, 1.3rem);
+    color: var(--font-warning);
+    border: 1px solid vaR(--font-warning);
+    border-radius: .2rem;
+    background: var(--bg-transparent);
+    transition: all .3s ease-out;
+}
+.containerCharacterHeader button:hover {
+    background: var(--font-warning);
+    color: var(--font-highlight);
+}
+
+.containerCharacterInput {
+    margin-bottom: 1rem;
+}
+
+.containerCharacterInput label {
+    font-size: clamp(1.1rem, 0.9694rem + 0.6531vw, 1.5rem);
+}
+
+.containerFileUpload {
+    background-color: var(--bg-transparent);
+    border: 2px solid var(--font-base);
+    border-radius: .3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: .6rem;
+    padding-bottom: .3rem;
+    gap: .3rem;
+}
+
+.containerFileUpload button {
+    font-size: clamp(1.1rem, 1.0020rem + 0.4898vw, 1.4rem);
+    margin: 0;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    transition: all .3s ease-out;
+}
+
+.containerAllFiles {
+    width: 90%;
+}
+
+.containerFile {
+    border: 1px solid var(--font-highlight);
+    border-radius: .2rem;
+    margin-bottom: .3rem;
+    background-color: var(--bg-transparent);
+    padding-left: .5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.containerFile b {
+    margin-bottom: .3rem;
+    max-width: 85%;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.containerFile span {
+    width: 15%;
+    text-align: center;
+    font-size: clamp(1.3rem, 1.2020rem + 0.4898vw, 1.6rem);
+    color: var(--font-warning);
+    font-weight: 800;
+    cursor: pointer;
+    transition: color .3s ease-out;
+}
+.containerFile span:hover {
+    color: var(--font-highlight);
+}
+
+.containerAddMore {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.containerAddMore button {
+    font-size: clamp(1.1rem, 1.0020rem + 0.4898vw, 1.4rem);
+    width: 50%;
+}
+
+@media only screen and (min-width: 1024px) {
+    .containerCharacterList {
+        width: 75%;
+    }
+
+    .containerCharacterHeader {
+        gap: .8rem;
+    }
+    .containerCharacterHeader button {
+        padding-bottom: .4rem;
+        padding-left: .4rem;
+        padding-right: .4rem;
+    }
+
+    .containerAllInputs {
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+    .containerCharacterInput textarea {
+        margin-top: .5rem;
+    }
+
+    .containerCharacterInfo {
+        border-radius: .8rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .containerFileUpload {
+        width: 32.5%;
+        justify-content: center;
+    }
+    .containerFileUpload button {
+        padding-bottom: .5rem;
+        margin-top: 0;
+        margin-bottom: auto;
+    }
+    .containerAllFiles {
+        width: 80%;
+        margin-bottom: auto;
+    }
+
+    .containerAddMore {
+        margin-bottom: 1.5rem;
+    }
+    .containerAddMore button {
+        padding-bottom: .75rem;
+        width: 15%;
+    }
+}
