@@ -39,7 +39,12 @@ const CommissionSelectType: Page = () => {
               groupName='baseTypes'
               options={
                 baseTypes.map(commType => ({
-                  display: `${commType.display} ($${commType.price})`,
+                  display: commType.display,
+                  price: commType.price,
+                  offer: commType.offer,
+                  newPrice: commType.price !== commType.actualPrice
+                    ? commType.actualPrice
+                    : undefined,
                   value: commType.id,
                 }))
               }

@@ -14,11 +14,15 @@ interface Character {
   fileMap: {[name: string]: File};
 };
 
+interface CommissionOption extends CommissionType {
+  actualPrice: number;
+};
+
 interface CommissionState {
   pageProgress: string;
   totalPrice: number;
-  baseType?: CommissionType;
-  backgroundType?: CommissionType;
+  baseType?: CommissionOption;
+  backgroundType?: CommissionOption;
   backgroundDescription: string;
   characters: Character[];
   userName: string;
@@ -28,8 +32,8 @@ interface CommissionState {
 
 type CommissionAction =
   | { type: 'PAGE', payload: string }
-  | { type: 'BASE', payload: CommissionType }
-  | { type: 'BACKGROUND-TYPE', payload: CommissionType }
+  | { type: 'BASE', payload: CommissionOption }
+  | { type: 'BACKGROUND-TYPE', payload: CommissionOption }
   | { type: 'BACKGROUND-DESC', payload: string }
   | { type: 'CHARACTER-ADD' }
   | { type: 'CHARACTER-UPDATE-VIS', payload: { id: number, newValue: string } }
@@ -50,12 +54,18 @@ const createNewCharacter = (): Character => ({
 
 const calcTotalPrice = (state: CommissionState): number => {
   return (
-    (state.baseType?.price || 0) +
-    (state.backgroundType?.price || 0) +
+    (state.baseType?.actualPrice || 0) +
+    (state.backgroundType?.actualPrice || 0) +
     (
-      (state.characters.length - 1) * (state.baseType?.price || 0)
+      (state.characters.length - 1) * (state.baseType?.actualPrice || 0)
     )
   );
+};
+
+const calcActualPrice = (basePrice: number, offer: number | null): number => {
+  if (offer === null) return basePrice;
+
+  return basePrice * ((100 - offer) / 100)
 };
 
 const reducer = (state: CommissionState, action: CommissionAction) : CommissionState => {
@@ -227,17 +237,18 @@ const reducer = (state: CommissionState, action: CommissionAction) : CommissionS
 
 interface CommissionContextType extends CommissionState {
   spacesOpen: number | null;
-  baseTypes: CommissionType[];
-  backgroundTypes: CommissionType[];
+  baseTypes: CommissionOption[];
+  backgroundTypes: CommissionOption[];
   fetchCommissionData: () => Promise<void>;
   dispatchUserState: Dispatch<CommissionAction>;
 };
 
-const c_bgTypeFlatColour: CommissionType = {
+const c_bgTypeFlatColour: CommissionOption = {
   price: 0,
   display: 'Flat Color or Transparent',
   id: -1,
   offer: null,
+  actualPrice: 0,
   exampleImage: 'https://tania-portfolio.s3.eu-west-1.amazonaws.com/transparent-ex.png',
 };
 
@@ -293,7 +304,12 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
       backgroundTypes,
     },
     setCommissionServerData
-  ] = useState<CommissionResponseData>({spaces: null, baseTypes: [], backgroundTypes: [c_bgTypeFlatColour]})
+  ] = useState<{
+    spaces: number | null,
+    baseTypes: CommissionOption[],
+    backgroundTypes: CommissionOption[],
+  }>
+  ({spaces: null, baseTypes: [], backgroundTypes: [c_bgTypeFlatColour]})
 
   const fetchCommissionData = async () => {
     if (madeCommissionRequest) return;
@@ -306,10 +322,27 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
         setMadeCommissionRequest(true);
         setCommissionServerData(prev => ({
           spaces: data.spaces,
-          baseTypes: data.baseTypes,
-          backgroundTypes: [...prev.backgroundTypes, ...data.backgroundTypes],
+          baseTypes: data.baseTypes.map(baseType => ({
+            ...baseType,
+            actualPrice: calcActualPrice(baseType.price, baseType.offer),
+          })),
+          backgroundTypes: [
+            ...prev.backgroundTypes,
+            ...data.backgroundTypes.map(backgroundType => ({
+              ...backgroundType,
+              actualPrice: calcActualPrice(backgroundType.price, backgroundType.offer),
+            })),
+          ],
         }));
-        dispatch({type: 'BASE', payload: data.baseTypes[0]});
+
+        const defaultSelectedBase = data.baseTypes[0];
+        dispatch({
+          type: 'BASE',
+          payload: {
+            ...defaultSelectedBase,
+            actualPrice: calcActualPrice(defaultSelectedBase.price, defaultSelectedBase.offer),
+          },
+        });
       })
       .catch(console.dir);
   };

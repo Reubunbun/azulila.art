@@ -1,3 +1,7 @@
+.containerRadioButtonsGroup {
+    width: 100%;
+}
+
 .containerRadioButton {
     display: flex;
     align-items: center;

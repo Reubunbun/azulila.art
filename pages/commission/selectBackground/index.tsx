@@ -42,7 +42,12 @@ const CommissionSelectBackgound: Page = () => {
               groupName='backgroundTypes'
               options={
                 backgroundTypes.map(backgroundType => ({
-                  display: `${backgroundType.display} ($${backgroundType.price})`,
+                  display: backgroundType.display,
+                  price: backgroundType.price,
+                  offer: backgroundType.offer,
+                  newPrice: backgroundType.price !== backgroundType.actualPrice
+                  ? backgroundType.actualPrice
+                  : undefined,
                   value: backgroundType.id,
                 }))
               }

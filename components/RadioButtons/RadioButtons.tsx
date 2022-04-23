@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
-import { useState } from 'react';
 import styles from './RadioButtons.module.css';
 
 type OptionValue = number | string;
 
 interface Option<T extends OptionValue> {
   display: string;
+  price?: number;
+  newPrice?: number;
+  offer?: number | null;
   value: T;
 };
 
@@ -15,6 +17,13 @@ interface Props<T extends OptionValue> {
   options: Option<T>[];
   onValueSelected: (optionSelected: T) => void;
   selected?: T;
+};
+
+const formatPrice = (price: number): string => {
+  if (price % 1 === 0) {
+    return String(price);
+  }
+  return price.toFixed(2);
 };
 
 const RadioButtons = <T extends OptionValue>(
@@ -41,6 +50,15 @@ const RadioButtons = <T extends OptionValue>(
             htmlFor={option.value as string}
           >
             {option.display}
+            {option.price ?
+              option.newPrice
+                ? <>
+                    <s>(${option.price})</s> <br />
+                    <span className='highlight-text'>(${formatPrice(option.newPrice)} - {option.offer}% Off!)</span>
+                  </>
+                : `($${option.price})`
+              : ''
+            }
           </label>
         </div>
       ))}

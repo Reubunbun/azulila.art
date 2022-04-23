@@ -191,7 +191,7 @@ const CommissionDescribeCharacters: Page = () => {
                 className='commission-btn'
                 onClick={() => dispatchUserState({ type: 'CHARACTER-ADD' })}
               >
-                Add Another Character (+${selectedBaseType?.price})
+                Add Another Character (+${selectedBaseType?.actualPrice})
               </button>
             </div>
           : <></>
