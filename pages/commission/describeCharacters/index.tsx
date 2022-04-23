@@ -9,9 +9,9 @@ import styles from './DescribeCharacters.module.css';
 
 const c_maxFilesPerCharacter = 6;
 const c_NumberToStringMap: {[key: number]: string} = {
-  1: 'One',
-  2: 'Two',
-  3: 'Three',
+  1: 'First',
+  2: 'Second',
+  3: 'Third',
 };
 
 const CommissionDescribeCharacters: Page = () => {
@@ -64,7 +64,7 @@ const CommissionDescribeCharacters: Page = () => {
               key={character.id}
             >
               <div className={styles.containerCharacterHeader}>
-                <b>Character {c_NumberToStringMap[i + 1]}</b>
+                <b>{c_NumberToStringMap[i + 1]} Character</b>
                 {characters.length > 1
                   ? <button onClick={() => dispatchUserState({
                       type: 'CHARACTER-REMOVE',
@@ -79,7 +79,7 @@ const CommissionDescribeCharacters: Page = () => {
                 <div className={styles.containerDescriptionInputs}>
                   <div className={styles.containerCharacterInput}>
                     <label htmlFor={`${character.id}-vis-desc`}>
-                      Describe Character {c_NumberToStringMap[i + 1]}&apos;s Visual Appearance:
+                      Describe {c_NumberToStringMap[i + 1]} Character&apos;s Visual Appearance:
                     </label>
                     <textarea
                       ref={refs[i].visInput}
@@ -94,7 +94,7 @@ const CommissionDescribeCharacters: Page = () => {
                   </div>
                   <div className={styles.containerCharacterInput}>
                     <label htmlFor={`${character.id}-pers-desc`}>
-                      (Optional) Describe Character {c_NumberToStringMap[i + 1]}&apos;s Personality:
+                      (Optional) Describe {c_NumberToStringMap[i + 1]} Character&apos;s Personality:
                     </label>
                     <textarea
                       ref={refs[i].persInput}
@@ -164,7 +164,7 @@ const CommissionDescribeCharacters: Page = () => {
                   >
                     {Object.keys(character.fileMap).length === c_maxFilesPerCharacter
                       ? 'Upload Limit Reached'
-                      : `Add Images For Character ${c_NumberToStringMap[i + 1]}`
+                      : `Add Images For ${c_NumberToStringMap[i + 1]} Character`
                     }
                   </button>
                   <div className={styles.containerAllFiles}>
