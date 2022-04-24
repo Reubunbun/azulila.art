@@ -25,7 +25,7 @@ export interface CommissionType {
 };
 
 /**
- * API RESPONSES
+ * APIS
  */
 export type GenericError = {
     message: string;
@@ -41,6 +41,34 @@ export type CommissionData = {
     spaces: number | null;
     baseTypes: CommissionType[];
     backgroundTypes: CommissionType[];
+};
+
+export type CommissionPost = {
+    totalPrice: number;
+    baseType: {
+        display: string;
+        price: number;
+        offer: number | null;
+        actualPrice: number;
+    };
+    backgroundType: {
+        display: string;
+        price: number;
+        offer: number | null;
+        actualPrice: number;
+    };
+    backgroundDescription: string;
+    userName: string;
+    userContactEmail: string;
+    userPaypalEmail: string;
+    postPermissionGiven: boolean;
+    userSocials: string[];
+    characters: {
+        visualDescription: string;
+        personalityDescription: string;
+        imageURLs: string[];
+    }[];
+    failedImages: boolean;
 };
 
 /**

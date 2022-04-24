@@ -1,7 +1,16 @@
+.spacesText {
+    width: 100%;
+    margin-top: 0;
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(1.4rem, 1.2041rem + 0.9796vw, 2rem);
+}
+
 .containerTerms {
     padding-left: .6rem;
     padding-right: .6rem;
     margin-top: .8rem;
+    min-height: 90vh;
 }
 
 .containerTerms > p {

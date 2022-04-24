@@ -1,0 +1,129 @@
+<head>
+    <style>
+        table {
+            background-image: url('https://assets.bigcartel.com/theme_images/48216620/BIG.png?auto=format&fit=max&h=200&w=200');
+            background-repeat: repeat;
+            background-size: 220px 220px;
+            width: 100%;
+            border-radius: .75rem;
+        }
+
+        h1, h2, h3, p, b, a, a:link, a:visited, a:hover, a:active {
+            color: #783c55;
+        }
+
+        h2 {
+            margin-bottom: 0;
+        }
+
+        p, b, a, blockquote {
+            font-size: 1.2rem;
+        }
+
+        p {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        blockquote {
+            color: #bb3f73;
+            background-color: #fca7bc50;;
+            padding: .8rem;
+            border-radius: .4rem;
+            font-weight: 600;
+            margin-left: 20px;
+        }
+
+        .highlight {
+            color: red;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="20"><tr><td>
+        <h1>New Commission Request From {{UserName}} via azulilah wesbite!</h1>
+        <a href="mailto:{{UserEmail}}">Click Me To Repond</a>
+        <h2>Summary and Costs:</h2>
+        <p>
+            <b>Base Type:</b> {{BaseTypeName}} - ${{BaseTypeInitCost}}
+            {{#if BaseTypeOffer}}
+                <br/>
+                offer of {{BaseTypeOffer}}% off - price reduced to ${{BaseTypeActualCost}}
+            {{/if}}
+            <br/>
+            <b>Background Type:</b> {{BackgroundTypeName}} - ${{BackgroundTypeInitCost}}
+            {{#if BackgroundTypeOffer}}
+                <br/>
+                offer of {{BackgroundTypeOffer}}% off - price reduced to ${{BackgroundTypeActualCost}}
+            {{/if}}
+            <br />
+            {{#if ExtraCharacters}}
+                <b>{{ExtraCharacters}} extra characters added</b> - ${{ExtraCharactersCost}} added to total
+            {{else}}
+                <b>No extra characters added</b>
+            {{/if}}
+            <br/>
+            <b>Commission totals to ${{CommissionTotalCost}}</b>
+        </p>
+
+        <h2>User Details:</h2>
+        <p>
+            <b>Name:</b> {{UserName}} <br/>
+            <b>Contact Email:</b> {{UserEmail}} <br/>
+            <b>Paypal Email:</b> {{PaypalEmail}} <br/>
+            {{#if PermissionGiven}}
+                They have given you permission to post the finished work on your social media
+                {{#if UserSocials}}
+                    but they would like you to link their following social media accounts: <br />
+                    {{#each UserSocials}}
+                        <b>{{this}}</b> <br/>
+                    {{/each}}
+                {{/if}}
+            {{else}}
+                They have <b>not</b> given you permission to post the finished work on your social media.
+            {{/if}}
+        </p>
+
+        <h2>Background Details:</h2>
+        <p>
+            <b>Type:</b> {{BackgroundTypeName}} <br/>
+            <b>Description Provided:</b> <br/>
+            <blockquote>
+                <pre>{{BackgroundDescription}}</pre>
+            </blockquote>
+        </p>
+
+        <h2>Character Details:</h2>
+        {{#if ImagesFailed}}
+            <b class="highlight">Some of the character images failed to upload! You should ask them to send them again via email.</b>
+            <br/>
+        {{/if}}
+        {{#each Characters}}
+            <b>{{CharacterName}}:</b> <br/><br/>
+            <p>
+                <b>Visual Description Provided:</b><br/>
+                <blockquote>
+                    <pre>{{VisualDescription}}</pre>
+                </blockquote>
+                {{#if PersonalityDescription}}
+                    <b>Personality Description Provided:</b><br/>
+                    <blockquote>
+                        <pre>{{PersonalityDescription}}</pre>
+                    </blockquote>
+                {{/if}}
+                {{#if Images}}
+                    {{#each Images}}
+                        <img src="{{this}}" />
+                    {{/each}}
+                {{/if}}
+            </p>
+        {{/each}}
+    </td></tr></table>
+</body>

@@ -43,7 +43,8 @@ type CommissionAction =
   | { type: 'CHARACTER-REMOVE', payload: number }
   | { type: 'USER-NAME', payload: string }
   | { type: 'USER-CONTACT-EMAIL', payload: string }
-  | { type: 'USER-PAYPAL-EMAIL', payload: string };
+  | { type: 'USER-PAYPAL-EMAIL', payload: string }
+  | { type: 'RESET' };
 
 const createNewCharacter = (): Character => ({
   id: Date.now(),
@@ -51,6 +52,17 @@ const createNewCharacter = (): Character => ({
   personalityDescription: '',
   fileMap: {},
 });
+
+const createNewUserState = (): CommissionState => ({
+  pageProgress: '',
+  totalPrice: 0,
+  characters: [createNewCharacter()],
+  backgroundType: c_bgTypeFlatColour,
+  backgroundDescription: '',
+  userName: '',
+  userContactEmail: '',
+  userPaypalEmail: '',
+})
 
 const calcTotalPrice = (state: CommissionState): number => {
   return (
@@ -225,6 +237,9 @@ const reducer = (state: CommissionState, action: CommissionAction) : CommissionS
         userPaypalEmail: action.payload,
       };
     }
+    case 'RESET': {
+      return createNewUserState();
+    }
     default:
       return state;
   }
@@ -252,16 +267,7 @@ const c_bgTypeFlatColour: CommissionOption = {
   exampleImage: 'https://tania-portfolio.s3.eu-west-1.amazonaws.com/transparent-ex.png',
 };
 
-const defaultUserState: CommissionState = {
-  pageProgress: '',
-  totalPrice: 0,
-  characters: [createNewCharacter()],
-  backgroundType: c_bgTypeFlatColour,
-  backgroundDescription: '',
-  userName: '',
-  userContactEmail: '',
-  userPaypalEmail: '',
-};
+const defaultUserState = createNewUserState();
 
 const CommissionContext = createContext<CommissionContextType>({
   spacesOpen: null,

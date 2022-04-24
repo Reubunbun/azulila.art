@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { useCommissionContext } from '../../context/CommissionContext';
+import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
 import scrollToTop from '../../helpers/smoothScroll';
 import styles from './Commission.module.css';
 
@@ -22,6 +23,7 @@ const c_ToSList: string[] = [
 const Commission: Page = () => {
   const router = useRouter();
   const {
+    spacesOpen,
     fetchCommissionData,
     dispatchUserState,
   } = useCommissionContext();
@@ -35,29 +37,60 @@ const Commission: Page = () => {
   return (
     <>
       <h2>Commission Me</h2>
-      <div className={styles.containerTerms}>
-        <p>Thank you for your interest in commissioning me! Before continuing, please read my terms and conditions:</p>
-        <div className={styles.containerList}>
-          <ul>
-            {c_ToSList.map(item =>
-              <li key={item} className={styles.listItem}>
-                <embed src='/list-icon.svg' /> <p>{item}</p>
-              </li>
-            )}
-          </ul>
-        </div>
-        <p>If you have further questions, feel free to <Link href='/contact'><a className='highlight-text'>send me an e-mail</a></Link> and I will respond as soon as I&apos;m available.</p>
-        <p>Once form is sent, I will contact you personally to ask for details and send you an invoice via Paypal <small>(@taniareyesramirez@gmail.com)</small>.</p>
-        <div className='commissionsContainerButton'>
-          <button
-            onClick={() => {
-              scrollToTop().then(() => router.push('/commission/selectType'));
-            }}
-            className='commission-btn'
-          >
-            Next
-          </button>
-        </div>
+      {(spacesOpen || 0) > 0 &&
+        <p className={`highlight-text ${styles.spacesText}`}>
+          {spacesOpen} Spaces Open!
+        </p>
+      }
+      <div
+        style={{
+          minHeight: (spacesOpen || 0) === 0
+            ? 'unset'
+            : undefined,
+        }}
+        className={styles.containerTerms}
+      >
+        {spacesOpen === null &&
+          <LoadingSpinner
+            loadingText='Checking Availability...'
+            width='9rem'
+          />
+        }
+        {spacesOpen === 0 &&
+          <p style={{
+            width: '100%',
+            marginTop: 0,
+            textAlign: 'center'
+          }}>
+            So sorry, but my commission requests are full right now. Please check back again soon!
+          </p>
+        }
+        {(spacesOpen || 0) > 0 &&
+          <>
+            <p>Thank you for your interest in commissioning me! Before continuing, please read my terms and conditions:</p>
+            <div className={styles.containerList}>
+              <ul>
+                {c_ToSList.map(item =>
+                  <li key={item} className={styles.listItem}>
+                    <embed src='/list-icon.svg' /> <p>{item}</p>
+                  </li>
+                )}
+              </ul>
+            </div>
+            <p>If you have further questions, feel free to <Link href='/contact'><a className='highlight-text'>send me an e-mail</a></Link> and I will respond as soon as I&apos;m available.</p>
+            <p>Once form is sent, I will contact you personally to ask for details and send you an invoice via Paypal <small>(@taniareyesramirez@gmail.com)</small>.</p>
+            <div className='commissionsContainerButton'>
+              <button
+                onClick={() => {
+                  scrollToTop().then(() => router.push('/commission/selectType'));
+                }}
+                className='commission-btn'
+              >
+                Next
+              </button>
+            </div>
+          </>
+        }
       </div>
     </>
   );

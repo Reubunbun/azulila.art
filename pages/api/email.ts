@@ -71,7 +71,7 @@ export default async function handler(
             Data: `Message From ${FromName} via Azulilah Website!`
           },
         },
-        Source: 'reuben.luke.p@gmail.com',
+        Source: 'azulilah.art@gmail.com',
       }).promise();
     } catch (err) {
       console.log('SES error', err);
