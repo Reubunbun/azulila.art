@@ -10,13 +10,20 @@ interface Props {
   title: string;
   transitionTime: number;
   dontStickHeader: boolean;
+  removeMainPadding: boolean;
 };
 
 const c_twitterLink: string = 'https://twitter.com/azulilah';
 const c_instaLink: string = 'https://www.instagram.com/azulilah';
 const c_tumblrLink: string = 'https://azulila.tumblr.com';
 
-const DefaultLayout: FC<Props> = ({children, title, transitionTime, dontStickHeader}) => {
+const DefaultLayout: FC<Props> = ({
+  children,
+  title,
+  transitionTime,
+  dontStickHeader,
+  removeMainPadding,
+}) => {
 
   return (
     <>
@@ -25,7 +32,9 @@ const DefaultLayout: FC<Props> = ({children, title, transitionTime, dontStickHea
       </Head>
       <div className={styles.pageContent}>
         <NavBar dontStick={dontStickHeader} />
-        <main className={`${styles.main} ${dontStickHeader ? styles.dontStick : ''}`}>
+        <main
+          className={`${styles.main} ${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''}`}
+        >
           <CustomAnimatePresence exitBeforeEnter>
             <motion.div
               className='page-content'

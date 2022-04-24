@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 export type Page = NextPage & {
     title: string;
     dontStick?: boolean;
+    removePadding?: boolean;
 };
 
 export type Image = {

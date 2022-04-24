@@ -50,7 +50,7 @@ embed {
   pointer-events: none;
 }
 
-h1, h2, h3, p, b, a, label, button {
+h1, h2, h3, p, b, a, label, button, span {
   font-family: 'Concert One', cursive;
   color: var(--font-base);
 }

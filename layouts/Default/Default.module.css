@@ -36,6 +36,10 @@
         padding: 1rem;
     }
 
+    .pageContent main.removePadding {
+        padding: 0;
+    }
+
     .pageContent main.dontStick {
         margin-top: unset;
     }

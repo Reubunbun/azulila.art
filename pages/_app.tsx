@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
         <DefaultLayout
           title={Component.title}
           dontStickHeader={!!Component.dontStick}
+          removeMainPadding={!!Component.removePadding}
           transitionTime={c_pageTransitionTime}
         >
           <Component {...pageProps}/>
