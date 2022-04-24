@@ -1,6 +1,8 @@
 import type { Page } from '../../interfaces/index';
+import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import scrollToTop from '../../helpers/smoothScroll';
+import WorkItem from '../../components/WorkItem/WorkItem';
 import styles from './Work.module.css';
 
 interface WorkItem {
@@ -38,29 +40,17 @@ const Work: Page = () => {
     <>
       <h2 className={styles.mainHeader}>My Work</h2>
       <div className={styles.containerAllWorkItems}>
-        {c_workItems.map(({title, image, linkPath, description}) => (
-          <div key={title} className={styles.containerWorkItem}>
-            <h3>{title}</h3>
-            <div className={styles.containerDescriptionAndImage}>
-              <div className={styles.containerDescription}>
-                <div>
-                  <p>{description}</p>
-                  <span
-                    onClick={() => scrollToTop().then(() => router.push(`/work/${linkPath}`))}
-                    className={styles.link}
-                  >
-                    Click here to see more!
-                  </span>
-                </div>
-              </div>
-              <div className={styles.containerImage}>
-                <img
-                  src={image}
-                  alt={`Image for ${title}`}
-                />
-              </div>
-            </div>
-          </div>
+        {c_workItems.map(({title, image, linkPath, description}, i) => (
+          <Fragment key={title}>
+             <WorkItem
+              title={title}
+              image={image}
+              linkPath={linkPath}
+              description={description}
+              isReversed={i % 2 === 0}
+              onLinkClicked={pathname => scrollToTop().then(() => router.push(pathname))}
+            />
+          </Fragment>
         ))}
       </div>
     </>
