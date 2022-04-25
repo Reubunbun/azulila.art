@@ -49,7 +49,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props,
-    revalidate: 10,
+    revalidate: 300,
   };
 };
 
@@ -330,6 +330,6 @@ const Gallery: Page<Props> = ({images, tags}) => {
   );
 };
 
-Gallery.title = 'Gallery Test';
+Gallery.title = 'Gallery';
 
 export default Gallery;

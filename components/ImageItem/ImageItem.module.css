@@ -13,8 +13,39 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    background: var(--bg-transparent);
+    background-color: rgba(243, 63, 135, 0.2);
     border-radius: var(--image-border-radius);
+    animation: breathing 2.5s ease-out infinite normal;
+    -webkit-animation: breathing 2.5s ease-out infinite normal;
+}
+
+@keyframes breathing {
+    0% {
+        background-color: rgba(243, 63, 135, 0.2);
+    }
+
+    50% {
+        background-color: rgba(252, 167, 188, 0.6);
+    }
+
+    100% {
+        background-color: rgba(243, 63, 135, 0.2);
+    }
+}
+
+@-webkit-keyframes breathing {
+    0% {
+        background-color: rgba(252, 167, 188, 0.2);
+    }
+
+    50% {
+        background-color: rgba(252, 167, 188, 0.6);
+    }
+
+
+    100% {
+        background-color: rgba(252, 167, 188, 0.2);
+    }
 }
 
 .imageItem {
