@@ -1,14 +1,22 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Page, ScreenType } from '../../../interfaces/index';
+import { useRef } from 'react';
+import { Page } from '../../../interfaces/index';
 import { useCommissionContext } from '../../../context/CommissionContext';
-import useScreenType from '../../../hooks/useScreenType';
 import scrollToTop from '../../../helpers/smoothScroll';
 import RadioButtons from '../../../components/RadioButtons/RadioButtons';
 import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
 import CommissionHeaderText from '../../../components/CommissionHeaderText/CommissionHeaderText';
 import styles from './SelectType.module.css';
 import { useEffect } from 'react';
+
+const c_exImageAnimationOptions = {
+  opacity: 1,
+  transition: {
+    duration: 0.8,
+    type: 'tween',
+  },
+};
 
 const CommissionSelectType: Page = () => {
   const {
@@ -19,7 +27,7 @@ const CommissionSelectType: Page = () => {
     dispatchUserState,
   } = useCommissionContext();
 
-  const screenType = useScreenType();
+  const loadedImages = useRef<{[bgURL: string]: boolean}>({});
   const exampleImgAnimation = useAnimation();
   const router = useRouter();
 
@@ -65,7 +73,14 @@ const CommissionSelectType: Page = () => {
             <motion.div
               key={selectedBaseType?.id}
               initial={{opacity: 0}}
-              animate={screenType === ScreenType.mobile ? {opacity: 1} : exampleImgAnimation}
+              animate={
+                (
+                  selectedBaseType?.exampleImage &&
+                  loadedImages.current[selectedBaseType?.exampleImage]
+                )
+                  ? c_exImageAnimationOptions
+                  : exampleImgAnimation
+              }
               exit={{opacity: 0}}
               className={styles.containerExample}
             >
@@ -74,13 +89,8 @@ const CommissionSelectType: Page = () => {
                   src={selectedBaseType.exampleImage}
                   alt={`Example image for ${selectedBaseType.display}`}
                   onLoad={() => {
-                    exampleImgAnimation.start({
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        type: 'tween',
-                      }
-                    });
+                    exampleImgAnimation.start(c_exImageAnimationOptions);
+                    loadedImages.current[selectedBaseType.exampleImage] = true;
                   }}
                 />
               }

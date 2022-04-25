@@ -1,15 +1,22 @@
-import { Page, ScreenType } from '../../../interfaces';
+import { Page } from '../../../interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useRef, useEffect } from 'react';
 import { useCommissionContext } from '../../../context/CommissionContext';
-import useScreenType from '../../../hooks/useScreenType';
 import CommissionHeaderText from '../../../components/CommissionHeaderText/CommissionHeaderText';
 import RadioButtons from '../../../components/RadioButtons/RadioButtons';
 import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
 import scrollToTop from '../../../helpers/smoothScroll';
 import selectStyles from '../selectType/SelectType.module.css';
 import styles from './SelectBackground.module.css';
+
+const c_exImageAnimationOptions = {
+  opacity: 1,
+  transition: {
+    duration: 0.8,
+    type: 'tween',
+  },
+};
 
 const CommissionSelectBackgound: Page = () => {
   const {
@@ -22,9 +29,9 @@ const CommissionSelectBackgound: Page = () => {
   } = useCommissionContext();
 
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
+  const loadedImages = useRef<{[bgURL: string]: boolean}>({});
   const exampleImgAnimation = useAnimation();
   const router = useRouter();
-  const screenType = useScreenType();
 
   useEffect(() => {
     if (spacesOpen === null) {
@@ -48,8 +55,8 @@ const CommissionSelectBackgound: Page = () => {
                   price: backgroundType.price,
                   offer: backgroundType.offer,
                   newPrice: backgroundType.price !== backgroundType.actualPrice
-                  ? backgroundType.actualPrice
-                  : undefined,
+                    ? backgroundType.actualPrice
+                    : undefined,
                   value: backgroundType.id,
                 }))
               }
@@ -69,7 +76,14 @@ const CommissionSelectBackgound: Page = () => {
               className={selectStyles.containerExample}
               key={selectedBackgroundType?.id}
               initial={{opacity: 0}}
-              animate={screenType === ScreenType.mobile ? {opacity: 1} : exampleImgAnimation}
+              animate={
+                (
+                  selectedBackgroundType?.exampleImage &&
+                  loadedImages.current[selectedBackgroundType?.exampleImage]
+                )
+                  ? c_exImageAnimationOptions
+                  : exampleImgAnimation
+              }
               exit={{opacity: 0}}
             >
               {selectedBackgroundType?.exampleImage &&
@@ -77,13 +91,8 @@ const CommissionSelectBackgound: Page = () => {
                   src={selectedBackgroundType.exampleImage}
                   alt={`Example background for ${selectedBackgroundType.display}`}
                   onLoad={() => {
-                    exampleImgAnimation.start({
-                      opacity: 1,
-                      transition: {
-                        duration: 0.8,
-                        type: 'tween',
-                      },
-                    });
+                    exampleImgAnimation.start(c_exImageAnimationOptions);
+                    loadedImages.current[selectedBackgroundType.exampleImage] = true
                   }}
                 />
               }
