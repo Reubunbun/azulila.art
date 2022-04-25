@@ -1,7 +1,8 @@
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
-import { Page } from '../../../interfaces/index';
+import { Page, ScreenType } from '../../../interfaces/index';
 import { useCommissionContext } from '../../../context/CommissionContext';
+import useScreenType from '../../../hooks/useScreenType';
 import scrollToTop from '../../../helpers/smoothScroll';
 import RadioButtons from '../../../components/RadioButtons/RadioButtons';
 import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
@@ -18,6 +19,7 @@ const CommissionSelectType: Page = () => {
     dispatchUserState,
   } = useCommissionContext();
 
+  const screenType = useScreenType();
   const exampleImgAnimation = useAnimation();
   const router = useRouter();
 
@@ -63,7 +65,7 @@ const CommissionSelectType: Page = () => {
             <motion.div
               key={selectedBaseType?.id}
               initial={{opacity: 0}}
-              animate={exampleImgAnimation}
+              animate={screenType === ScreenType.mobile ? {opacity: 1} : exampleImgAnimation}
               exit={{opacity: 0}}
               className={styles.containerExample}
             >
