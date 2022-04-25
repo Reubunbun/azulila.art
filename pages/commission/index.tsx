@@ -51,10 +51,12 @@ const Commission: Page = () => {
         className={styles.containerTerms}
       >
         {spacesOpen === null &&
-          <LoadingSpinner
-            loadingText='Checking Availability...'
-            width='9rem'
-          />
+          <div style={{marginBottom: '1rem'}}>
+            <LoadingSpinner
+              loadingText='Checking Availability...'
+              width='9rem'
+            />
+          </div>
         }
         {spacesOpen === 0 &&
           <p style={{

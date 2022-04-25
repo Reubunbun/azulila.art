@@ -63,20 +63,6 @@ button {
   padding-bottom: .5rem;
   cursor: pointer;
 }
-.commission-btn {
-  margin-top: .75rem;
-  margin-bottom: .75rem;
-  padding-left: .75rem;
-  padding-right: .75rem;
-  background-color: var(--bg);
-  border: 1px solid var(--font-highlight);
-  border-radius: .2rem;
-  font-size: clamp(1.5rem, 1.1735rem + 1.6327vw, 2.5rem);
-  transition: background-color .3s ease-out;
-}
-.commission-btn:not(:disabled):hover {
-  background-color: #ffc6d4;
-}
 
 h2 {
   font-weight: 600;
@@ -204,6 +190,22 @@ textarea.warning {
   display: flex;
   justify-content: center;
   gap: .75rem;
+}
+
+.commission-btn {
+  margin-top: .75rem;
+  margin-bottom: .75rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-bottom: .75rem;
+  background-color: var(--bg);
+  border: 1px solid var(--font-highlight);
+  border-radius: .2rem;
+  font-size: clamp(1.5rem, 1.1735rem + 1.6327vw, 2.5rem);
+  transition: background-color .3s ease-out;
+}
+.commission-btn:not(:disabled):hover {
+  background-color: #ffc6d4;
 }
 
 @media only screen and (min-width: 1024px) {
