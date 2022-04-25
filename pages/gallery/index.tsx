@@ -1,32 +1,69 @@
-import { useEffect, useState, useRef, useCallback, Fragment } from 'react';
+import type { GetStaticProps } from 'next';
+import type { Page, Image } from '../../interfaces';
+import { ScreenType, Direction } from '../../interfaces';
+import { useState, useRef, useEffect, useCallback, Fragment } from 'react';
+import sql from 'mysql';
+import DaoPortfolioImages from '../../dao/images';
+import DaoTags from '../../dao/tags';
 import { motion, useAnimation } from 'framer-motion';
-import dynamic from 'next/dynamic';
-import axios from 'axios';
-import type { Page, Image, ImagesData } from '../../interfaces/index';
-import { Direction, ScreenType } from '../../interfaces/index';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
-import useGetScreenType from '../../hooks/useScreenType';
 import BurgerButton from '../../components/BurgerButton/BurgerButton';
+import Filters from '../../components/Filters/Filters';
 import ImageItem from '../../components/ImageItem/ImageItem';
 import ImageModal from '../../components/ImageModal/ImageModal';
-import Filters from '../../components/Filters/Filters';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import styles from './gallery.module.css';
+import useScreenType from '../../hooks/useScreenType';
+import styles from './Gallery.module.css';
 
-interface QueryParams {
-  page: number;
-  filter: string | null;
+interface Props {
+  images: Image[];
+  tags: string[];
 };
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const connSQL = sql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: Number(process.env.DB_PORT),
+  });
+
+  const props: Props = {
+    images: [],
+    tags: [],
+  };
+
+  try {
+    const daoPortfolioImages = new DaoPortfolioImages(connSQL);
+    const daoTags = new DaoTags(connSQL);
+
+    await Promise.all([
+      daoPortfolioImages.getAll().then(res => props.images.push(...res.images)),
+      daoTags.getAll().then(res => props.tags.push(...res)),
+    ]);
+  } catch (err) {
+    console.log('err getting static props:', err);
+  } finally {
+    connSQL.destroy();
+  }
+
+  return {
+    props,
+    revalidate: 10,
+  };
+};
+
+
+interface DisplayImage extends Image {
+  actualHeight: number;
+}
+
 interface Column {
   items: DisplayImage[];
   height: number;
 }
-type DisplayImage = Image & {
-  loadNum: number;
-};
 
-const c_loadingFadeOutTime = 0.75;
-const c_imageLimit: number = 10;
+const c_imageLimit = 10;
 const c_columnMap: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
@@ -40,57 +77,23 @@ const c_genNewColumns = (screenType: ScreenType): Column[] => {
   return finalColumns;
 }
 
-const Gallery: Page = () => {
-  const screenType = useGetScreenType();
+
+const Gallery: Page<Props> = ({images, tags}) => {
+  const screenType = useScreenType();
+  const filterAnimation = useAnimation();
+
+  const loadedImages = useRef<{[url: string]: boolean}>({});
+  const firstColDiv = useRef<HTMLDivElement | null>(null);
+
+  const [hideFilters, setHideFilters] = useState<boolean>(true);
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<Image | false | null>(null);
   const [imageColumns, setImageColumns] = useState<Column[]>(
     c_genNewColumns(screenType),
   );
 
-  const [hideFilters, setHideFilters] = useState<boolean>(true);
-  const [selectedImage, setSelectedImage] = useState<Image | null | false>(null);
-  const [isLoading, _setIsLoading] = useState<boolean>(true);
-  const [tags, setTags] = useState<string[]>([]);
-  const [{page, filter}, setQueryParams] = useState<QueryParams>({
-    page: 0,
-    filter: null,
-  });
-
-  const totalCountRef = useRef<number | null>(null);
-  const isLoadingRef = useRef<boolean>(true);
-  const uniqueImages = useRef<{[key: string]: boolean}>({});
-  const firstColDiv = useRef<HTMLDivElement | null>(null);
-
-  const filterAnimation = useAnimation();
-
-  const setIsLoading = (newLoadingState: boolean): void => {
-    isLoadingRef.current = newLoadingState;
-    _setIsLoading(newLoadingState);
-  };
-
-  const loadNextPage = (): void => {
-    if (totalCountRef.current === null) return;
-
-    if (
-      Object.keys(uniqueImages.current).length < totalCountRef.current &&
-      !isLoadingRef.current
-    ) {
-      setIsLoading(true);
-      setQueryParams(prev => ({...prev, page: prev.page + 1}));
-    }
-  };
-
-  const callbackChangeFilters = useCallback((selected: string | null) => {
-    if (isLoadingRef.current) {
-      return;
-    }
-
-    uniqueImages.current = {};
-    setIsLoading(true);
-    setImageColumns(c_genNewColumns(screenType));
-    setQueryParams({
-      page: 0,
-      filter: selected,
-    })
+  const callbackChangeFilter = useCallback((selected: string | null) => {
+    setSelectedFilter(selected);
   }, []);
 
   const callbackClickImage = useCallback(
@@ -98,70 +101,66 @@ const Gallery: Page = () => {
     [],
   );
 
-  useEffect(() => {
-    const shouldUpdateSelected: boolean = selectedImage === false;
-    console.log('starting req', window.navigatingTo);
-    if (window.navigatingTo !== Gallery.title) {
-      console.log('not making req!');
-    } else {
-      console.log('will make req!');
+  const loadNextPage = (setNextImage: boolean = false) => {
+    const allImages: DisplayImage[] = [...images]
+      .filter(image => selectedFilter
+        ? image.tags.includes(selectedFilter)
+        : true
+      )
+      .sort((a, b) => a.priority - b.priority) as DisplayImage[];
+
+    let imagesLoaded = 0;
+    let foundUnloadedImage = false;
+    let imageToShow: Image | undefined;
+    const imagesToLoad: DisplayImage[] = [];
+    for (let i = 0; i < allImages.length; i++) {
+      const image = allImages[i];
+      imagesToLoad.push(image);
+      if (foundUnloadedImage) {
+        imagesLoaded++;
+      }
+
+      if (!loadedImages.current[image.url]) {
+        foundUnloadedImage = true;
+        loadedImages.current[image.url] = true;
+        if (setNextImage && !imageToShow) {
+          imageToShow = image;
+        }
+        if (imagesLoaded >= c_imageLimit) {
+          break;
+        }
+      }
     }
-    axios({
-      url: `/api/images?page=${page}&limit=${c_imageLimit}&filter=${filter || ''}`,
-      method: 'GET',
-    })
-      .then(({data}: {data: ImagesData}) => {
-        const colWidth = firstColDiv.current?.offsetWidth;
-        const newColumns = [...imageColumns];
 
-        for (let i = 0; i < data.images.length; i++) {
-          const image = data.images[i];
+    const newColumns = c_genNewColumns(screenType);
 
-          if (uniqueImages.current[image.url]) {
-            continue;
-          }
-          uniqueImages.current[image.url] = true;
+    while (imagesToLoad.length) {
+      const nextBatch = imagesToLoad.splice(0, c_imageLimit);
+      const colWidth = firstColDiv.current?.offsetWidth;
+      for (const image of nextBatch) {
+        const smallestColumn = newColumns.reduce(
+          (prev, curr) => prev.height < curr.height ? prev : curr,
+        );
 
+        if (!image.actualHeight) {
           const origImgWidth = image.width;
           const percentChange = (origImgWidth - (colWidth || 0)) / origImgWidth;
           const actualHeight = image.height - (image.height * percentChange);
-
-          const smallestColumn = newColumns.reduce(
-            (prev, curr) => (prev.height < curr.height) ? prev : curr,
-          );
-
-          const displayImage: DisplayImage = {...image, loadNum: i};
-          displayImage.height = actualHeight;
-          smallestColumn.items.push(displayImage);
-          smallestColumn.height += actualHeight;
+          image.actualHeight = actualHeight;
         }
 
-
-        setTimeout(() => {
-          setImageColumns(newColumns);
-          setTags(data.tags);
-          totalCountRef.current = data.totalCount;
-          if (shouldUpdateSelected) {
-            setSelectedImage(data.images[0]);
-          }
-        }, c_loadingFadeOutTime * 1000);
-      })
-      .catch(console.dir)
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [page, filter]);
-
-  useEffect(() => {
-    const callbackScroll = (): void => {
-      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight * 0.95)) {
-        loadNextPage();
+        smallestColumn.items.push(image);
+        image.height = image.actualHeight;
+        smallestColumn.height += image.actualHeight;
       }
-    };
+    }
 
-    window.addEventListener('scroll', callbackScroll);
-    return () => window.removeEventListener('scroll', callbackScroll);
-  }, []);
+    setImageColumns(newColumns);
+
+    if (imageToShow) {
+      setSelectedImage(imageToShow);
+    }
+  };
 
   useEffect(() => {
     if (screenType === ScreenType.mobile) {
@@ -182,41 +181,44 @@ const Gallery: Page = () => {
       });
     }
 
-    const newColumns = c_genNewColumns(screenType);
-    const allImages: DisplayImage[] = imageColumns
-      .reduce(
-        (prev, curr) => [...prev, ...curr.items],
-        [] as DisplayImage[],
-      )
-      .sort((a, b) => a.priority - b.priority);
+    loadNextPage();
 
-    if (!allImages.length) return;
-
-    while (allImages.length) {
-      const nextBatch = allImages.splice(0, 10);
-      const colWidth = firstColDiv.current?.offsetWidth;
-      for (const image of nextBatch) {
-        const smallestColumn = newColumns.reduce(
-          (prev, curr) => prev.height < curr.height ? prev : curr,
-        );
-
-        const origImgWidth = image.width;
-        const percentChange = (origImgWidth - (colWidth || 0)) / origImgWidth;
-        const actualHeight = image.height - (image.height * percentChange);
-
-        smallestColumn.items.push(image);
-        image.height = actualHeight;
-        smallestColumn.height += image.height;
+    const callbackScroll = (): void => {
+      if (Object.keys(loadedImages.current).length >= images.length) {
+        return;
       }
-    }
 
-    setImageColumns(newColumns);
-  }, [screenType]);
+      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight * 0.9)) {
+        loadNextPage();
+      }
+    };
 
-  if (typeof window !== 'undefined') {
-    if (window.navigatingTo !== Gallery.title) {
-      return <></>;
-    }
+    window.addEventListener('scroll', callbackScroll);
+    return () => window.removeEventListener('scroll', callbackScroll);
+  }, [screenType, selectedFilter]);
+
+  if (!images.length) {
+    return (
+      <>
+        <p className={styles.errorText}>
+          Something has broken on the server and my gallery could not be loaded. <br /> <br />
+          I&apos;m so sorry for the inconvenience, please feel free to explore my social media accounts to see more of my work: <br />
+        </p>
+        <div className={styles.containerSocials}>
+          <a href='https://www.instagram.com/azulilah/' target='_blank' rel='noreferrer'>
+            Instagram
+          </a>
+          <br />
+          <a href='https://azulila.tumblr.com/' target='_blank' rel='noreferrer'>
+            Tumblr
+          </a>
+          <br />
+          <a href='https://twitter.com/azulilah' target='_blank' rel='noreferrer'>
+            Twitter
+          </a>
+        </div>
+      </>
+    );
   }
 
   return (
@@ -257,7 +259,7 @@ const Gallery: Page = () => {
         >
           <Filters
             filters={tags}
-            changeSelected={callbackChangeFilters}
+            changeSelected={callbackChangeFilter}
           />
         </motion.div>
         <div className={styles.containerAllColumns}>
@@ -271,7 +273,6 @@ const Gallery: Page = () => {
                 <Fragment key={image.url}>
                   <ImageItem
                     image={image}
-                    delay={image.loadNum}
                     clickImage={callbackClickImage}
                   />
                 </Fragment>
@@ -279,22 +280,6 @@ const Gallery: Page = () => {
             </div>
           ))}
         </div>
-        <CustomAnimatePresence exitBeforeEnter>
-          {isLoading &&
-            <motion.div
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              transition={{duration: c_loadingFadeOutTime}}
-              exit={{opacity: 0}}
-              key='Loading-Container'
-            >
-              <LoadingSpinner
-                loadingText='Getting my latest work for you...'
-                width={screenType === ScreenType.mobile ? '8rem' : '10rem'}
-              />
-            </motion.div>
-          }
-        </CustomAnimatePresence>
       </div>
       <CustomAnimatePresence
         initial={false}
@@ -305,7 +290,7 @@ const Gallery: Page = () => {
             image={selectedImage}
             close={() => setSelectedImage(null)}
             getNextImage={dir => {
-              if (!selectedImage || !totalCountRef.current) return;
+              if (!selectedImage) return;
 
               const allImages: DisplayImage[] = imageColumns
                 .reduce(
@@ -316,13 +301,13 @@ const Gallery: Page = () => {
 
               const currImageIndex = allImages.findIndex(img => img.url === selectedImage.url);
               if (dir === Direction.Forward) {
+                if (currImageIndex + 1 === images.length) {
+                  setSelectedImage(null);
+                  return;
+                }
                 if (currImageIndex + 1 === allImages.length) {
-                  if (Object.keys(uniqueImages.current).length >= totalCountRef.current) {
-                    setSelectedImage(null);
-                    return;
-                  }
                   setSelectedImage(false);
-                  loadNextPage();
+                  loadNextPage(true);
                   return;
                 }
 
@@ -344,6 +329,7 @@ const Gallery: Page = () => {
     </>
   );
 };
-Gallery.title = 'Gallery';
+
+Gallery.title = 'Gallery Test';
 
 export default Gallery;

@@ -1,3 +1,32 @@
+.errorText {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    width: 100%;
+    color: var(--font-warning);
+    font-size: clamp(1.4rem, 1.2041rem + 0.9796vw, 2rem);
+    margin-bottom: 1rem;
+}
+.errorText a {
+    width: 100%;
+    text-align: center;
+}
+
+.containerSocials {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .25rem;
+    margin-bottom: 3rem;
+}
+
+.containerSocials a {
+    font-size: clamp(1.6rem, 1.4041rem + 0.9796vw, 2.2rem);
+    color: var(--font-highlight);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .galleryContainer {
     padding: 0 .8rem;
 }
@@ -60,6 +89,16 @@
 }
 
 @media only screen and (min-width: 1024px) {
+    .errorText {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .containerSocials {
+        margin-bottom: 1rem;
+        gap: .5rem;
+    }
+
     .galleryContainer {
         padding: 0 2rem;
         padding-bottom: 2rem;

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 
-export type Page = NextPage & {
+export type Page<P = {}> = NextPage<P> & {
     title: string;
     dontStick?: boolean;
     removePadding?: boolean;
@@ -30,12 +30,6 @@ export interface CommissionType {
  */
 export type GenericError = {
     message: string;
-};
-
-export type ImagesData = {
-    images: Image[];
-    tags: string[];
-    totalCount: number;
 };
 
 export type CommissionData = {
