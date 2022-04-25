@@ -1,8 +1,9 @@
-import type { Page } from '../../../interfaces';
+import { Page, ScreenType } from '../../../interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useRef, useEffect } from 'react';
 import { useCommissionContext } from '../../../context/CommissionContext';
+import useScreenType from '../../../hooks/useScreenType';
 import CommissionHeaderText from '../../../components/CommissionHeaderText/CommissionHeaderText';
 import RadioButtons from '../../../components/RadioButtons/RadioButtons';
 import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
@@ -23,6 +24,7 @@ const CommissionSelectBackgound: Page = () => {
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
   const exampleImgAnimation = useAnimation();
   const router = useRouter();
+  const screenType = useScreenType();
 
   useEffect(() => {
     if (spacesOpen === null) {
@@ -67,7 +69,7 @@ const CommissionSelectBackgound: Page = () => {
               className={selectStyles.containerExample}
               key={selectedBackgroundType?.id}
               initial={{opacity: 0}}
-              animate={exampleImgAnimation}
+              animate={screenType === ScreenType.mobile ? {opacity: 1} : exampleImgAnimation}
               exit={{opacity: 0}}
             >
               {selectedBackgroundType?.exampleImage &&
