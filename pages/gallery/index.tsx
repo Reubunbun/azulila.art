@@ -25,7 +25,8 @@ type DisplayImage = Image & {
   loadNum: number;
 };
 
-const c_intLimit: number = 10;
+const c_loadingFadeOutTime = 0.75;
+const c_imageLimit: number = 10;
 const c_columnMap: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
@@ -106,7 +107,7 @@ const Gallery: Page = () => {
       console.log('will make req!');
     }
     axios({
-      url: `/api/images?page=${page}&limit=${c_intLimit}&filter=${filter || ''}`,
+      url: `/api/images?page=${page}&limit=${c_imageLimit}&filter=${filter || ''}`,
       method: 'GET',
     })
       .then(({data}: {data: ImagesData}) => {
@@ -135,12 +136,15 @@ const Gallery: Page = () => {
           smallestColumn.height += actualHeight;
         }
 
-        setImageColumns(newColumns);
-        setTags(data.tags);
-        totalCountRef.current = data.totalCount;
-        if (shouldUpdateSelected) {
-          setSelectedImage(data.images[0]);
-        }
+
+        setTimeout(() => {
+          setImageColumns(newColumns);
+          setTags(data.tags);
+          totalCountRef.current = data.totalCount;
+          if (shouldUpdateSelected) {
+            setSelectedImage(data.images[0]);
+          }
+        }, c_loadingFadeOutTime * 1000);
       })
       .catch(console.dir)
       .finally(() => {
@@ -275,25 +279,26 @@ const Gallery: Page = () => {
             </div>
           ))}
         </div>
-        {isLoading &&
-          <CustomAnimatePresence exitBeforeEnter>
+        <CustomAnimatePresence exitBeforeEnter>
+          {isLoading &&
             <motion.div
               initial={{opacity: 0}}
               animate={{opacity: 1}}
+              transition={{duration: c_loadingFadeOutTime}}
               exit={{opacity: 0}}
+              key='Loading-Container'
             >
               <LoadingSpinner
                 loadingText='Getting my latest work for you...'
                 width={screenType === ScreenType.mobile ? '8rem' : '10rem'}
               />
             </motion.div>
-          </CustomAnimatePresence>
-        }
+          }
+        </CustomAnimatePresence>
       </div>
       <CustomAnimatePresence
         initial={false}
         exitBeforeEnter={true}
-        onExitComplete={() => null}
       >
         {selectedImage !== null &&
           <ImageModal

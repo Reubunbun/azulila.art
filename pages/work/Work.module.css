@@ -1,11 +1,17 @@
 .containerAllWorkItems {
-    width: 100%;
+    width: 100vw;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 @media only screen and (min-width: 1024px) {
+    .containerAllWorkItems {
+        width: unset;
+        overflow-x: unset;
+    }
+
     .mainHeader {
         margin-top: 1rem;
     }
