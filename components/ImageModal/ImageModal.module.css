@@ -7,7 +7,6 @@
 .modalBtn {
     position: absolute;
     z-index: 11;
-    margin: .5rem;
     font-size: 1.3rem;
     font-weight: 600;
     cursor: pointer;
@@ -29,7 +28,7 @@
     background: transparent;
     border: none;
     border-radius: 1rem;
-    padding: .4rem .8rem;
+    padding: 0 .8rem;
 }
 .closeBtn p {
     margin-top: 0;
@@ -45,6 +44,7 @@
 }
 .leftBtn p {
     margin-right: 1rem;
+    margin-bottom: 20px;
 }
 
 .rightBtn {
@@ -53,6 +53,7 @@
 }
 .rightBtn p {
     margin-left: 1rem;
+    margin-bottom: 20px;
 }
 
 .leftBtn,
@@ -62,6 +63,9 @@
     height: 50vw;
     background: transparent;
     border: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
 .leftBtn p,
@@ -91,6 +95,7 @@
     width: auto;
     height: auto;
     cursor: pointer;
+    margin-bottom: 1rem;
 }
 
 .containerDescription {

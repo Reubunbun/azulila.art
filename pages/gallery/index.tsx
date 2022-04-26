@@ -163,6 +163,23 @@ const Gallery: Page<Props> = ({images, tags}) => {
   };
 
   useEffect(() => {
+    loadNextPage();
+
+    const callbackScroll = (): void => {
+      if (Object.keys(loadedImages.current).length >= images.length) {
+        return;
+      }
+
+      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight * 0.9)) {
+        loadNextPage();
+      }
+    };
+
+    window.addEventListener('scroll', callbackScroll);
+    return () => window.removeEventListener('scroll', callbackScroll);
+  }, [screenType, selectedFilter]);
+
+  useEffect(() => {
     if (screenType === ScreenType.mobile) {
       filterAnimation.start({
         opacity: 0,
@@ -180,22 +197,7 @@ const Gallery: Page<Props> = ({images, tags}) => {
         }
       });
     }
-
-    loadNextPage();
-
-    const callbackScroll = (): void => {
-      if (Object.keys(loadedImages.current).length >= images.length) {
-        return;
-      }
-
-      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight * 0.9)) {
-        loadNextPage();
-      }
-    };
-
-    window.addEventListener('scroll', callbackScroll);
-    return () => window.removeEventListener('scroll', callbackScroll);
-  }, [screenType, selectedFilter]);
+  }, [screenType]);
 
   if (!images.length) {
     return (

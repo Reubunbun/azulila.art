@@ -9,7 +9,7 @@
     );
 }
 
-.footer {
+.footer .containerSocials {
     --icon-height: 40px;
 
     width: 100vw;
@@ -18,9 +18,14 @@
     align-items: flex-end;
     margin-bottom: .2rem;
 }
-.footer embed {
+.footer .containerSocials embed {
     width: var(--icon-height);
     height: var(--icon-height);
+}
+
+.footer p {
+    width: 100%;
+    text-align: center;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -44,11 +49,11 @@
         margin-top: unset;
     }
 
-    .footer {
+    .footer .containerSocials {
         --icon-height: 60px;
 
         justify-content: center;
         gap: calc(var(--icon-height) * .75);
-        margin-top: .2rem;
+        margin-top: 1.5rem;
     }
 }

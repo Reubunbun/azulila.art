@@ -9,6 +9,12 @@
 @media only screen and (min-width: 1024px) {
     .containerAllWorkItems {
         width: unset;
+    }
+}
+
+@media only screen and (min-width: 1650px) {
+    .containerAllWorkItems {
+        width: unset;
         overflow-x: unset;
     }
 

@@ -50,15 +50,20 @@ const DefaultLayout: FC<Props> = ({
         </main>
       </div>
       <footer className={styles.footer}>
-        <a href={c_twitterLink} target='_blank' rel='noreferrer'>
-          <embed src='/social-twitter.svg' />
-        </a>
-        <a href={c_instaLink} target='_blank' rel='noreferrer'>
-          <embed src='/social-insta.svg' />
-        </a>
-        <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
-          <embed src='/social-tumblr.svg' />
-        </a>
+        <div className={styles.containerSocials}>
+          <a href={c_twitterLink} target='_blank' rel='noreferrer'>
+            <embed src='/social-twitter.svg' />
+          </a>
+          <a href={c_instaLink} target='_blank' rel='noreferrer'>
+            <embed src='/social-insta.svg' />
+          </a>
+          <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
+            <embed src='/social-tumblr.svg' />
+          </a>
+        </div>
+        <p>
+          <b>This website was created by Reuben Price - reuben.luke.p@gmail.com</b>
+        </p>
       </footer>
     </>
   );
