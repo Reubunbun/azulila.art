@@ -16,15 +16,42 @@
     transition: all .4s ease-out;
 }
 
+.containerText textarea.fullDesc {
+    min-height: 8rem;
+    height: 8rem;
+}
+
+.containerText textarea.simpleDesc {
+    min-height: 2.5rem;
+    height: 2.5rem;
+}
+
 @media only screen and (min-width: 1024px) {
     .containerText {
         width: 50%;
     }
 }
 
-
 @media only screen and (min-width: 1921px) {
     .containerText label {
         font-size: clamp(1.6rem, -1.8500rem + 2.8750vw, 2.75rem);
+    }
+}
+
+@media only screen and (min-width: 2561px) {
+    .containerText label {
+        font-size: clamp(2.75rem, -0.7500rem + 2.1875vw, 4.5rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerText textarea.fullDesc {
+        min-height: 18rem;
+        height: 18rem;
+    }
+
+    .containerText textarea.simpleDesc {
+        min-height: 5rem;
+        height: 5rem;
     }
 }

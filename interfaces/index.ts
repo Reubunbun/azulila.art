@@ -72,8 +72,9 @@ export type CommissionPost = {
 export enum ScreenType {
     mobile,
     tablet,
-    desktop,
-    large,
+    desktop, // 1080p
+    large, // 1440p
+    extraLarge, // 4k
 };
 
 export enum Direction {

@@ -254,3 +254,23 @@
         font-size: clamp(4rem, -8.0000rem + 10.0000vw, 8rem);
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .containerDescription p {
+        font-size: clamp(3.5rem, -0.5000rem + 2.5000vw, 5.5rem);
+        line-height: clamp(3.5rem, -0.5000rem + 2.5000vw, 5.5rem);
+    }
+
+    .containerImg h3 {
+        font-size: clamp(4.25rem, 0.2500rem + 2.5000vw, 6.25rem);
+    }
+
+    .closeBtn p {
+        font-size: clamp(8rem, 0.0000rem + 5.0000vw, 12rem);
+    }
+
+    .leftBtn p,
+    .rightBtn p {
+        font-size: clamp(8rem, -6.0000rem + 8.7500vw, 15rem);
+    }
+}

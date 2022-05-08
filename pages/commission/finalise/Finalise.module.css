@@ -133,3 +133,28 @@
         margin-bottom: 5rem;
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .containerHeader p {
+        font-size: clamp(3rem, 0.0000rem + 1.8750vw, 4.5rem);
+    }
+
+    .inputBlock label {
+        font-size: clamp(2.5rem, -0.5000rem + 1.8750vw, 4rem);
+    }
+
+    .containerPermissionOptions p {
+        font-size: clamp(2.7rem, -1.3000rem + 2.5000vw, 4.7rem);
+    }
+
+    .successText,
+    .errorText {
+        font-size: clamp(3.8rem, -0.6000rem + 2.7500vw, 6rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerHeader p {
+        margin-bottom: 3rem;
+    }
+}

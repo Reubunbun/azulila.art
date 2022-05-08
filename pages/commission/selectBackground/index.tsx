@@ -119,19 +119,16 @@ const CommissionSelectBackgound: Page = () => {
               ref={descriptionInput}
               name='background-description'
               value={backgroundDescription}
+              className={
+                selectedBackgroundType?.id !== -1
+                  ? styles.fullDesc
+                  : styles.simpleDesc
+              }
               placeholder={
                 selectedBackgroundType?.id !== -1
                   ? 'Feel free to link some references here!'
                   : ''
               }
-              style={{
-                minHeight: selectedBackgroundType?.id !== -1
-                  ? '8rem'
-                  : '2.5rem',
-                height: selectedBackgroundType?.id !== -1
-                  ? '8rem'
-                  : '2.5rem'
-              }}
               onChange={e => dispatchUserState({
                 type: 'BACKGROUND-DESC',
                 payload: e.target.value,

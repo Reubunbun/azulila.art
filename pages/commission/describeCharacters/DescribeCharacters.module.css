@@ -231,3 +231,69 @@
         box-shadow: 0 0 2px 2px var(--font-highlight);
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .containerCharacterHeader b {
+        font-size: clamp(2.5rem, -1.5000rem + 2.5000vw, 4.5rem);
+    }
+
+    .containerCharacterHeader button {
+        font-size: clamp(2rem, 0.0000rem + 1.2500vw, 3rem);
+    }
+
+    .containerCharacterInput label {
+        font-size: clamp(2.4rem, -0.2000rem + 1.6250vw, 3.7rem);
+    }
+
+    .containerFileUpload button {
+        font-size: clamp(2.1rem, -0.7000rem + 1.7500vw, 3.5rem);
+    }
+
+    .containerFile b {
+        font-size: clamp(2.5rem, 0.9000rem + 1.0000vw, 3.3rem);
+    }
+    .containerFile span {
+        font-size: clamp(2.5rem, -0.1000rem + 1.6250vw, 3.8rem);
+    }
+
+    .containerAddMore button {
+        font-size: clamp(2.5rem, 0.0000rem + 1.5625vw, 3.75rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerCharacterList {
+        margin-top: 2rem;
+        width: 90%;
+    }
+
+    .containerCharacterHeader {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .containerCharacterHeader b {
+        margin-bottom: 1rem;
+    }
+
+    .containerCharacterHeader button {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-left: 2rem;
+    }
+
+    .containerAddMore button {
+        width: 20%;
+    }
+
+    .containerFileUpload button {
+        margin-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .containerFile {
+        margin-bottom: 1.5rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}

@@ -46,3 +46,21 @@
         gap: 1rem;
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .containerOptions button {
+        font-size: clamp(2.75rem, 0.2500rem + 1.5625vw, 4rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerOptions button {
+        padding-bottom: 1.25rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .containerOptions {
+        gap: 1.75rem;
+    }
+}

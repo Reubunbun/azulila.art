@@ -108,3 +108,35 @@
         height: calc(100% - 20px);
     }
 }
+
+
+@media only screen and (min-width: 2561px) {
+    .containerRadioButton .radioText {
+        font-size: clamp(3.75rem, -0.7500rem + 2.8125vw, 6rem);
+        line-height: clamp(3.75rem, -0.7500rem + 2.8125vw, 6rem);;
+    }
+
+    .containerRadioButton .radioText.small {
+        font-size: clamp(2.5rem, -1.2500rem + 3.1250vw, 3.25rem);
+        line-height: clamp(2.5rem, -1.2500rem + 3.1250vw, 3.25rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerRadioButton .radioText {
+        transform: translateY(-1.5rem);
+        margin-left: 1rem;
+    }
+
+    .containerRadioButton .radioButton {
+        min-width: 125px;
+        min-height: 125px;
+        width: 125px;
+        height: 125px;
+    }
+
+    .containerRadioButton .radioButton .radioDot {
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+    }
+}

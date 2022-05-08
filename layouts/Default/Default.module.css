@@ -68,6 +68,22 @@
 @media only screen and (min-width: 2560px) {
     .footer .containerSocials {
         --icon-height: 100px;
+    }
+}
 
+@media only screen and (min-width: 2561px) {
+    .footer p {
+        font-size: clamp(1.7rem, -0.3000rem + 1.2500vw, 2.7rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .footer .containerSocials {
+        margin-top: 3rem;
+        --icon-height: 130px;
+    }
+
+    .pageContent main {
+        margin-top: calc(var(--header-height) + 8rem);
     }
 }

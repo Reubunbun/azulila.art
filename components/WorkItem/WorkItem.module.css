@@ -93,7 +93,6 @@
 @media only screen and (min-width: 1921px) {
     .containerWorkItem h3 {
         font-size: clamp(3.5rem, 1.4000rem + 1.7500vw, 4.2rem);
-        margin-bottom: 2rem;
     }
 
     .containerWorkItem p {
@@ -109,11 +108,37 @@
 
 @media only screen and (min-width: 2560px) {
     .containerWorkItem h3 {
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .containerWorkItem {
         padding-top: 5rem;
         padding-bottom: 7rem;
+    }
+}
+
+@media only screen and (min-width: 2561px) {
+    .containerWorkItem h3 {
+        font-size: clamp(4.2rem, 0.6000rem + 2.2500vw, 6rem);
+    }
+
+    .containerWorkItem p {
+        font-size: clamp(3rem, -0.4000rem + 2.1250vw, 4.7rem);
+        line-height: clamp(3.2rem, -0.2000rem + 2.1250vw, 4.9rem);
+    }
+
+    /* .containerWorkItem .link {
+        font-size: clamp(1.3rem, 0.9735rem + 1.6327vw, 2.3rem);
+    } */
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerWorkItem {
+        padding-top: 9rem;
+        padding-bottom: 11rem;
+    }
+
+    .containerImage img {
+        max-height: 70rem;
     }
 }

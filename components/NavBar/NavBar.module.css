@@ -227,6 +227,14 @@
 }
 
 @media only screen and (min-width: 2560px) {
+    .headerWrapper h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    .linkItem p {
+        margin-bottom: 10px !important;
+    }
+
     .linkItem {
         --underline-height: 4px;
 
@@ -239,5 +247,41 @@
     .logoWrapper {
         border: none;
         box-shadow: 0 0 6px 6px var(--font-base);
+    }
+}
+
+@media only screen and (min-width: 2561px) {
+    .headerWrapper h1 {
+        font-size: clamp(8rem, 1.0000rem + 4.3750vw, 11.5rem);
+        letter-spacing: clamp(2.2rem, -1.2000rem + 2.1250vw, 3.9rem);
+    }
+
+    .linkItem p {
+        font-size: clamp(2.8rem, 0.4000rem + 1.5000vw, 4rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .headerWrapper h1 {
+        margin-bottom: 4rem;
+    }
+
+    .linkItem p {
+        margin-bottom: 30px !important;
+    }
+
+    .linkItem {
+        --underline-height: 6px;
+
+        height: calc(
+            4rem +
+            calc(var(--underline-height) + var(--underline-gap))
+        );
+    }
+
+    .logoWrapper {
+        border: none;
+        box-shadow: 0 0 6px 6px var(--font-base);
+        margin-right: 4rem;
     }
 }

@@ -41,6 +41,7 @@ const c_comparePath = (currUrl: string, pathname: string) : boolean => (
     : currUrl.startsWith(pathname)
 );
 
+const c_desktopSizes = [ScreenType.desktop, ScreenType.large, ScreenType.extraLarge];
 const c_scrollAnimRange: number[] = [0, 200];
 
 const NavBar: FC<Props> = ({dontStick}) => {
@@ -96,21 +97,27 @@ const NavBar: FC<Props> = ({dontStick}) => {
     c_scrollAnimRange,
     [
       '0vh',
-      screenType === ScreenType.large
-        ? '-9vh'
-        : '-16vh',
+      screenType === ScreenType.extraLarge
+        ? '-8vh'
+        : screenType === ScreenType.large
+            ? '-9vh'
+            : '-16vh',
     ],
   )
   const logoMaxWidth = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
     [
-      screenType === ScreenType.large
-        ? '10rem'
-        : '8rem',
-      screenType === ScreenType.large
-        ? '8rem'
-        : '6rem',
+      screenType === ScreenType.extraLarge
+        ? '15rem'
+        : screenType === ScreenType.large
+            ? '10rem'
+            : '8rem',
+      screenType === ScreenType.extraLarge
+        ? '11rem'
+        : screenType === ScreenType.large
+            ? '8rem'
+            : '6rem',
     ],
   );
   const logoMaxWidthMob = useTransform<number, REM>(
@@ -123,9 +130,11 @@ const NavBar: FC<Props> = ({dontStick}) => {
     c_scrollAnimRange,
     [
       '0rem',
-      screenType === ScreenType.large
-        ? '-16rem'
-        : '-14.5rem',
+      screenType === ScreenType.extraLarge
+        ? '-20rem'
+        : screenType === ScreenType.large
+            ? '-16rem'
+            : '-14.5rem',
     ],
   );
   const logoTransUp = useTransform<number, REM>(
@@ -133,7 +142,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
     c_scrollAnimRange,
     [
       '0rem',
-      screenType === ScreenType.large
+      screenType === ScreenType.large || screenType === ScreenType.extraLarge
         ? '0rem'
         : '-1.75rem',
     ],
@@ -156,7 +165,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
             style={
               dontAnimate
                 ? {}
-                : (screenType === ScreenType.desktop || screenType === ScreenType.large)
+                : c_desktopSizes.includes(screenType)
                     ? {
                         minWidth: logoMaxWidth,
                         minHeight: logoMaxWidth,
@@ -178,7 +187,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
           <div className={styles.containerTitleAndSocials}>
             <motion.h1
               style={
-                !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
+                !dontAnimate && c_desktopSizes.includes(screenType)
                   ? {opacity: titleOpacity}
                   : {}
               }
@@ -212,7 +221,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
       <motion.ul
         className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}
         style={
-          !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
+          !dontAnimate && c_desktopSizes.includes(screenType)
             ? {
                 y: navTransBottom,
                 width: navWidth,
@@ -245,7 +254,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
               <motion.p
                 className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
-                  !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
+                  !dontAnimate && c_desktopSizes.includes(screenType)
                     ? {'--link-opacity': textShadowOpacity}
                     : {}
                 }

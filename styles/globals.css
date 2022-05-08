@@ -69,7 +69,7 @@ h2 {
   text-transform: uppercase;
   text-align: center;
   color: var(--font-base);
-  font-size: clamp(2.25rem, 2.0202rem + 1.0213vw, 2.85rem);
+  font-size: clamp(2.25rem, 2.0051rem + 1.2245vw, 3rem);
   margin-top: .3rem;
   margin-bottom: .3rem;
   text-shadow:
@@ -266,5 +266,38 @@ textarea.warning {
   .commission-btn {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
+  }
+}
+
+@media only screen and (min-width: 2561px) {
+  h2 {
+    font-size: clamp(4.75rem, -1.7500rem + 4.0625vw, 8rem);
+  }
+
+  input[type="text"], textarea {
+    font-size: clamp(2.5rem, 0.0000rem + 1.5625vw, 3.75rem);
+  }
+
+  .submitBtn {
+    font-size: clamp(3.75rem, 0.2500rem + 2.1875vw, 5.5rem);
+  }
+
+  .commission-btn {
+    font-size: clamp(3.75rem, -2.7500rem + 4.0625vw, 7rem);
+  }
+}
+
+@media only screen and (min-width: 3840px) {
+  .submitBtn {
+    padding-bottom: 2rem;
+  }
+
+  .commission-btn {
+    border-radius: .8rem;
+    margin-top: 4rem;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-bottom: 2.5rem;
   }
 }

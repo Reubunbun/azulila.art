@@ -16,7 +16,11 @@ const c_determinScreenType = (mobileThreshold: number): ScreenType => {
     return ScreenType.desktop;
   }
 
-  return ScreenType.large;
+  if (window.innerWidth < 3840) {
+    return ScreenType.large;
+  }
+
+  return ScreenType.extraLarge;
 };
 
 export default function useScreenType(

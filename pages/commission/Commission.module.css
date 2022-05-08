@@ -101,3 +101,45 @@
         margin-top: .5rem;
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .spacesText {
+        font-size: clamp(3rem, -1.0000rem + 2.5000vw, 5rem);
+    }
+
+    .containerTerms > p {
+        font-size: clamp(3.1rem, -0.1000rem + 2.0000vw, 4.7rem);
+        line-height: clamp(3.4rem, 0.2000rem + 2.0000vw, 5rem);
+    }
+
+    .listItem p {
+        font-size: clamp(2.9rem, 0.7000rem + 1.3750vw, 4rem);
+    }
+
+    .containerTerms small {
+        font-size: clamp(2.7rem, 1.1000rem + 1.0000vw, 3.5rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .listItem embed {
+        width: 150px;
+        height: 150px;
+    }
+
+    .containerList {
+        margin-left: 2rem;
+    }
+
+    .containerList ul {
+        margin-top: 4.5rem;
+    }
+
+    .containerList ul {
+        gap: 1.5rem;
+    }
+
+    .listItem p {
+        margin-top: 1.25rem;
+    }
+}

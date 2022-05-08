@@ -128,3 +128,34 @@
         -webkit-transform-origin: 0 0;
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .inputBlock label,
+    .areaBlock label {
+        font-size: clamp(2.75rem, 0.2500rem + 1.5625vw, 4rem);
+    }
+
+    .textSuccess {
+        font-size: clamp(3.5rem, -1.5000rem + 3.1250vw, 6rem);
+    }
+    .textError {
+        font-size: clamp(3.5rem, -1.5000rem + 3.1250vw, 6rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerForm form {
+        width: 50vw;
+    }
+
+    .containerForm {
+        margin-bottom: 8rem;
+    }
+
+    .containerRecaptcha {
+        transform: scale(2.5) translateX(-40%);
+        -webkit-transform: scale(2.5) translateX(-40%);
+        transform-origin: 0 0;
+        -webkit-transform-origin: 0 0;
+    }
+}

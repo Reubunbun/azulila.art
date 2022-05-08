@@ -135,3 +135,24 @@
         gap: 1rem;
     }
 }
+
+@media only screen and (min-width: 2561px) {
+    .errorText {
+        font-size: clamp(3rem, 1.0000rem + 1.2500vw, 4rem);
+    }
+
+    .containerSocials a {
+        font-size: clamp(3.3rem, 0.7000rem + 1.6250vw, 4.6rem);
+    }
+}
+
+@media only screen and (min-width: 3840px) {
+    .containerToggleFilters {
+        margin-bottom: 2rem;
+    }
+
+    .containerTitle {
+        margin-top: 2rem;
+        margin-bottom: 6rem;
+    }
+}
