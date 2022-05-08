@@ -28,7 +28,7 @@ type REM = `${number}rem`;
 const allPaths: Path[] = [
   {display: 'Work', pathname: '/work'},
   {display: 'Gallery', pathname: '/gallery'},
-  {display: 'Popslinger', pathname: '/work/popslinger'},
+  // {display: 'Popslinger', pathname: '/work/popslinger'},
   {display: 'About', pathname: '/about'},
   {display: 'Commission', pathname: '/commission'},
   {display: 'Contact', pathname: '/contact'},
