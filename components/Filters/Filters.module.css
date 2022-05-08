@@ -28,3 +28,21 @@
     border: 2px solid var(--font-highlight);
     color: var(--font-highlight);
 }
+
+@media only screen and (min-width: 1921px) {
+    .containerOptions button {
+        font-size: clamp(1.5rem, -2.2500rem + 3.1250vw, 2.75rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .containerOptions button {
+        padding-bottom: 1rem;
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .containerOptions {
+        gap: 1rem;
+    }
+}

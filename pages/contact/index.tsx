@@ -127,7 +127,7 @@ const Contact: Page = () => {
             {isSending
               ? <LoadingSpinner
                   loadingText='Sending email...'
-                  width={`7rem`}
+                  width={`7.5rem`}
                 />
               : <div className={styles.containerCaptchaSubmit}>
                   <button

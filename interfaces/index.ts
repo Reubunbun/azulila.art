@@ -73,6 +73,7 @@ export enum ScreenType {
     mobile,
     tablet,
     desktop,
+    large,
 };
 
 export enum Direction {

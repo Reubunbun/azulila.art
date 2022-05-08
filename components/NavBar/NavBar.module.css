@@ -73,8 +73,6 @@
     position: relative;
     text-decoration: none;
     color: var(--font-base);
-    font-weight: bold;
-    font-size: large;
     cursor: pointer;
     font-family: 'Concert One', cursive;
     display: flex;
@@ -83,6 +81,8 @@
     gap: 2px;
 }
 .linkItem p {
+    font-weight: bold;
+    font-size: clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem);
     margin-top: 0;
     margin-bottom: 5px !important;
 }
@@ -185,7 +185,6 @@
     }
     .linkItem p {
         font-weight: 600;
-        font-size: x-large;
         transition: color 0.2s ease-in-out;
         text-shadow:
             0
@@ -211,5 +210,34 @@
         height: calc(var(--underline-height) + var(--underline-gap));
         border: none;
         background-color: var(--font-highlight);
+    }
+}
+
+@media only screen and (min-width: 1921px) {
+    .headerWrapper h1 {
+        font-size: clamp(4.5rem, -6.0000rem + 8.7500vw, 8rem);
+        letter-spacing: clamp(1.6rem, -0.2000rem + 1.5000vw, 2.2rem);
+        margin-bottom: 1.5rem;
+    }
+
+    .linkItem p {
+        font-size: clamp(1.6rem, -2.0000rem + 3.0000vw, 2.8rem);
+        margin-bottom: 10px !important;
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .linkItem {
+        --underline-height: 4px;
+
+        height: calc(
+            3rem +
+            calc(var(--underline-height) + var(--underline-gap))
+        );
+    }
+
+    .logoWrapper {
+        border: none;
+        box-shadow: 0 0 6px 6px var(--font-base);
     }
 }

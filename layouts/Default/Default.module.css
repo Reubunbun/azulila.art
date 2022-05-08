@@ -57,3 +57,17 @@
         margin-top: 1.5rem;
     }
 }
+
+
+@media only screen and (min-width: 1921px) {
+    .footer p {
+        font-size: clamp(1rem, -1.1000rem + 1.7500vw, 1.7rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .footer .containerSocials {
+        --icon-height: 100px;
+
+    }
+}

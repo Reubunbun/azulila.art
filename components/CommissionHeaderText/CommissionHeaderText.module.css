@@ -1,0 +1,17 @@
+.containerCommissionHeader {
+    width: 100%;
+    margin-bottom: .8rem;
+}
+
+.containerCommissionHeader p {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    font-size: clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem);
+}
+
+@media only screen and (min-width: 1921px) {
+    .containerCommissionHeader p {
+        font-size: clamp(1.6rem, -1.4000rem + 2.5000vw, 2.6rem);
+    }
+}

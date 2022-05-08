@@ -84,17 +84,34 @@ const NavBar: FC<Props> = ({dontStick}) => {
   const navHeight = useTransform<number, ViewportHeight>(
     scrollY,
     c_scrollAnimRange,
-    ['20vh', '12.5vh'],
+    [
+      '20vh',
+      screenType === ScreenType.large
+        ? '14vh'
+        : '12.5vh',
+    ],
   );
   const navTransBottom = useTransform<number, ViewportHeight>(
     scrollY,
     c_scrollAnimRange,
-    ['0vh', '-16vh'],
+    [
+      '0vh',
+      screenType === ScreenType.large
+        ? '-9vh'
+        : '-16vh',
+    ],
   )
   const logoMaxWidth = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
-    ['8rem', '6rem'],
+    [
+      screenType === ScreenType.large
+        ? '10rem'
+        : '8rem',
+      screenType === ScreenType.large
+        ? '8rem'
+        : '6rem',
+    ],
   );
   const logoMaxWidthMob = useTransform<number, REM>(
     scrollY,
@@ -104,12 +121,22 @@ const NavBar: FC<Props> = ({dontStick}) => {
   const logoTransRight = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
-    ['0rem', '-14.5rem'],
+    [
+      '0rem',
+      screenType === ScreenType.large
+        ? '-16rem'
+        : '-14.5rem',
+    ],
   );
   const logoTransUp = useTransform<number, REM>(
     scrollY,
     c_scrollAnimRange,
-    ['0rem', '-1.75rem'],
+    [
+      '0rem',
+      screenType === ScreenType.large
+        ? '0rem'
+        : '-1.75rem',
+    ],
   );
   // Scroll animation values
 
@@ -117,7 +144,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
     <motion.nav
       className={`${styles.nav} ${dontAnimate ? styles.dontStick : ''}`}
       style={
-        !dontAnimate && screenType !== ScreenType.desktop
+        !dontAnimate && (screenType !== ScreenType.desktop)
           ? {'--header-height': navHeight}
           : {}
       }
@@ -129,7 +156,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
             style={
               dontAnimate
                 ? {}
-                : screenType === ScreenType.desktop
+                : (screenType === ScreenType.desktop || screenType === ScreenType.large)
                     ? {
                         minWidth: logoMaxWidth,
                         minHeight: logoMaxWidth,
@@ -151,7 +178,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
           <div className={styles.containerTitleAndSocials}>
             <motion.h1
               style={
-                !dontAnimate && screenType === ScreenType.desktop
+                !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
                   ? {opacity: titleOpacity}
                   : {}
               }
@@ -185,7 +212,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
       <motion.ul
         className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}
         style={
-          !dontAnimate && screenType === ScreenType.desktop
+          !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
             ? {
                 y: navTransBottom,
                 width: navWidth,
@@ -218,7 +245,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
               <motion.p
                 className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
-                  !dontAnimate && screenType === ScreenType.desktop
+                  !dontAnimate && (screenType === ScreenType.desktop || screenType === ScreenType.large)
                     ? {'--link-opacity': textShadowOpacity}
                     : {}
                 }

@@ -27,3 +27,15 @@
         width: max(25%, 15rem);
     }
 }
+
+@media only screen and (min-width: 1921px) {
+    .containerLds p {
+        font-size: clamp(2rem, -1.0000rem + 2.5000vw, 3rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .containerLds p {
+        width: 40rem;
+    }
+}

@@ -117,7 +117,7 @@
     text-align: center;
     transform: translateX(10%);
     font-size: clamp(1rem, 0.8851rem + 0.5106vw, 1.5rem);
-    line-height: 1.5rem;
+    line-height: clamp(1rem, 0.8851rem + 0.5106vw, 1.5rem);
     color: rgb(238, 130, 238, 0);
     transition: color .25s ease-in-out;
 }
@@ -232,5 +232,25 @@
         color: var(--font-base);
         width: 100%;
         transform: unset;
+    }
+}
+
+@media only screen and (min-width: 1921px) {
+    .containerDescription p {
+        font-size: clamp(1.5rem, -4.5000rem + 5.0000vw, 3.5rem);
+        line-height: clamp(1.5rem, -4.5000rem + 5.0000vw, 3.5rem);
+    }
+
+    .containerImg h3 {
+        font-size: clamp(1.5rem, -6.7500rem + 6.8750vw, 4.25rem);
+    }
+
+    .closeBtn p {
+        font-size: clamp(3.5rem, -10.0000rem + 11.2500vw, 8rem);
+    }
+
+    .leftBtn p,
+    .rightBtn p {
+        font-size: clamp(4rem, -8.0000rem + 10.0000vw, 8rem);
     }
 }

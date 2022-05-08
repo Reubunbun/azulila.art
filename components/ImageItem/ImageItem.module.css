@@ -90,3 +90,10 @@
         margin-bottom: 2rem;
     }
 }
+
+
+@media only screen and (min-width: 1921px) {
+    .imageHover p {
+        font-size: clamp(2rem, -0.2500rem + 1.8750vw, 2.75rem);
+    }
+}

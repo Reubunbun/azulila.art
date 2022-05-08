@@ -68,6 +68,7 @@ const c_columnMap: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
   [ScreenType.desktop]: 3,
+  [ScreenType.large]: 3
 };
 const c_genNewColumns = (screenType: ScreenType): Column[] => {
   const finalColumns: Column[] = [];

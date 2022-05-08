@@ -41,7 +41,7 @@
     padding-right: .2rem;
     font-size: clamp(0.95rem, 0.8357rem + 0.5714vw, 1.3rem);
     color: var(--font-warning);
-    border: 1px solid vaR(--font-warning);
+    border: 1px solid var(--font-warning);
     border-radius: .2rem;
     background: var(--bg-transparent);
     transition: all .3s ease-out;
@@ -173,5 +173,61 @@
     .containerAddMore button {
         padding-bottom: .75rem;
         width: 15%;
+    }
+}
+
+@media only screen and (min-width: 1921px) {
+    .containerCharacterHeader b {
+        font-size: clamp(1.8rem, -0.3000rem + 1.7500vw, 2.5rem);
+    }
+
+    .containerCharacterHeader button {
+        font-size: clamp(1.3rem, -0.8000rem + 1.7500vw, 2rem);
+    }
+
+    .containerCharacterInput label {
+        font-size: clamp(1.5rem, -1.2000rem + 2.2500vw, 2.4rem);
+    }
+
+    .containerFileUpload button {
+        font-size: clamp(1.4rem, -0.7000rem + 1.7500vw, 2.1rem);
+    }
+
+    .containerFile b {
+        font-size: clamp(1rem, -3.5000rem + 3.7500vw, 2.5rem);
+    }
+    .containerFile span {
+        font-size: clamp(1.6rem, -1.1000rem + 2.2500vw, 2.5rem);
+    }
+
+    .containerAddMore button {
+        font-size: clamp(1.4rem, -1.9000rem + 2.7500vw, 2.5rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .containerCharacterList {
+        width: 85%;
+    }
+
+    .containerCharacterHeader button {
+        border: none;
+        box-shadow: 0 0 2px 2px var(--font-warning);
+    }
+
+    .containerAddMore button {
+        width: 20%;
+    }
+
+    .containerFileUpload button {
+        margin-bottom: 1rem;
+    }
+
+    .containerFile {
+        margin-bottom: 1rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        border: none;
+        box-shadow: 0 0 2px 2px var(--font-highlight);
     }
 }

@@ -14,3 +14,10 @@
     text-decoration: underline;
     font-weight: 900;
 }
+
+@media only screen and (min-width: 1921px) {
+    .containerAbout p {
+        font-size: clamp(2rem, -4.0000rem + 5.0000vw, 4rem);
+        line-height: clamp(2.3rem, -3.7000rem + 5.0000vw, 4.3rem);
+    }
+}

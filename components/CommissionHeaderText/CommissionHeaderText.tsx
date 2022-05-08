@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import styles from './CommissionHeaderText.module.css';
 
 interface Props {
   title: string;
@@ -7,17 +8,10 @@ interface Props {
 
 const CommissionHeaderText: FC<Props> = ({title, priceTotal}) => {
   return (
-    <div style={{width: '100%', marginBottom: '.8rem'}}>
+    <div className={styles.containerCommissionHeader}>
       <h2>{title}</h2>
       {priceTotal > 0 &&
-        <p
-          style={{
-            width: '100%',
-            textAlign: 'center',
-            margin: 0,
-            fontSize: 'clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem)',
-          }}
-        >
+        <p>
           Current Total - ${priceTotal}
         </p>
       }

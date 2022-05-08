@@ -62,3 +62,42 @@
         font-size: clamp(1.5rem, 1.3085rem + 0.8511vw, 2rem);
     }
 }
+
+@media only screen and (min-width: 1921px) {
+    .spacesText {
+        font-size: clamp(2rem, -1.0000rem + 2.5000vw, 3rem);
+    }
+
+    .containerTerms > p {
+        font-size: clamp(2rem, -1.3000rem + 2.7500vw, 3.1rem);
+        line-height: clamp(2.3rem, -1.0000rem + 2.7500vw, 3.4rem);
+    }
+
+    .listItem p {
+        font-size: clamp(1.6rem, -2.3000rem + 3.2500vw, 2.9rem);
+    }
+
+    .containerTerms small {
+        font-size: clamp(2rem, -0.1000rem + 1.7500vw, 2.7rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .listItem embed {
+        width: 90px;
+        height: 90px;
+    }
+
+    .containerList ul {
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .containerList ul {
+        gap: 1rem;
+    }
+
+    .listItem p {
+        margin-top: .5rem;
+    }
+}

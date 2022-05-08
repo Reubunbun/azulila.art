@@ -113,3 +113,25 @@
         width: calc(33% - 2rem);
     }
 }
+
+@media only screen and (min-width: 1921px) {
+    .errorText {
+        font-size: clamp(2rem, -1.0000rem + 2.5000vw, 3rem);
+    }
+
+    .containerSocials a {
+        font-size: clamp(2.2rem, -1.1000rem + 2.7500vw, 3.3rem);
+    }
+}
+
+@media only screen and (min-width: 2560px) {
+    .containerTitle {
+        margin-top: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    .containerSocials {
+        margin-top: 3rem;
+        gap: 1rem;
+    }
+}

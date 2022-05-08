@@ -238,3 +238,33 @@ textarea.warning {
     gap: 2.5rem;
   }
 }
+
+@media only screen and (min-width: 1921px) {
+  h2 {
+    font-size: clamp(2.85rem, -2.8500rem + 4.7500vw, 4.75rem);
+  }
+
+  input[type="text"], textarea {
+    font-size: clamp(1.2rem, -2.7000rem + 3.2500vw, 2.5rem);
+  }
+
+  .submitBtn {
+    font-size: clamp(2.5rem, -1.2500rem + 3.1250vw, 3.75rem);
+  }
+
+  .commission-btn {
+    font-size: clamp(2.5rem, -1.2500rem + 3.1250vw, 3.75rem);
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  input[type="text"], textarea {
+    border: none;
+    box-shadow: 0 0 2px 2px var(--font-highlight);
+  }
+
+  .commission-btn {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+}
