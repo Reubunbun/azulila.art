@@ -27,8 +27,8 @@ type REM = `${number}rem`;
 
 const allPaths: Path[] = [
   {display: 'Work', pathname: '/work'},
-  {display: 'Gallery', pathname: '/gallery'},
   // {display: 'Popslinger', pathname: '/work/popslinger'},
+  {display: 'Gallery', pathname: '/gallery'},
   {display: 'About', pathname: '/about'},
   {display: 'Commission', pathname: '/commission'},
   {display: 'Contact', pathname: '/contact'},
@@ -109,10 +109,10 @@ const NavBar: FC<Props> = ({dontStick}) => {
     c_scrollAnimRange,
     [
       screenType === ScreenType.extraLarge
-        ? '15rem'
+        ? '18rem'
         : screenType === ScreenType.large
-            ? '10rem'
-            : '8rem',
+            ? '13rem'
+            : '9rem',
       screenType === ScreenType.extraLarge
         ? '11rem'
         : screenType === ScreenType.large
@@ -192,7 +192,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
                   : {}
               }
             >
-              Azulilah
+              Azulila
             </motion.h1>
           </div>
           <BurgerButton onClick={() => {

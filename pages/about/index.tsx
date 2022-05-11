@@ -9,7 +9,7 @@ const About: Page = () => {
       <div className={styles.containerAbout}>
         <p>
           <b>Hello!</b><br /><br />
-            I&apos;m Tania Reyes, also known as Azulilah online, I&apos;m an artist based in Mexico.
+            I&apos;m Tania Reyes, also known as Azulila online, I&apos;m an artist based in Mexico.
             <br />
             I&apos;m a huge fan of movies and Japanese art styles, so my artwork is a testament to my love for them.
             Having previously worked on the indie video game <a href='https://www.popslinger.com/' target='_blank' rel='noreferrer'>Popslinger</a>, I focus on digital art working with dynamic art styles, concept art, background and character design.
