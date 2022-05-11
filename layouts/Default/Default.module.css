@@ -9,6 +9,11 @@
     );
 }
 
+.pageContent main.removeBg {
+    background: none;
+    border: none;
+}
+
 .footer .containerSocials {
     --icon-height: 40px;
 
@@ -28,6 +33,15 @@
     text-align: center;
 }
 
+.backgroundImg {
+    position: absolute;
+    height: 100%;
+    z-index: -1000;
+    pointer-events: none;
+    width: 100vw;
+    background-repeat: repeat;
+}
+
 @media only screen and (min-width: 1024px) {
     .pageContent main {
         transition: unset;
@@ -39,6 +53,19 @@
         border: 3px solid var(--font-highlight);
         background: var(--bg-transparent);
         padding: 1rem;
+        transition: margin-top .5s ease-in-out;
+    }
+
+    .pageContent main.removeBg {
+        background: none !important;
+        border: none !important;
+    }
+
+    .pageContent main.removeMargin {
+        margin-top: var(--header-height);
+        margin-left: 0rem !important;
+        margin-right: 0rem !important;
+        padding: 0;
     }
 
     .pageContent main.removePadding {

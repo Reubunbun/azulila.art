@@ -1,9 +1,14 @@
+import type { FC } from 'react';
 import type { NextPage } from 'next';
 
 export type Page<P = {}> = NextPage<P> & {
     title: string;
     dontStick?: boolean;
     removePadding?: boolean;
+    removeMargin?: boolean;
+    background?: string;
+    customNav?: FC;
+    removeBg?: boolean;
 };
 
 export type Image = {

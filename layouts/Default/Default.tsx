@@ -11,6 +11,10 @@ interface Props {
   transitionTime: number;
   dontStickHeader: boolean;
   removeMainPadding: boolean;
+  removeMainMargin: boolean;
+  removeMainBackground: boolean;
+  background?: string;
+  CustomNav?: FC;
 };
 
 const c_twitterLink: string = 'https://twitter.com/azulilah';
@@ -23,6 +27,10 @@ const DefaultLayout: FC<Props> = ({
   transitionTime,
   dontStickHeader,
   removeMainPadding,
+  removeMainMargin,
+  removeMainBackground,
+  background,
+  CustomNav,
 }) => {
 
   return (
@@ -30,10 +38,40 @@ const DefaultLayout: FC<Props> = ({
       <Head>
         <title>{title}</title>
       </Head>
+      <CustomAnimatePresence exitBeforeEnter>
+        <motion.div
+          key={background || 'none'}
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          exit={{opacity: 0}}
+          transition={{duration: transitionTime}}
+          className={styles.backgroundImg}
+          style={{
+            backgroundImage: background
+              ? `url('/${background}')`
+              : 'url("/main-bg.gif")'
+          }}
+        />
+      </CustomAnimatePresence>
       <div className={styles.pageContent}>
-        <NavBar dontStick={dontStickHeader} />
+        <CustomAnimatePresence exitBeforeEnter>
+          <motion.div
+            initial={{opacity: 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+            transition={{duration: transitionTime}}
+            key={CustomNav ? `CustomNav-${CustomNav.name}` : 'DefaultNav'}
+          >
+            {!CustomNav &&
+              <NavBar dontStick={dontStickHeader} />
+            }
+            {CustomNav &&
+              <CustomNav />
+            }
+          </motion.div>
+        </CustomAnimatePresence>
         <main
-          className={`${styles.main} ${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''}`}
+          className={`${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''} ${removeMainBackground ? styles.removeBg : ''} ${removeMainMargin ? styles.removeMargin : ''}`}
         >
           <CustomAnimatePresence exitBeforeEnter>
             <motion.div

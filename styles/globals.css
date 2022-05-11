@@ -1,34 +1,3 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html {
-  background-image: url('/main-bg.gif');
-  background-repeat: repeat;
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-* {
-  box-sizing: border-box;
-}
-
 :root {
   --num-links: 0;
   --font-highlight: #f33f87;
@@ -40,10 +9,48 @@ a {
   --bg-icon-shadow: #f108e6;
   --icon-shadow-spread: 3rem;
   --image-border-radius: 0.5rem;
-  --header-height: 20vh;
+  --main-header-height: 20vh;
+  --popslinger-header-height: 12.5vh;
+  --header-height: var(--main-header-height);
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;
   --links-open-height: calc(var(--num-links) * var(--mov-nav-link-height));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-image: url('/main-bg.gif');
+  background-repeat: repeat;
+}
+
+#__next {
+  position: absolute;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 embed {

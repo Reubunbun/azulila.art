@@ -33,6 +33,10 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
           title={Component.title}
           dontStickHeader={!!Component.dontStick}
           removeMainPadding={!!Component.removePadding}
+          removeMainMargin={!!Component.removeMargin}
+          removeMainBackground={!!Component.removeBg}
+          background={Component.background}
+          CustomNav={Component.customNav}
           transitionTime={c_pageTransitionTime}
         >
           <Component {...pageProps}/>

@@ -215,7 +215,7 @@
 
 @media only screen and (min-width: 1921px) {
     .headerWrapper h1 {
-        font-size: clamp(5.5rem, 3.9681rem + 6.8085vw, 9.5rem);
+        font-size: clamp(5.5rem, -6.5000rem + 10.0000vw, 9.5rem);
         letter-spacing: clamp(1.6rem, -0.2000rem + 1.5000vw, 2.2rem);
         margin-bottom: 1.5rem;
     }
@@ -253,7 +253,7 @@
 
 @media only screen and (min-width: 2561px) {
     .headerWrapper h1 {
-        font-size: clamp(9.5rem, 7.9681rem + 6.8085vw, 13.5rem);
+        font-size: clamp(9.5rem, 1.5000rem + 5.0000vw, 13.5rem);
         letter-spacing: clamp(2.2rem, -1.2000rem + 2.1250vw, 3.9rem);
     }
 
