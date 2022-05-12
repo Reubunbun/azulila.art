@@ -1,4 +1,5 @@
 import type { ReactNode, FC } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
 import NavBar from '../../components/NavBar/NavBar';
@@ -32,6 +33,15 @@ const DefaultLayout: FC<Props> = ({
   background,
   CustomNav,
 }) => {
+  const [displayChildren, setDisplayChildren] = useState(children);
+  const [transitionStage, setTransitionStage] = useState('fadeOut');
+
+  useEffect(() => {
+    setTransitionStage("fadeIn");
+  }, []);
+  useEffect(() => {
+    if (children !== displayChildren) setTransitionStage('fadeOut');
+  }, [children, setDisplayChildren, displayChildren]);
 
   return (
     <>
@@ -73,18 +83,17 @@ const DefaultLayout: FC<Props> = ({
         <main
           className={`${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''} ${removeMainBackground ? styles.removeBg : ''} ${removeMainMargin ? styles.removeMargin : ''}`}
         >
-          <CustomAnimatePresence exitBeforeEnter>
-            <motion.div
-              className='page-content'
-              key={title}
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              transition={{duration: transitionTime}}
-            >
-              {children}
-            </motion.div>
-          </CustomAnimatePresence>
+          <div
+            onTransitionEnd={() => {
+              if (transitionStage === 'fadeOut') {
+                setDisplayChildren(children);
+                setTransitionStage('fadeIn');
+              }
+            }}
+            className={`${styles.pageContainer} ${styles[transitionStage]}`}
+          >
+            {displayChildren}
+          </div>
         </main>
       </div>
       <footer className={styles.footer}>

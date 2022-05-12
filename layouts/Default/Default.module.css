@@ -1,3 +1,15 @@
+.pageContainer {
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.fadeIn {
+    opacity: 1;
+}
+.fadeOut {
+    opacity: 0;
+}
+
 .pageContent main {
     margin-top: calc(var(--header-height) + var(--main-margin-offset));
     transition: margin 0.5s ease-in-out;
@@ -12,6 +24,10 @@
 .pageContent main.removeBg {
     background: none;
     border: none;
+}
+
+.pageContent main.removePadding {
+    padding: 0 !important;
 }
 
 .footer .containerSocials {
@@ -65,10 +81,6 @@
         margin-top: var(--header-height);
         margin-left: 0rem !important;
         margin-right: 0rem !important;
-        padding: 0;
-    }
-
-    .pageContent main.removePadding {
         padding: 0;
     }
 

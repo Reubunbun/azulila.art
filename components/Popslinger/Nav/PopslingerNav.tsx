@@ -2,10 +2,10 @@ import type { FC } from 'react';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
-import useScreenType from '../../hooks/useScreenType';
-import scrollToTop from '../../helpers/smoothScroll';
+import { ScreenType } from '../../../interfaces';
+import useScreenType from '../../../hooks/useScreenType';
+import scrollToTop from '../../../helpers/smoothScroll';
 import styles from './PopslingerNav.module.css';
-import { ScreenType } from '../../interfaces';
 
 const c_scrollRange = 400;
 
@@ -49,11 +49,7 @@ const PopslingerNav: FC = () => {
   return (
     <motion.div
       className={styles.popslingerNavContainer}
-      style={
-        screenType === ScreenType.mobile
-          ? {}
-          : {opacity: headerOpacity}
-      }
+      style={{opacity: headerOpacity}}
       ref={refHeader}
     >
       <div

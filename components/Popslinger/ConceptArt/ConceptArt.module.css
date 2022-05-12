@@ -1,0 +1,35 @@
+.containerConceptArt {
+    height: 100vh;
+    display: flex;
+}
+
+.containerText {
+    width: 50vw;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.containerText p {
+    height: 50%;
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+}
+
+.containerImages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem
+}
+
+.containerImages img {
+    max-width: 40vw;
+    max-height: 30vh;
+    width: auto;
+    height: auto;
+}

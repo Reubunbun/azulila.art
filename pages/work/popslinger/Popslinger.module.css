@@ -3,5 +3,12 @@
 }
 
 .section {
-    height: 120vh;
+    height: 100vh;
+}
+
+.sectionTitle {
+    font-size: 8rem;
+    text-shadow: 2px 2px 8px #FF0000;
+    color: #fffae6;
+    text-shadow: none;
 }

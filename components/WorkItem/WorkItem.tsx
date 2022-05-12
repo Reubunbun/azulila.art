@@ -35,7 +35,6 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
         transition: {
           duration: 1.5,
           type: 'tween',
-        //   delay: 1,
         }
       });
 
@@ -44,7 +43,6 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
         transition: {
           duration: 1.5,
           type: 'tween',
-        //   delay: 1,
         }
       });
     }

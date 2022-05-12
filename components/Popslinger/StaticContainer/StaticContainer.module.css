@@ -1,0 +1,6 @@
+.staticContainer {
+    background-image: url('/popslinger-bg.gif');
+    background-repeat: repeat;
+    position: relative;
+    z-index: 1;
+}
