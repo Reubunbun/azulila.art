@@ -28,13 +28,13 @@ const Carousell: FC<Props> = ({ imgURLs }) => {
   useEffect(() => {
     setVisibleImages(
         [
-            selectedIndex - 3,
+            // selectedIndex - 3,
             selectedIndex - 2,
             selectedIndex - 1,
             selectedIndex,
             selectedIndex + 1,
             selectedIndex + 2,
-            // selectedIndex + 3,
+            selectedIndex + 3,
         ]
             .map(convertToActualIndex)
             .map(index => imgURLs[index]),
@@ -43,7 +43,6 @@ const Carousell: FC<Props> = ({ imgURLs }) => {
 
   return (
     <div className={styles.carousellContainer}>
-      {selectedIndex}
       <button
         onClick={() => setSelectedIndex(prev => {
           if (prev === 0) {

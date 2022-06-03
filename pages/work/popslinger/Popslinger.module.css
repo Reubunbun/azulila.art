@@ -27,3 +27,12 @@
 .goBackBtn:hover {
     background: #fffae6;
 }
+
+.carousellSection {
+    height: 110vh;
+}
+.carousellSection p {
+    text-align: center;
+    padding-top: 2rem;
+    font-size: 4rem;
+}

@@ -32,7 +32,8 @@ const Popslinger: Page = () => {
         <h2 className={styles.sectionTitle}>Concept Art</h2>
       </ParallaxContainer>
       <StaticContainer>
-        <div style={{height: '120vh'}}>
+        <div className={styles.carousellSection}>
+          <p>Brief summary for concept art</p>
           <Carousell
             imgURLs={[
               '/popslinger/concept-art/1.png',
@@ -50,7 +51,8 @@ const Popslinger: Page = () => {
         <h2 className={styles.sectionTitle}>Illusations</h2>
       </ParallaxContainer>
       <StaticContainer>
-        <div style={{height: '120vh'}}>
+        <div className={styles.carousellSection}>
+          <p>Brief summary for Illustrations</p>
           <Carousell
             imgURLs={[
               '/popslinger/concept-art/1.png',
@@ -68,7 +70,8 @@ const Popslinger: Page = () => {
         <h2 className={styles.sectionTitle}>Comics</h2>
       </ParallaxContainer>
       <StaticContainer>
-        <div style={{height: '120vh'}}>
+        <div className={styles.carousellSection}>
+          <p>Brief summary for comics</p>
           <Carousell
             imgURLs={[
               '/popslinger/concept-art/1.png',
