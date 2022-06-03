@@ -1,7 +1,3 @@
-.firstSection {
-    height: 100vh;
-}
-
 .section {
     height: 100vh;
 }
@@ -11,4 +7,23 @@
     text-shadow: 2px 2px 8px #FF0000;
     color: #fffae6;
     text-shadow: none;
+}
+
+.goBackBtn {
+    margin-left: 2rem;
+    margin-top: 2rem;
+
+    cursor: pointer;
+    background: #f45dff;
+    border: 2px solid #fffae6;
+    border-radius: .5rem;
+    font-size: 1.5rem;
+    padding: 1rem;
+    padding-top: .6rem;
+
+    transition: background .3s ease-in-out;
+}
+
+.goBackBtn:hover {
+    background: #fffae6;
 }

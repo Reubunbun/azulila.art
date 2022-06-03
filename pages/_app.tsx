@@ -36,7 +36,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
           removeMainMargin={!!Component.removeMargin}
           removeMainBackground={!!Component.removeBg}
           background={Component.background}
-          CustomNav={Component.customNav}
+          noNav={Component.noNav}
           transitionTime={c_pageTransitionTime}
         >
           <Component {...pageProps}/>

@@ -1,17 +1,6 @@
 import Router from 'next/router';
 
 export const fixTransition = (timeout: number): void => {
-  Router.events.on('routeChangeStart', () => {
-    const pageContainer = window.document.getElementById('animate-container');
-    console.log(pageContainer);
-    if (!pageContainer) return;
-
-    console.log('activating anim');
-    pageContainer.style.animation = '';
-    void pageContainer.offsetWidth;
-    pageContainer.style.animation = 'transition 1s linear';
-  });
-
   Router.events.on('beforeHistoryChange', () => {
     // Create a clone of every <style> and <link> that currently affects the page. It doesn't matter
     // if Next.js is going to remove them or not since we are going to remove the copies ourselves

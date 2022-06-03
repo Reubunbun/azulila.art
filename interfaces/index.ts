@@ -1,4 +1,3 @@
-import type { FC } from 'react';
 import type { NextPage } from 'next';
 
 export type Page<P = {}> = NextPage<P> & {
@@ -7,7 +6,7 @@ export type Page<P = {}> = NextPage<P> & {
     removePadding?: boolean;
     removeMargin?: boolean;
     background?: string;
-    customNav?: FC;
+    noNav?: boolean;
     removeBg?: boolean;
 };
 

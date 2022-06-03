@@ -1,4 +1,4 @@
-.pageContainer {
+.transitionContainer {
     opacity: 0;
     transition: 0.5s;
 }
@@ -78,7 +78,7 @@
 
     .pageContent main.removeMargin {
         transition: margin-top .5s ease-in-out;
-        margin-top: var(--header-height);
+        margin-top: 0rem;
         margin-left: 0rem !important;
         margin-right: 0rem !important;
         padding: 0;

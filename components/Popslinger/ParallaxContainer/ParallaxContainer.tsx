@@ -20,13 +20,11 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const imgYAdjust = useTransform<number, Pixels>(
     scrollY,
     () => {
-      if (!refContainer.current) return '0px';
+      if (!refContainer.current) return `${c_pixelsToMove}px`;
 
       const screenHeight = window.innerHeight;
       const { top: topOfImage } = refContainer.current?.getBoundingClientRect();
-      if (
-        topOfImage > screenHeight
-      ) {
+      if (topOfImage > screenHeight) {
         return '0px';
       }
 
@@ -39,13 +37,11 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const contentYAdjust = useTransform<number, Pixels>(
     scrollY,
     () => {
-      if (!refContainer.current) return '0px';
+      if (!refContainer.current) return `${-c_pixelsToMove}px`;
 
       const screenHeight = window.innerHeight;
       const { top: topOfImage } = refContainer.current?.getBoundingClientRect();
-      if (
-        topOfImage > screenHeight
-      ) {
+      if (topOfImage > screenHeight) {
         return '0px';
       }
 
@@ -68,10 +64,6 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
           top: imgYAdjust,
           height: `calc(100% + ${c_pixelsToMove * 2}px)`,
           transform: `translateY(-${c_pixelsToMove * 2}px)`,
-        }}
-        onLoad={e => {
-          console.log('hello')
-          console.log(e.target);
         }}
       />
       <motion.div

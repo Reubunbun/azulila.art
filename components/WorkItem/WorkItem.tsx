@@ -17,7 +17,7 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
   const containerAnimation = useAnimation();
   const textAnimation = useAnimation();
   const imageAnimation = useAnimation();
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({threshold: 0.4});
 
   useEffect(() => {
     if (inView) {

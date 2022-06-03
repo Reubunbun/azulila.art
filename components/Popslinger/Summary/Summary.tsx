@@ -2,13 +2,11 @@ import type { FC } from 'react';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
-import styles from './ConceptArt.module.css';
+import styles from './Summary.module.css';
 
-interface Props {};
+const c_delay = 0.2;
 
-const c_delay = 0.5;
-
-const ConcepArt: FC<Props> = () => {
+const Summary: FC<{}> = () => {
   const textAnimation = useAnimation();
   const img1Animation = useAnimation();
   const img2Animation = useAnimation();
@@ -21,7 +19,7 @@ const ConcepArt: FC<Props> = () => {
         x: '10%',
         opacity: 1,
         transition: {
-          duration: 1.5,
+          duration: 1.25,
           delay: c_delay,
           type: 'tween',
         },
@@ -70,12 +68,12 @@ const ConcepArt: FC<Props> = () => {
           initial={{opacity: 0, x: '100%'}}
           animate={textAnimation}
         >
-          Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text Concept art text
+          Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text Summary text
         </motion.p>
       </div>
       <div className={styles.containerImages}>
         <motion.img
-          src='/2.png'
+          src='/popslinger/summary/1.png'
           initial={{
             opacity: 0,
             y: '100%',
@@ -84,7 +82,7 @@ const ConcepArt: FC<Props> = () => {
           animate={img1Animation}
         />
         <motion.img
-          src='/3.jpg'
+          src='/popslinger/summary/2.jpg'
           initial={{
             opacity: 0,
             y: '0%',
@@ -93,7 +91,7 @@ const ConcepArt: FC<Props> = () => {
           animate={img2Animation}
         />
         <motion.img
-          src='/4.jpg'
+          src='/popslinger/summary/3.jpg'
           initial={{
             opacity: 0,
             y: '-100%',
@@ -106,4 +104,4 @@ const ConcepArt: FC<Props> = () => {
   );
 };
 
-export default ConcepArt;
+export default Summary;

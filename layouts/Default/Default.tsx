@@ -15,12 +15,15 @@ interface Props {
   removeMainMargin: boolean;
   removeMainBackground: boolean;
   background?: string;
-  CustomNav?: FC;
+  noNav?: boolean;
 };
 
-const c_twitterLink: string = 'https://twitter.com/azulilah';
-const c_instaLink: string = 'https://www.instagram.com/azulilah';
-const c_tumblrLink: string = 'https://azulila.tumblr.com';
+const c_classFadeIn = 'fadeIn';
+const c_classFadeOut = 'fadeOut';
+
+const c_twitterLink = 'https://twitter.com/azulilah';
+const c_instaLink = 'https://www.instagram.com/azulilah';
+const c_tumblrLink = 'https://azulila.tumblr.com';
 
 const DefaultLayout: FC<Props> = ({
   children,
@@ -31,16 +34,19 @@ const DefaultLayout: FC<Props> = ({
   removeMainMargin,
   removeMainBackground,
   background,
-  CustomNav,
+  noNav,
 }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
-  const [transitionStage, setTransitionStage] = useState('fadeOut');
+  const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
 
   useEffect(() => {
-    setTransitionStage("fadeIn");
+    setMainTransitionStage(c_classFadeIn);
   }, []);
+
   useEffect(() => {
-    if (children !== displayChildren) setTransitionStage('fadeOut');
+    if (children !== displayChildren) {
+      setMainTransitionStage(c_classFadeOut);
+    }
   }, [children, setDisplayChildren, displayChildren]);
 
   return (
@@ -70,27 +76,25 @@ const DefaultLayout: FC<Props> = ({
             animate={{opacity: 1}}
             exit={{opacity: 0}}
             transition={{duration: transitionTime}}
-            key={CustomNav ? `CustomNav-${CustomNav.name}` : 'DefaultNav'}
+            key={noNav ? 'NoNav' : 'DefaultNav'}
           >
-            {!CustomNav &&
+            {!noNav &&
               <NavBar dontStick={dontStickHeader} />
-            }
-            {CustomNav &&
-              <CustomNav />
             }
           </motion.div>
         </CustomAnimatePresence>
+
         <main
           className={`${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''} ${removeMainBackground ? styles.removeBg : ''} ${removeMainMargin ? styles.removeMargin : ''}`}
         >
           <div
             onTransitionEnd={() => {
-              if (transitionStage === 'fadeOut') {
+              if (mainTransitionStage === c_classFadeOut) {
                 setDisplayChildren(children);
-                setTransitionStage('fadeIn');
+                setMainTransitionStage(c_classFadeIn);
               }
             }}
-            className={`${styles.pageContainer} ${styles[transitionStage]}`}
+            className={`${styles.transitionContainer} ${styles[mainTransitionStage]}`}
           >
             {displayChildren}
           </div>
