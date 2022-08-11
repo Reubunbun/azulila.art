@@ -1,25 +1,37 @@
-.section {
-    height: 100vh;
-}
-
 .sectionTitle {
-    font-size: 8rem;
+    font-size: clamp(3.5rem, 1.4545rem + 10.2273vw, 8rem);
+    padding-top: 6rem;
+    text-align: center;
     text-shadow: 2px 2px 8px #FF0000;
     color: #fffae6;
     text-shadow: none;
 }
 
+.sectionSubTitle {
+    text-align: center;
+    color: #e95e4c;
+    font-weight: bold;
+    font-size: clamp(1.7rem, 1.1091rem + 2.9545vw, 3rem);
+}
+
 .goBackBtn {
-    margin-left: 2rem;
-    margin-top: 2rem;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+
+    margin-left: 1rem;
+    margin-top: 1rem;
 
     cursor: pointer;
     background: #f45dff;
     border: 2px solid #fffae6;
     border-radius: .5rem;
-    font-size: 1.5rem;
-    padding: 1rem;
-    padding-top: .6rem;
+    font-size: clamp(1.3rem, 0.8909rem + 2.0455vw, 2.2rem);
+    padding: .7rem;
+    padding-top: .4rem;
+
+    box-shadow: 0px 0px 10px #fff3ad;
 
     transition: background .3s ease-in-out;
 }
@@ -28,11 +40,56 @@
     background: #fffae6;
 }
 
-.carousellSection {
-    height: 110vh;
+.containerLogo {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.carousellSection p {
-    text-align: center;
-    padding-top: 2rem;
-    font-size: 4rem;
+
+.containerLogo img {
+    padding-top: 10rem;
+    display: block;
+    max-width: 98vw;
+    height: auto;
+}
+
+.textContainer {
+    width: min(95%, 80rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+}
+
+.textContainer p {
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+    font-size: clamp(1.5rem, 1.0909rem + 2.0455vw, 2.4rem);
+    line-height: clamp(1.8rem, 1.4364rem + 1.8182vw, 2.6rem);
+}
+
+@media only screen and (min-width: 1024px) {
+    .sectionTitle {
+        padding-top: 11rem;
+    }
+
+    .sectionSubTitle {
+        margin-bottom: 0;
+    }
+
+    .goBackBtn {
+        padding: 1.1rem;
+        padding-top: .6rem;
+        box-shadow: 0px 0px 13px #fff3ad;
+    }
+
+    .textContainer {
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+    }
 }

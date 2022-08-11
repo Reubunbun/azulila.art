@@ -45,6 +45,7 @@ body {
 }
 
 #__next {
+  overflow-x:hidden;
   position: absolute;
 }
 

@@ -2,8 +2,6 @@ import type { Page } from '../../../interfaces/index';
 import { useRouter } from 'next/router';
 import StaticContainer from '../../../components/Popslinger/StaticContainer/StaticContainer';
 import ParallaxContainer from '../../../components/Popslinger/ParallaxContainer/ParallaxContainer';
-import Carousell from '../../../components/Popslinger/Carousell/Carousell';
-import Summary from '../../../components/Popslinger/Summary/Summary';
 import styles from './Popslinger.module.css';
 
 const Popslinger: Page = () => {
@@ -18,71 +16,33 @@ const Popslinger: Page = () => {
         Go Back
       </button>
       <ParallaxContainer imgSrc='/popslinger/main-title.jpg' imgAlt='fill this later'>
-        <h2
-          className={styles.sectionTitle}
-          style={{marginBottom: '20rem'}}
+        <div
+          className={styles.containerLogo}
         >
-          Popslinger
-        </h2>
-      </ParallaxContainer>
-      <StaticContainer>
-        <Summary />
-      </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/concept-art-title.png' imgAlt='fill this later'>
-        <h2 className={styles.sectionTitle}>Concept Art</h2>
-      </ParallaxContainer>
-      <StaticContainer>
-        <div className={styles.carousellSection}>
-          <p>Brief summary for concept art</p>
-          <Carousell
-            imgURLs={[
-              '/popslinger/concept-art/1.png',
-              '/popslinger/concept-art/2.png',
-              '/popslinger/concept-art/3.png',
-              '/popslinger/concept-art/4.png',
-              '/popslinger/concept-art/5.jpg',
-              '/popslinger/concept-art/6.png',
-              '/popslinger/concept-art/7.jpg',
-            ]}
+          <img
+            src='/popslinger/Popslinger_Logo_T3.png'
+            alt='Logo for popslinger'
           />
         </div>
-      </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/illustrations-title.jpg' imgAlt='fill this later'>
-        <h2 className={styles.sectionTitle}>Illusations</h2>
       </ParallaxContainer>
       <StaticContainer>
-        <div className={styles.carousellSection}>
-          <p>Brief summary for Illustrations</p>
-          <Carousell
-            imgURLs={[
-              '/popslinger/concept-art/1.png',
-              '/popslinger/concept-art/2.png',
-              '/popslinger/concept-art/3.png',
-              '/popslinger/concept-art/4.png',
-              '/popslinger/concept-art/5.jpg',
-              '/popslinger/concept-art/6.png',
-              '/popslinger/concept-art/7.jpg',
-            ]}
-          />
+        <div className={styles.textContainer}>
+          <p>General summary of what popslinger is and the work ive contributed to it</p>
+          <p>General summary of what popslinger is and the work ive contributed to it</p>
+          <p>General summary of what popslinger is and the work ive contributed to it</p>
+          <p>General summary of what popslinger is and the work ive contributed to it</p>
         </div>
       </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/comics-title.png' imgAlt='fill this later'>
-        <h2 className={styles.sectionTitle}>Comics</h2>
+      <ParallaxContainer imgSrc='/popslinger/backgrounds-title.jpg' imgAlt='fill this later'>
+        <h1 className={styles.sectionTitle}>Background Design</h1>
       </ParallaxContainer>
       <StaticContainer>
-        <div className={styles.carousellSection}>
-          <p>Brief summary for comics</p>
-          <Carousell
-            imgURLs={[
-              '/popslinger/concept-art/1.png',
-              '/popslinger/concept-art/2.png',
-              '/popslinger/concept-art/3.png',
-              '/popslinger/concept-art/4.png',
-              '/popslinger/concept-art/5.jpg',
-              '/popslinger/concept-art/6.png',
-              '/popslinger/concept-art/7.jpg',
-            ]}
-          />
+        <h3 className={styles.sectionSubTitle}>
+          Working as a Background Designer in Popslinger
+        </h3>
+        <div className={styles.textContainer}>
+          <p>Video games have been one of my biggest artistic inspirations in life; when the opportunity arose to work on one, I was thrilled. Working on it was a different story; there was a lot of effort and deadlines to fulfill.</p>
+          <p>Background design was something that I wanted to focus in my art career and this game shows my knowledge regarding this area, I learned how to apply it from an animation viewpoint to a video game one, which include background assets, floor tiles, props and more.<br />My inspirations while designing these assets included games, artists and musicians like The World Ends With You, Streets of Rage, Hiroshi Nagai and Tatsuro Yamashita.</p>
         </div>
       </StaticContainer>
     </>
