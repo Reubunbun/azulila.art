@@ -92,7 +92,7 @@ const CommissionSelectBackgound: Page = () => {
                   alt={`Example background for ${selectedBackgroundType.display}`}
                   onLoad={() => {
                     exampleImgAnimation.start(c_exImageAnimationOptions);
-                    loadedImages.current[selectedBackgroundType.exampleImage] = true
+                    loadedImages.current[selectedBackgroundType.exampleImage] = true;
                   }}
                 />
               }

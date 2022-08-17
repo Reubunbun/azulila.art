@@ -13,9 +13,10 @@ interface Props {
   image: ImageType | false;
   close: () => void;
   getNextImage: (dir: Direction) => void;
+  hideDescriptions?: boolean;
 };
 
-const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
+const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) => {
   const screenType = useScreenType();
   const imgRef = useRef<HTMLImageElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
@@ -56,25 +57,29 @@ const ImageModal: FC<Props> = ({image, close, getNextImage}) => {
               animate={{opacity: 1}}
               exit={{opacity: 0}}
             >
-              <h3 style={{display: screenType !== ScreenType.mobile ? 'none' : undefined}}>
-                {image.title}
-              </h3>
-              <div
-                ref={divRef}
-                className={`
-                  ${styles.containerDescription}
-                  ${screenType === ScreenType.mobile && showDescription ? styles.active : ''}
-                `}
-                onClick={e => {
-                  e.stopPropagation();
-                  setShowDescription(prev => !prev);
-                }}
-              >
-                <h3 style={{display: screenType === ScreenType.mobile ? 'none' : undefined}}>
-                  {image.title}
-                </h3>
-                <p>{image.description}</p>
-              </div>
+              {!hideDescriptions &&
+                <>
+                  <h3 style={{display: screenType !== ScreenType.mobile ? 'none' : undefined}}>
+                    {image.title}
+                  </h3>
+                  <div
+                    ref={divRef}
+                    className={`
+                      ${styles.containerDescription}
+                      ${screenType === ScreenType.mobile && showDescription ? styles.active : ''}
+                    `}
+                    onClick={e => {
+                      e.stopPropagation();
+                      setShowDescription(prev => !prev);
+                    }}
+                  >
+                    <h3 style={{display: screenType === ScreenType.mobile ? 'none' : undefined}}>
+                      {image.title}
+                    </h3>
+                    <p>{image.description}</p>
+                  </div>
+                </>
+              }
               <img
                 ref={imgRef}
                 src={image.url}

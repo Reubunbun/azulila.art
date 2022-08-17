@@ -55,22 +55,29 @@
     height: auto;
 }
 
-.textContainer {
-    width: min(95%, 80rem);
+.textContainer, .textWithImageContainer {
+    width: min(95%, 90rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: .5rem;
-    padding-bottom: .5rem;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
 }
 
-.textContainer p {
-    margin-top: .4rem;
+.textContainer {
+    padding-bottom: .5rem;
+}
+
+.textContainer > p, .textWithImageContainer > p {
     margin-bottom: .4rem;
+    margin-top: 0;
     font-size: clamp(1.5rem, 1.0909rem + 2.0455vw, 2.4rem);
     line-height: clamp(1.8rem, 1.4364rem + 1.8182vw, 2.6rem);
+}
+
+.textWithImageContainer > p {
+    margin-top: .4rem;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -91,5 +98,16 @@
     .textContainer {
         padding-top: 2rem;
         padding-bottom: 4rem;
+    }
+
+    .textWithImageContainer {
+        flex-direction: row;
+        padding-bottom: 2rem;
+        padding-top: 4rem;
+    }
+
+    .carouselContainer {
+        height: 20rem;
+        width: 200%;
     }
 }
