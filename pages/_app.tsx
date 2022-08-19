@@ -10,22 +10,10 @@ interface CustomAppProps extends AppProps {
   Component: Page;
 };
 
-declare global {
-  interface Window { navigatingTo: string | null }
-};
-
 const c_pageTransitionTime = 0.5 // seconds
 fixTransition(c_pageTransitionTime * 1000);
 
-if (typeof window !== 'undefined') {
-  window.navigatingTo = null;
-}
-
 function MyApp({ Component, pageProps }: CustomAppProps) {
-  if (typeof window !== 'undefined') {
-    window.navigatingTo = Component.title;
-  }
-
   return (
     <AnimateSharedLayout>
       <CommissionStateProvider>

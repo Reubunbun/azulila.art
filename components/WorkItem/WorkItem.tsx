@@ -64,12 +64,14 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
             animate={textAnimation}
           >
             <p>{description}</p>
-            {/* <span
-              onClick={() => onLinkClicked(`/work/${linkPath}`)}
-              className={styles.link}
-            >
-              Click here to see more!
-            </span> */}
+            {(linkPath === 'popslinger') &&
+              <span
+                onClick={() => onLinkClicked(`/work/${linkPath}`)}
+                className={styles.link}
+              >
+                Click here to see more!
+              </span>
+            }
           </motion.div>
         </div>
         <div className={styles.containerImage}>

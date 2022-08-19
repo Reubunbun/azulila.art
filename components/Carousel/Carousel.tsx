@@ -5,7 +5,7 @@ import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresenc
 import ImageModal from '../ImageModal/ImageModal';
 import styles from './Carousel.module.css';
 
-const c_transitionDuration: number = 1;
+const c_transitionDuration: number = 0.8;
 const c_transitionInterval: number = 5500 + (c_transitionDuration * 1000);
 const c_imageAnimationOptions = {
   opacity: 1,

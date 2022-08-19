@@ -31,14 +31,14 @@ const Contact: Page = () => {
     }
 
     if (!email) {
-      emailInput.current.placeholder = 'Please fill in your name';
+      emailInput.current.placeholder = 'Please fill in your email';
       emailInput.current.classList.remove('warning');
       void emailInput.current.offsetWidth;
       emailInput.current.classList.add('warning');
     }
 
     if (!content) {
-      contentInput.current.placeholder = 'Please fill in your name';
+      contentInput.current.placeholder = 'Please fill in a message';
       contentInput.current.classList.remove('warning');
       void contentInput.current.offsetWidth;
       contentInput.current.classList.add('warning');

@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import type { Image as ImageType } from '../../interfaces';
 import { memo, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import LazyLoad from 'react-lazyload';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import styles from './ImageItem.module.css';
 
@@ -20,32 +21,34 @@ const ImageItem: FC<Props> = ({clickImage, image}) => {
       className={styles.containerImageItem}
       style={{height: hasLoaded ? undefined : `${image.height}px`}}
     >
-      <motion.img
-        initial={{opacity: 0}}
-        animate={imgAnimation}
-        exit={{opacity: 0}}
-        className={styles.imageItem}
-        src={image.url}
-        alt={image.description}
-        onClick={() => clickImage(image)}
-        onLoad={() => {
-          imgAnimation.start({
-            opacity: 1,
-            transition: {
-              duration: 0.8,
-              type: 'tween',
-            },
-          });
-          placeholderAnimation.start({
-            opacity: 0,
-            transition: {
-              duration: 0.8,
-              type: 'tween',
-            },
-          });
-          setHasLoaded(true);
-        }}
-      />
+      <LazyLoad>
+        <motion.img
+          initial={{opacity: 0}}
+          animate={imgAnimation}
+          exit={{opacity: 0}}
+          className={styles.imageItem}
+          src={image.url}
+          alt={image.description}
+          onClick={() => clickImage(image)}
+          onLoad={() => {
+            imgAnimation.start({
+              opacity: 1,
+              transition: {
+                duration: 0.8,
+                type: 'tween',
+              },
+            });
+            placeholderAnimation.start({
+              opacity: 0,
+              transition: {
+                duration: 0.8,
+                type: 'tween',
+              },
+            });
+            setHasLoaded(true);
+          }}
+        />
+      </LazyLoad>
       <div className={styles.imageHover} onClick={() => clickImage(image)}>
         <p>{image.title}</p>
       </div>
