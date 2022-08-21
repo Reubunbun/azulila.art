@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { memo, useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
+import ImageItem from '../ImageItem/ImageItem';
 import ImageModal from '../ImageModal/ImageModal';
 import styles from './Carousel.module.css';
 
@@ -62,7 +63,7 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
           onClick={() => setModalOpen(true)}
           key={imageIndex}
           initial={{
-            opacity: 0,
+            opacity: 1,
           }}
           animate={
             loadedImages.current[images[imageIndex]]
@@ -82,13 +83,18 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
             }
           }}
         >
-          <img
-            src={images[imageIndex]}
-            alt={images[imageIndex]}
+          <ImageItem
+            image={{
+              id: imageIndex,
+              url: images[imageIndex],
+              width: 0,
+              height: 0,
+            }}
             onLoad={() => {
               imgTransitionAnimation.start(c_imageAnimationOptions);
               loadedImages.current[images[imageIndex]] = true;
             }}
+            simpleLoadStyle={true}
           />
         </motion.div>
       </CustomAnimatePresence>
@@ -101,10 +107,6 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
             image={{
               id: imageIndex,
               url: images[imageIndex],
-              title: '',
-              description: '',
-              tags: [],
-              priority: 0,
               width: 0,
               height: 0,
             }}

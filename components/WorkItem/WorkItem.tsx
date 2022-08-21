@@ -1,22 +1,33 @@
 import type { FC } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
+import type { Image } from '../../interfaces';
+import ImageItem from '../ImageItem/ImageItem';
 import styles from './WorkItem.module.css';
 
 interface Props {
   title: string;
   description: string;
-  image: string;
+  image: Image;
   linkPath: string;
   isReversed: boolean;
   onLinkClicked: (path: string) => void;
 };
 
-const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, onLinkClicked}) => {
+const WorkItem: FC<Props> = ({
+  title,
+  description,
+  image,
+  linkPath,
+  isReversed,
+  onLinkClicked,
+}) => {
   const containerAnimation = useAnimation();
   const textAnimation = useAnimation();
   const imageAnimation = useAnimation();
+  const [computedImgHeight, setComputedImgHeight] = useState<number>(image.height);
+  const refContainer = useRef<HTMLDivElement>(null);
   const { ref, inView } = useInView({threshold: 0.4});
 
   useEffect(() => {
@@ -48,6 +59,16 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
     }
   }, [inView]);
 
+  useEffect(() => {
+    if (!refContainer.current) {
+      return;
+    }
+
+    const divWidth = refContainer.current.getBoundingClientRect().width;
+    const percentWidthChange = divWidth / image.width;
+    setComputedImgHeight(image.height * percentWidthChange);
+  }, [typeof window !== 'undefined' ? window.innerWidth : undefined]);
+
   return (
     <motion.div
       initial={{opacity: 0}}
@@ -74,14 +95,17 @@ const WorkItem: FC<Props> = ({title, description, image, linkPath, isReversed, o
             }
           </motion.div>
         </div>
-        <div className={styles.containerImage}>
-          <motion.img
-            initial={{x: isReversed ? '10rem' : '-10rem'}}
-            animate={imageAnimation}
-            src={image}
-            alt={`Image for ${title}`}
+        <motion.div
+          className={styles.containerImage}
+          initial={{x: isReversed ? '10rem' : '-10rem'}}
+          animate={imageAnimation}
+          ref={refContainer}
+        >
+          <ImageItem
+            image={image}
+            maxHeight={`${computedImgHeight}px`}
           />
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

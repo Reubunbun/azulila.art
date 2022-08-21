@@ -1,5 +1,6 @@
 import type { Page } from '../../../interfaces/index';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import StaticContainer from '../../../components/Popslinger/StaticContainer/StaticContainer';
 import ParallaxContainer from '../../../components/Popslinger/ParallaxContainer/ParallaxContainer';
 import Summary from '../../../components/Popslinger/Summary/Summary';
@@ -9,6 +10,7 @@ import styles from './Popslinger.module.css';
 
 const Popslinger: Page = () => {
   const router = useRouter();
+  const [logoLoaded, setLogoLoaded] = useState<boolean>(false);
 
   return (
     <>
@@ -22,9 +24,16 @@ const Popslinger: Page = () => {
         <div
           className={styles.containerLogo}
         >
+          {!logoLoaded &&
+            <h1 className={styles.sectionTitle} style={{marginBottom: '4rem'}}>
+              POPSLINGER
+            </h1>
+          }
           <img
             src='/popslinger/Popslinger_Logo_T3.png'
             alt='Logo for popslinger'
+            onLoad={() => setLogoLoaded(true)}
+            style={{display: logoLoaded ? undefined : 'none'}}
           />
         </div>
       </ParallaxContainer>

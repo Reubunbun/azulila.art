@@ -32,7 +32,7 @@ const BackgroundDesign: FC = () => {
         },
       }).then(() => {
         if (refCarouselContainer.current) {
-          refCarouselContainer.current.classList.add(styles.overrideTransform);
+          refCarouselContainer.current.classList.add(sharedStyles.overrideTransform);
         }
       });
     }

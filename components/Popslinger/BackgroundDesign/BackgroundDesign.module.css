@@ -23,10 +23,6 @@
     margin-top: .4rem;
 }
 
-.overrideTransform {
-    transform: none !important;
-}
-
 @media only screen and (min-width: 1024px) {
     .sectionSubTitle {
         margin-bottom: 0;

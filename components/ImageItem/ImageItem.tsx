@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC, Ref } from 'react';
 import type { Image as ImageType } from '../../interfaces';
 import { memo, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
@@ -7,11 +7,24 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import styles from './ImageItem.module.css';
 
 interface Props {
-  clickImage: (image: ImageType) => void;
+  clickImage?: (image: ImageType) => void;
   image: ImageType;
+  maxHeight?: string;
+  onLoad?: () => void;
+  imgRef?: Ref<HTMLImageElement>;
+  loadingText?: string;
+  simpleLoadStyle?: boolean;
 };
 
-const ImageItem: FC<Props> = ({clickImage, image}) => {
+const ImageItem: FC<Props> = ({
+  clickImage,
+  onLoad,
+  image,
+  maxHeight,
+  imgRef,
+  loadingText,
+  simpleLoadStyle,
+}) => {
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState(false);
@@ -19,9 +32,15 @@ const ImageItem: FC<Props> = ({clickImage, image}) => {
   return (
     <div
       className={styles.containerImageItem}
-      style={{height: hasLoaded ? undefined : `${image.height}px`}}
+      style={{
+        height: hasLoaded
+          ? undefined
+          : maxHeight
+            ? `min(${maxHeight}, ${image.height}px)`
+            : `${image.height}px`,
+      }}
     >
-      <LazyLoad>
+      <LazyLoad offset={150}>
         <motion.img
           initial={{opacity: 0}}
           animate={imgAnimation}
@@ -29,7 +48,13 @@ const ImageItem: FC<Props> = ({clickImage, image}) => {
           className={styles.imageItem}
           src={image.url}
           alt={image.description}
-          onClick={() => clickImage(image)}
+          ref={imgRef ? imgRef : undefined}
+          onClick={e => {
+            e.stopPropagation();
+            if (clickImage) {
+              clickImage(image);
+            }
+          }}
           onLoad={() => {
             imgAnimation.start({
               opacity: 1,
@@ -46,23 +71,30 @@ const ImageItem: FC<Props> = ({clickImage, image}) => {
               },
             });
             setHasLoaded(true);
+
+            if (onLoad) {
+              onLoad();
+            }
           }}
         />
       </LazyLoad>
-      <div className={styles.imageHover} onClick={() => clickImage(image)}>
-        <p>{image.title}</p>
-      </div>
+      {clickImage &&
+        <div className={styles.imageHover} onClick={() => clickImage(image)}>
+          <p>{image.title}</p>
+        </div>
+      }
       {!hasLoaded &&
         <motion.div
           initial={{opacity: 1}}
           animate={placeholderAnimation}
           exit={{opacity: 0}}
-          className={styles.placeholder}
+          className={`${styles.placeholder} ${simpleLoadStyle ? styles.hideBreathing : ''}`}
         >
-          <LoadingSpinner loadingText='' />
+          <LoadingSpinner
+            loadingText={loadingText || ''}
+          />
         </motion.div>
       }
-
     </div>
   );
 };

@@ -7,6 +7,7 @@ import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresenc
 import useScreenType from '../../hooks/useScreenType';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
+import ImageItem from '../ImageItem/ImageItem';
 import styles from './ImageModal.module.css';
 
 interface Props {
@@ -80,11 +81,9 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
                   </div>
                 </>
               }
-              <img
-                ref={imgRef}
-                src={image.url}
-                alt={image.description}
-                onClick={e => e.stopPropagation()}
+              <ImageItem
+                imgRef={imgRef}
+                image={image}
                 onLoad={() => {
                   if (!divRef.current || !imgRef.current) return;
 
@@ -98,6 +97,8 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
                     `${imgRef.current.offsetHeight}px`,
                   );
                 }}
+                loadingText='Loading full size image...'
+                simpleLoadStyle={true}
               />
             </motion.div>
           }

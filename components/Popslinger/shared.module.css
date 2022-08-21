@@ -11,3 +11,7 @@
     font-size: clamp(1.5rem, 1.0909rem + 2.0455vw, 2.4rem);
     line-height: clamp(1.8rem, 1.4364rem + 1.8182vw, 2.6rem);
 }
+
+.overrideTransform {
+    transform: none !important;
+}

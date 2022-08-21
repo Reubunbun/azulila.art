@@ -19,6 +19,12 @@
     -webkit-animation: breathing 2.5s ease-out infinite normal;
 }
 
+.placeholder.hideBreathing {
+    animation: unset !important;
+    -webkit-animation: unset !important;
+    background-color: unset !important;
+}
+
 @keyframes breathing {
     0% {
         background-color: rgba(243, 63, 135, 0.2);
@@ -50,10 +56,10 @@
 
 .imageItem {
     width: 100%;
-    cursor: pointer;
     border-radius: var(--image-border-radius);
 }
 .imageHover {
+    cursor: pointer;
     display: none;
 }
 

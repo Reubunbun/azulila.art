@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { useState } from 'react';
 import styles from './LoadingSpinner.module.css';
 
 interface Props {
@@ -12,13 +13,20 @@ const LoadingSpinner: FC<Props> = ({
   width,
   height,
 }) => {
+  const [starHasLoaded, setStarHasLoaded] = useState<boolean>(false);
+
   return (
     <div className={styles.containerLds}>
-      <embed
+      <img
+        alt='twinkle star'
         src='/lds-star.svg'
         style={{width, height}}
+        onLoad={() => setStarHasLoaded(true)}
       />
-      <p>{loadingText}</p>
+      {loadingText
+        ? <p>{loadingText}</p>
+        : !starHasLoaded ? <p>Loading image...</p> : <></>
+      }
     </div>
   );
 };

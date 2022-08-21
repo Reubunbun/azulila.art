@@ -126,10 +126,6 @@
         font-size: clamp(3rem, -0.4000rem + 2.1250vw, 4.7rem);
         line-height: clamp(3.2rem, -0.2000rem + 2.1250vw, 4.9rem);
     }
-
-    /* .containerWorkItem .link {
-        font-size: clamp(1.3rem, 0.9735rem + 1.6327vw, 2.3rem);
-    } */
 }
 
 @media only screen and (min-width: 3840px) {
