@@ -44,7 +44,7 @@
 }
 .leftBtn p {
     margin-right: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .rightBtn {
@@ -53,7 +53,7 @@
 }
 .rightBtn p {
     margin-left: 1rem;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .leftBtn,
@@ -71,7 +71,7 @@
 .leftBtn p,
 .rightBtn p {
     font-weight: 800;
-    font-size: 4rem;
+    font-size: 5rem;
     margin-top: 3.5rem;
 }
 

@@ -40,7 +40,7 @@ const ImageItem: FC<Props> = ({
             : `${image.height}px`,
       }}
     >
-      <LazyLoad offset={150}>
+      <LazyLoad offset={125}>
         <motion.img
           initial={{opacity: 0}}
           animate={imgAnimation}

@@ -20,7 +20,7 @@
 .containerWorkItem h3 {
     width: 100%;
     text-align: center;
-    margin-bottom: .75rem;
+    margin-bottom: 1.4rem;
     margin-top: .25rem;
     font-size: clamp(2.5rem, 2.1735rem + 1.6327vw, 3.5rem);
     color: var(--font-highlight);
