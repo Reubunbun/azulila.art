@@ -40,8 +40,9 @@
 }
 .containerTitle h2 {
     text-align: center;
-    margin: .7rem auto;
-    transform: translateX(-25%);
+    margin: 0;
+    padding-left: 3rem;
+    transform: translateX(-20%);
 }
 .containerTitle {
     margin-bottom: 1.25rem;
@@ -84,7 +85,8 @@
         transform: unset;
     }
     .containerTitle {
-        margin-bottom: 1.75rem;
+        padding-top: .25rem;
+        padding-bottom: 1.5rem;
     }
 }
 

@@ -13,10 +13,14 @@
     );
 }
 
+.containerWorkItem:first-child {
+    padding-top: 0rem;
+}
+
 .containerWorkItem h3 {
     width: 100%;
     text-align: center;
-    margin-bottom: 0;
+    margin-bottom: .75rem;
     margin-top: .25rem;
     font-size: clamp(2.5rem, 2.1735rem + 1.6327vw, 3.5rem);
     color: var(--font-highlight);
@@ -56,6 +60,10 @@
     .containerWorkItem {
         padding-left: 1rem;
         padding-right: 1rem;
+    }
+
+    .containerWorkItem:first-child {
+        padding-top: 1.5rem;
     }
 
     .containerWorkItem h3 {
@@ -100,9 +108,9 @@
         line-height: clamp(2.4rem, -0.0000rem + 2.0000vw, 3.2rem);
     }
 
-    /* .containerWorkItem .link {
+    .containerWorkItem .link {
         font-size: clamp(1.3rem, 0.9735rem + 1.6327vw, 2.3rem);
-    } */
+    }
 }
 
 

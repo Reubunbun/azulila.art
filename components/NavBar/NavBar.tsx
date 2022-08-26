@@ -27,7 +27,7 @@ type REM = `${number}rem`;
 
 const allPaths: Path[] = [
   {display: 'Work', pathname: '/work'},
-  // {display: 'Popslinger', pathname: '/work/popslinger'},
+  {display: 'Popslinger', pathname: '/work/popslinger'},
   {display: 'Gallery', pathname: '/gallery'},
   {display: 'About', pathname: '/about'},
   {display: 'Commission', pathname: '/commission'},
@@ -161,6 +161,25 @@ const NavBar: FC<Props> = ({dontStick}) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const rootElement = document.querySelector<HTMLElement>(':root');
+      rootElement?.style.setProperty(
+        '--num-links',
+        String(allPaths.length),
+      );
+
+      if (rootElement && navOpen) {
+        const openLinksHeight = getComputedStyle(rootElement)
+          .getPropertyValue('--links-open-height');
+        rootElement.style.setProperty('--main-margin-offset', openLinksHeight);
+      }
+      if (rootElement && !navOpen) {
+        rootElement.style.setProperty('--main-margin-offset', '0rem');
+      }
+    }
+  }, [navOpen]);
+
   return (
     <motion.nav
       className={`${styles.nav} ${dontAnimate ? styles.dontStick : ''}`}
@@ -208,25 +227,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
             </motion.h1>
           </div>
           <BurgerButton onClick={() => {
-            const isOpen = !navOpen;
-            setNavOpen(isOpen);
-
-            if (typeof document !== 'undefined') {
-              const rootElement = document.querySelector<HTMLElement>(':root');
-              rootElement?.style.setProperty(
-                '--num-links',
-                String(allPaths.length),
-              );
-
-              if (rootElement && isOpen) {
-                const openLinksHeight = getComputedStyle(rootElement)
-                  .getPropertyValue('--links-open-height');
-                rootElement.style.setProperty('--main-margin-offset', openLinksHeight);
-              }
-              if (rootElement && !isOpen) {
-                rootElement.style.setProperty('--main-margin-offset', '0rem');
-              }
-            }
+            setNavOpen(prev => !prev);
           }} />
         </div>
       </div>
@@ -258,6 +259,10 @@ const NavBar: FC<Props> = ({dontStick}) => {
                   }
                   scrollToTop().then(() => router.push(lastCommissionPath));
                   return;
+                }
+
+                if (path.pathname === '/work/popslinger') {
+                  setNavOpen(false);
                 }
 
                 scrollToTop().then(() => router.push(path.pathname));

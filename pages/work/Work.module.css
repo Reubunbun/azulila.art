@@ -6,6 +6,12 @@
     align-items: center;
 }
 
+.mainHeader {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    margin: 0;
+}
+
 @media only screen and (min-width: 1024px) {
     .containerAllWorkItems {
         width: unset;
@@ -19,6 +25,6 @@
     }
 
     .mainHeader {
-        margin-top: 1rem;
+        padding-top: 1rem;
     }
 }

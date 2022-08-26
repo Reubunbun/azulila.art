@@ -89,6 +89,8 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
               url: images[imageIndex],
               width: 0,
               height: 0,
+              tags: [],
+              priority: 0,
             }}
             onLoad={() => {
               imgTransitionAnimation.start(c_imageAnimationOptions);
@@ -109,6 +111,8 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
               url: images[imageIndex],
               width: 0,
               height: 0,
+              tags: [],
+              priority: 0,
             }}
             close={() => setModalOpen(false)}
             getNextImage={() => setImageIndex(

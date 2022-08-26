@@ -10,7 +10,6 @@
   --icon-shadow-spread: 3rem;
   --image-border-radius: 0.5rem;
   --main-header-height: 20vh;
-  --popslinger-header-height: 12.5vh;
   --header-height: var(--main-header-height);
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;
@@ -77,9 +76,8 @@ h2 {
   text-transform: uppercase;
   text-align: center;
   color: var(--font-base);
-  font-size: clamp(2.25rem, 2.0051rem + 1.2245vw, 3rem);
-  margin-top: .3rem;
-  margin-bottom: .3rem;
+  font-size: clamp(3rem, 2.0512rem + 4.2169vw, 4.75rem);
+  padding-bottom: .6rem;
   text-shadow:
     0.05em 0.05em 0 rgb(255, 171, 251);
 }

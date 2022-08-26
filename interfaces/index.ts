@@ -15,8 +15,8 @@ export type Image = {
     url: string;
     title?: string;
     description?: string;
-    tags?: string[];
-    priority?: number;
+    tags: string[];
+    priority: number;
     width: number;
     height: number;
 };
