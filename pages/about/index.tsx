@@ -7,7 +7,7 @@ const About: Page = () => {
     <>
       <h2>About</h2>
       <div className={styles.containerAbout}>
-        <p style={{textAlign: 'center', margin: 0}}><b>Hello!</b></p>
+        <p className={styles.hello}><b>Hello!</b></p>
         <br />
         <p>
           I&apos;m Tania Reyes, also known as Azulila online, I&apos;m an artist based in Mexico.

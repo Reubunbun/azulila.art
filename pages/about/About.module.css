@@ -4,15 +4,27 @@
 }
 
 .containerAbout p {
-    font-size: clamp(1.5rem, 1.3085rem + 0.8511vw, 2rem);
-    line-height: clamp(1.75rem, 1.5394rem + 0.9362vw, 2.3rem);
+    font-size: clamp(1.8rem, 1.4205rem + 1.6867vw, 2.5rem);
+    line-height: clamp(1.9rem, 1.4663rem + 1.9277vw, 2.7rem);
     margin-top: .3rem;
+}
+
+.containerAbout .hello {
+    margin: 0;
+    text-align: center;
 }
 
 .containerAbout a {
     color: var(--font-highlight);
     text-decoration: underline;
     font-weight: 900;
+}
+
+
+@media only screen and (min-width: 900px) {
+    .containerAbout .hello {
+        text-align: left;
+    }
 }
 
 @media only screen and (min-width: 1921px) {

@@ -58,9 +58,10 @@
 
 .leftBtn,
 .rightBtn {
+    z-index: 101;
     margin: 0;
     width: 50vw;
-    height: 50vw;
+    height: 30vw;
     background: transparent;
     border: none;
     display: flex;
@@ -72,7 +73,6 @@
 .rightBtn p {
     font-weight: 800;
     font-size: 5rem;
-    margin-top: 3.5rem;
 }
 
 .containerImg {
@@ -98,8 +98,18 @@
     margin-bottom: 1rem;
 }
 
+.containerDescription h3,
+.containerImg > h3 {
+    color: var(--font-highlight);
+}
+.containerImg > h3 {
+    padding-bottom: .5rem;
+    font-size: 2rem;
+}
+
 .containerDescription {
     position: absolute;
+    z-index: 100;
     background: rgba(20, 17, 49, 0);
     height: 100%;
     width: 100%;
@@ -116,8 +126,8 @@
     width: 80%;
     text-align: center;
     transform: translateX(10%);
-    font-size: clamp(1rem, 0.8851rem + 0.5106vw, 1.5rem);
-    line-height: clamp(1rem, 0.8851rem + 0.5106vw, 1.5rem);
+    font-size: clamp(1.75rem, 1.0723rem + 3.0120vw, 3rem);
+    line-height: clamp(1.8rem, 1.0410rem + 3.3735vw, 3.2rem);
     color: rgb(238, 130, 238, 0);
     transition: color .25s ease-in-out;
 }
@@ -162,6 +172,7 @@
 
     .leftBtn,
     .rightBtn {
+        z-index: unset;
         border-radius: 3rem;
         border: none;
         width: 20rem;
@@ -218,6 +229,7 @@
     }
 
     .containerDescription {
+        z-index: unset;
         position: unset;
         width: unset;
         width: 30vw;
@@ -226,12 +238,13 @@
         align-items: unset;
     }
     .containerDescription h3 {
-        color: var(--font-highlight);
+        font-size: 3.75rem;
     }
     .containerDescription p {
         color: var(--font-base);
         width: 100%;
         transform: unset;
+        margin-top: 1rem;
     }
 }
 

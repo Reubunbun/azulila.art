@@ -43,6 +43,7 @@
     margin: 0;
     padding-left: 3rem;
     transform: translateX(-20%);
+    pointer-events: none;
 }
 .containerTitle {
     margin-bottom: 1.25rem;
