@@ -2,7 +2,7 @@
     width: min(95%, 90rem);
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     padding-top: .5rem;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
@@ -15,8 +15,6 @@
 .textContainer > p, .textWithImageContainer > p {
     margin-bottom: .4rem;
     margin-top: 0;
-    font-size: clamp(1.5rem, 1.0909rem + 2.0455vw, 2.4rem);
-    line-height: clamp(1.8rem, 1.4364rem + 1.8182vw, 2.6rem);
 }
 
 .textWithImageContainer > p {

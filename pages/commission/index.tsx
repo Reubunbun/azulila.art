@@ -74,7 +74,7 @@ const Commission: Page = () => {
               <ul>
                 {c_ToSList.map(item =>
                   <li key={item} className={styles.listItem}>
-                    <embed src='/list-icon.svg' /> <p>{item}</p>
+                    <embed src='/icons/list-icon.svg' /> <p>{item}</p>
                   </li>
                 )}
               </ul>

@@ -17,7 +17,7 @@ const c_workItems: WorkItem[] = [
     title: 'Popslinger',
     image: {
       id: 1,
-      url: '/popslinger-ex.png',
+      url: '/work/popslinger-ex.png',
       width: 1280,
       height: 720,
       tags: [],
@@ -30,7 +30,7 @@ const c_workItems: WorkItem[] = [
     title: 'Fanzines',
     image: {
       id: 2,
-      url: '/fanzine-ex.png',
+      url: '/work/fanzine-ex.png',
       width: 1875,
       height: 960,
       tags: [],
@@ -43,7 +43,7 @@ const c_workItems: WorkItem[] = [
     title: 'Personal Projects',
     image: {
       id: 3,
-      url: '/personal-proj-ex.png',
+      url: '/work/personal-proj-ex.png',
       width: 2000,
       height: 1430,
       tags: [],

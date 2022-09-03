@@ -19,7 +19,7 @@ const LoadingSpinner: FC<Props> = ({
     <div className={styles.containerLds}>
       <img
         alt='twinkle star'
-        src='/lds-star.svg'
+        src='/icons/lds-star.svg'
         style={{width, height}}
         onLoad={() => setStarHasLoaded(true)}
       />

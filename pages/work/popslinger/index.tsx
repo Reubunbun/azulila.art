@@ -57,7 +57,7 @@ const Popslinger: Page = () => {
 };
 
 Popslinger.title = 'Popslinger';
-Popslinger.background = 'popslinger-bg.gif';
+Popslinger.background = 'backgrounds/popslinger-bg.gif';
 Popslinger.noNav = true;
 Popslinger.removeBg = true;
 Popslinger.removeMargin = true;

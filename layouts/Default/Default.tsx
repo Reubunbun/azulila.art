@@ -65,7 +65,7 @@ const DefaultLayout: FC<Props> = ({
           style={{
             backgroundImage: background
               ? `url('/${background}')`
-              : 'url("/main-bg.gif")'
+              : 'url("/backgrounds/main-bg.gif")'
           }}
         />
       </CustomAnimatePresence>
@@ -103,13 +103,13 @@ const DefaultLayout: FC<Props> = ({
       <footer className={styles.footer}>
         <div className={styles.containerSocials}>
           <a href={c_twitterLink} target='_blank' rel='noreferrer'>
-            <embed src='/social-twitter.svg' />
+            <embed src='/icons/social-twitter.svg' />
           </a>
           <a href={c_instaLink} target='_blank' rel='noreferrer'>
-            <embed src='/social-insta.svg' />
+            <embed src='/icons/social-insta.svg' />
           </a>
           <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
-            <embed src='/social-tumblr.svg' />
+            <embed src='/icons/social-tumblr.svg' />
           </a>
         </div>
         <p>
