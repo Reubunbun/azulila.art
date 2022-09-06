@@ -5,7 +5,9 @@ import StaticContainer from '../../../components/Popslinger/StaticContainer/Stat
 import ParallaxContainer from '../../../components/Popslinger/ParallaxContainer/ParallaxContainer';
 import Summary from '../../../components/Popslinger/Summary/Summary';
 import BackgroundDesign from '../../../components/Popslinger/BackgroundDesign/BackgroundDesign';
-import Placeholder from '../../../components/Popslinger/Placeholder/Placeholder';
+import ConceptArt from '../../../components/Popslinger/ConceptArt/ConceptArt';
+import GameAssets from '../../../components/Popslinger/GameAssets/GameAssets';
+import PromotionalComic from '../../../components/Popslinger/PromotionalComic/PromotionalComic';
 import styles from './Popslinger.module.css';
 
 const Popslinger: Page = () => {
@@ -47,10 +49,22 @@ const Popslinger: Page = () => {
         <BackgroundDesign />
       </StaticContainer>
       <ParallaxContainer imgSrc='/popslinger/concept-art/test.png' imgAlt='fill this later'>
-        <h1 className={styles.sectionTitle}>Placeholder Text</h1>
+        <h1 className={styles.sectionTitle}>Concept Art</h1>
       </ParallaxContainer>
       <StaticContainer>
-        <Placeholder />
+        <ConceptArt />
+      </StaticContainer>
+      <ParallaxContainer imgSrc='/popslinger/main-title.jpg' imgAlt='fill this later'>
+        <h1 className={styles.sectionTitle}>Game Assets</h1>
+      </ParallaxContainer>
+      <StaticContainer>
+        <GameAssets />
+      </StaticContainer>
+      <ParallaxContainer imgSrc='/popslinger/backgrounds-title.jpg' imgAlt='fill this later'>
+        <h1 className={styles.sectionTitle}>Promotional Comic</h1>
+      </ParallaxContainer>
+      <StaticContainer>
+        <PromotionalComic />
       </StaticContainer>
     </>
   );

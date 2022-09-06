@@ -2,9 +2,20 @@
     width: 100%;
     height: 40vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
     cursor: pointer;
+    height: 100%;
+}
+
+.containerCarouselImg h4 {
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--font-highlight);
+    font-size: clamp(1.1rem, 0.9916rem + 0.4819vw, 1.3rem);
+    font-weight: bold;
 }
 
 .containerCarouselImg img {

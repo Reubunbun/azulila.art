@@ -6,34 +6,63 @@ import sharedStyles from '../shared.module.css';
 import styles from './Summary.module.css';
 
 const Summary: FC = () => {
-  const textAnimation = useAnimation();
+  const anim1 = useAnimation();
+  const anim2 = useAnimation();
+  const anim3 = useAnimation();
   const { ref, inView } = useInView({ threshold: 0.5 });
 
   useEffect(() => {
+    const fadeDuration = 0.8;
     if (inView) {
-      textAnimation.start({
+      anim1.start({
         opacity: 1,
         transition: {
           type: 'tween',
-          duration: 0.7,
+          duration: fadeDuration,
+        },
+      });
+      anim2.start({
+        opacity: 1,
+        transition: {
+          type: 'tween',
+          duration: fadeDuration,
+          delay: (fadeDuration * 0.8),
+        },
+      });
+      anim3.start({
+        opacity: 1,
+        transition: {
+          type: 'tween',
+          duration: fadeDuration,
+          delay: (fadeDuration * 0.8) * 2,
         },
       });
     }
   }, [inView]);
 
   return (
-    <motion.div
-      initial={{opacity: 0}}
-      animate={textAnimation}
-      exit={{opacity: 0}}
+    <div
       ref={ref}
       className={`${sharedStyles.textContainer} ${styles.mainContainer}`}
-      style={{paddingTop: '2rem', paddingBottom: '2rem'}}
     >
-      <p>
+      <motion.h3
+        initial={{opacity: 0}}
+        animate={anim1}
+        className={`${sharedStyles.sectionSubTitle} ${styles.sectionSubTitle}`}
+      >
+        What’s Popslinger?
+      </motion.h3>
+      <motion.p
+        initial={{opacity: 0}}
+        animate={anim1}
+      >
         Popslinger’s a musical shoot-em-up inspired by City Pop and 90’s anime. It follows the young Ria and Gin on the way to beat the evil gang of Corazones. It made its way to Steam and Nintendo Switch on January 2022, with the recognition of being selected as one of the indie games of the month.
-      </p>
-      <div className={styles.youtubeWrapper}>
+      </motion.p>
+      <motion.div
+        initial={{opacity: 0}}
+        animate={anim2}
+        className={styles.youtubeWrapper}
+      >
         <h3>Watch the trailer!</h3>
         <div className={styles.youtubeContainer}>
           <iframe
@@ -46,13 +75,16 @@ const Summary: FC = () => {
             allowFullScreen
           />
         </div>
-      </div>
-      <p>
+      </motion.div>
+      <motion.p
+        initial={{opacity: 0}}
+        animate={anim3}
+      >
         I worked in various areas such as background design, animation, character design, illustrations, among others. My main focus was art direction on background design, while assisting in other details.
-      </p>
+      </motion.p>
 
       <p>(Some gifs here)</p>
-    </motion.div>
+    </div>
   );
 };
 

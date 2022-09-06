@@ -1,3 +1,8 @@
+.sectionSubTitle {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 .mainContainer {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -13,7 +18,7 @@
 .youtubeWrapper h3 {
     color: var(--font-highlight);
     text-align: center;
-    font-size: clamp(1.8rem, 1.2036rem + 2.6506vw, 2.9rem);
+    font-size: clamp(1.8rem, 1.3663rem + 1.9277vw, 2.6rem);
     margin-bottom: 0;
 }
 .youtubeContainer {
@@ -34,7 +39,13 @@
 }
 
 @media only screen and (min-width: 1024px) {
+    .mainContainer {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
     .youtubeWrapper h3 {
+        margin-top: 1.75rem;
         margin-bottom: 1.5rem;
     }
 }

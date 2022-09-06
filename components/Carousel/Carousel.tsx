@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 import { memo, useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import LazyLoad from 'react-lazyload';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
-import ImageItem from '../ImageItem/ImageItem';
 import ImageModal from '../ImageModal/ImageModal';
 import styles from './Carousel.module.css';
 
@@ -57,49 +57,31 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
 
   return (
     <>
-      <CustomAnimatePresence exitBeforeEnter>
-        <motion.div
-          className={styles.containerCarouselImg}
-          onClick={() => setModalOpen(true)}
-          key={imageIndex}
-          initial={{
-            opacity: 1,
-          }}
-          animate={
-            loadedImages.current[images[imageIndex]]
-              ? {
-                  ...c_imageAnimationOptions,
-                  transition: {
-                    ...c_imageAnimationOptions.transition,
-                    duration: modalOpen ? 0 : c_transitionDuration,
-                  }
-                }
-              : imgTransitionAnimation
-          }
-          exit={{
-            opacity: 0,
-            transition: {
-              duration: modalOpen ? 0 : c_transitionDuration,
-            }
-          }}
-        >
-          <ImageItem
-            image={{
-              id: imageIndex,
-              url: images[imageIndex],
-              width: 0,
-              height: 0,
-              tags: [],
-              priority: 0,
-            }}
-            onLoad={() => {
-              imgTransitionAnimation.start(c_imageAnimationOptions);
-              loadedImages.current[images[imageIndex]] = true;
-            }}
-            simpleLoadStyle={true}
-          />
-        </motion.div>
-      </CustomAnimatePresence>
+      <div className={styles.containerCarouselImg}>
+        <h4>Click the image to view full size!</h4>
+          <LazyLoad>
+            <CustomAnimatePresence exitBeforeEnter>
+              <motion.img
+                src={images[imageIndex]}
+                alt='Carousel Image'
+                onLoad={() => {
+                  imgTransitionAnimation.start(c_imageAnimationOptions);
+                  loadedImages.current[images[imageIndex]] = true;
+                }}
+                onClick={() => setModalOpen(true)}
+                key={imageIndex}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={imgTransitionAnimation}
+                exit={{
+                  opacity: 0,
+                  transition: {...c_imageAnimationOptions.transition}
+                }}
+              />
+          </CustomAnimatePresence>
+        </LazyLoad>
+      </div>
       <CustomAnimatePresence
         initial={false}
         exitBeforeEnter={true}
