@@ -3,6 +3,7 @@ import { Image as ImageType, ScreenType } from '../../interfaces';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Direction } from '../../interfaces';
+import { useUIContext } from '../../context/UIContext';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
 import useScreenType from '../../hooks/useScreenType';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
@@ -13,7 +14,7 @@ import styles from './ImageModal.module.css';
 interface Props {
   image: ImageType | false;
   close: () => void;
-  getNextImage: (dir: Direction) => void;
+  getNextImage: (dir: Direction, currImage?: ImageType) => ImageType | false | null;
   hideDescriptions?: boolean;
 };
 
@@ -21,10 +22,12 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
   const screenType = useScreenType();
   const imgRef = useRef<HTMLImageElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
+  const [currImage, setCurrImage] = useState<ImageType | false>(image);
   const [showDescription, setShowDescription] = useState<boolean>(false);
+  const { setModalContent } = useUIContext();
 
   return (
-    <ModalBackdrop close={close}>
+    <ModalBackdrop close={close} key='modal'>
       <motion.div
         onClick={close}
         className={styles.containerImgModal}
@@ -38,22 +41,27 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
         >
           <p>X</p>
         </button>
-        {image &&
+        {currImage &&
           <button
             className={`${styles.modalBtn} ${styles.leftBtn}`}
             onClick={e => {
               e.stopPropagation();
-              getNextImage(Direction.Backward);
+              const nextImg = getNextImage(Direction.Backward, currImage);
+              if (nextImg === null) {
+                setModalContent(null);
+                return;
+              }
+              setCurrImage(nextImg);
             }}
           >
             <p>&lt;</p>
           </button>
         }
         <CustomAnimatePresence exitBeforeEnter>
-          {image &&
+          {currImage &&
             <motion.div
               className={styles.containerImg}
-              key={image.url}
+              key={currImage.url}
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
@@ -61,7 +69,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
               {!hideDescriptions &&
                 <>
                   <h3 style={{display: screenType !== ScreenType.mobile ? 'none' : undefined}}>
-                    {image.title}
+                    {currImage.title}
                   </h3>
                   <div
                     ref={divRef}
@@ -75,15 +83,15 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
                     }}
                   >
                     <h3 style={{display: screenType === ScreenType.mobile ? 'none' : undefined}}>
-                      {image.title}
+                      {currImage.title}
                     </h3>
-                    <p>{image.description}</p>
+                    <p>{currImage.description}</p>
                   </div>
                 </>
               }
               <ImageItem
                 imgRef={imgRef}
-                image={image}
+                image={currImage}
                 onLoad={() => {
                   if (!divRef.current || !imgRef.current) return;
 
@@ -102,7 +110,7 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
               />
             </motion.div>
           }
-          {!image &&
+          {!currImage &&
             <motion.div
               key='loading'
               initial={{opacity: 0}}
@@ -113,12 +121,18 @@ const ImageModal: FC<Props> = ({image, close, getNextImage, hideDescriptions}) =
             </motion.div>
           }
         </CustomAnimatePresence>
-        {image &&
+        {currImage &&
           <button
             className={`${styles.modalBtn} ${styles.rightBtn}`}
             onClick={e => {
               e.stopPropagation();
-              getNextImage(Direction.Forward);
+              const nextImg = getNextImage(Direction.Forward, currImage);
+
+              if (nextImg === null) {
+                setModalContent(null);
+                return;
+              }
+              setCurrImage(nextImg);
             }}
           >
             <p>&gt;</p>

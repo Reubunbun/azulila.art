@@ -2,6 +2,7 @@ import type { ReactNode, FC } from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
+import { useUIContext } from '../../context/UIContext';
 import NavBar from '../../components/NavBar/NavBar';
 import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
 import styles from './Default.module.css';
@@ -38,6 +39,7 @@ const DefaultLayout: FC<Props> = ({
 }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
+  const { modalContent } = useUIContext();
 
   useEffect(() => {
     setMainTransitionStage(c_classFadeIn);
@@ -48,6 +50,19 @@ const DefaultLayout: FC<Props> = ({
       setMainTransitionStage(c_classFadeOut);
     }
   }, [children, setDisplayChildren, displayChildren]);
+
+  useEffect(() => {
+    const elHTML = document.querySelector('html');
+    if (!elHTML) {
+      return;
+    }
+
+    if (modalContent) {
+      elHTML.style.overflowY = 'hidden';
+    } else {
+      elHTML.style.overflowY = 'scroll';
+    }
+  }, [modalContent]);
 
   return (
     <>
@@ -116,6 +131,12 @@ const DefaultLayout: FC<Props> = ({
           <b>This website was created by Reuben Price - reuben.luke.p@gmail.com</b>
         </p>
       </footer>
+      <CustomAnimatePresence
+        initial={false}
+        exitBeforeEnter
+      >
+        {modalContent || <></>}
+      </CustomAnimatePresence>
     </>
   );
 };

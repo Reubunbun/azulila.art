@@ -212,6 +212,7 @@
         height: 100vh;
         flex-direction: row-reverse;
         justify-content: space-evenly;
+        gap: 1.5rem;
         align-items: center;
         margin-bottom: 0;
         transform: unset;
@@ -222,7 +223,7 @@
         cursor: unset;
 
         display: block;
-        max-width: 45vw;
+        max-width: 100%;
         max-height: 90vh;
         width: auto;
         height: auto;

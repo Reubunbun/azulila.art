@@ -6,7 +6,7 @@ import sql from 'mysql';
 import DaoPortfolioImages from '../../dao/images';
 import DaoTags from '../../dao/tags';
 import { motion, useAnimation } from 'framer-motion';
-import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
+import { useUIContext } from '../../context/UIContext';
 import BurgerButton from '../../components/BurgerButton/BurgerButton';
 import Filters from '../../components/Filters/Filters';
 import ImageItem from '../../components/ImageItem/ImageItem';
@@ -87,9 +87,10 @@ const Gallery: Page<Props> = ({images, tags}) => {
   const loadedImages = useRef<{[url: string]: boolean}>({});
   const firstColDiv = useRef<HTMLDivElement | null>(null);
 
+  const { setModalContent } = useUIContext();
+
   const [hideFilters, setHideFilters] = useState<boolean>(true);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
-  const [selectedImage, setSelectedImage] = useState<Image | false | null>(null);
   const [imageColumns, setImageColumns] = useState<Column[]>(
     c_genNewColumns(screenType),
   );
@@ -99,11 +100,48 @@ const Gallery: Page<Props> = ({images, tags}) => {
   }, []);
 
   const callbackClickImage = useCallback(
-    (image: Image) => setSelectedImage(image),
-    [],
+    (image: Image) => setModalContent(
+      <ImageModal
+        image={image}
+        close={() => setModalContent(null)}
+        getNextImage={(dir, currImage) => {
+          if (!currImage) return null;
+
+          const allImages: DisplayImage[] = imageColumns
+            .reduce(
+              (prev, curr) => [...prev, ...curr.items],
+              [] as DisplayImage[],
+            )
+            .sort((a, b) => a.priority - b.priority);
+
+          const currImageIndex = allImages.findIndex(img => img.url === currImage.url);
+          if (dir === Direction.Forward) {
+            if (currImageIndex + 1 === images.length) {
+              return null;
+            }
+            if (currImageIndex + 1 === allImages.length) {
+              return loadNextPage();
+            }
+
+            return allImages[currImageIndex + 1];
+          }
+
+          if (dir === Direction.Backward) {
+            if (currImageIndex === 0) {
+              return null;
+            }
+
+            return allImages[currImageIndex - 1];
+          }
+
+          return null;
+        }}
+      />
+    ),
+    [imageColumns],
   );
 
-  const loadNextPage = (setNextImage: boolean = false) => {
+  const loadNextPage = (currModalImg?: Image): Image | null => {
     const allImages: DisplayImage[] = [...images]
       .filter(image => selectedFilter
         ? image.tags.includes(selectedFilter)
@@ -113,7 +151,6 @@ const Gallery: Page<Props> = ({images, tags}) => {
 
     let imagesLoaded = 0;
     let foundUnloadedImage = false;
-    let imageToShow: Image | undefined;
     const imagesToLoad: DisplayImage[] = [];
     for (let i = 0; i < allImages.length; i++) {
       const image = allImages[i];
@@ -125,9 +162,7 @@ const Gallery: Page<Props> = ({images, tags}) => {
       if (!loadedImages.current[image.url]) {
         foundUnloadedImage = true;
         loadedImages.current[image.url] = true;
-        if (setNextImage && !imageToShow) {
-          imageToShow = image;
-        }
+
         if (imagesLoaded >= c_imageLimit) {
           break;
         }
@@ -159,9 +194,24 @@ const Gallery: Page<Props> = ({images, tags}) => {
 
     setImageColumns(newColumns);
 
-    if (imageToShow) {
-      setSelectedImage(imageToShow);
+    if (currModalImg) {
+      const allImages: DisplayImage[] = imageColumns
+        .reduce(
+          (prev, curr) => [...prev, ...curr.items],
+          [] as DisplayImage[],
+        )
+        .sort((a, b) => a.priority - b.priority);
+
+      const currImageIndex = allImages.findIndex(img => img.url === currModalImg.url);
+
+      if (currImageIndex + 1 === allImages.length) {
+        return null;
+      }
+
+      return allImages[currImageIndex + 1];
     }
+
+    return null;
   };
 
   useEffect(() => {
@@ -226,111 +276,64 @@ const Gallery: Page<Props> = ({images, tags}) => {
   }
 
   return (
-    <>
-      <div className={styles.galleryContainer}>
-        <div className={styles.containerTitle}>
-          {screenType === ScreenType.mobile &&
-            <BurgerButton
-              onClick={() => {
-                if (!hideFilters) {
-                  filterAnimation.start({
-                    opacity: 0,
-                    maxHeight: '0rem',
-                    transition: {
-                      duration: 0.35,
-                    },
-                  });
-                } else {
-                  filterAnimation.start({
-                    opacity: 1,
-                    maxHeight: '10rem',
-                    transition: {
-                      duration: 0.35,
-                    },
-                  });
-                }
-                setHideFilters(prev => !prev);
-              }}
-            />
-          }
-          <h2>Gallery</h2>
-        </div>
-        <motion.div
-          className={styles.containerToggleFilters}
-          initial={{opacity: 0, maxHeight: '0rem'}}
-          animate={filterAnimation}
-          exit={{opacity: 0, maxHeight: '0rem'}}
-        >
-          <Filters
-            filters={tags}
-            changeSelected={callbackChangeFilter}
-          />
-        </motion.div>
-        <div className={styles.containerAllColumns}>
-          {imageColumns.map((column, i) => (
-            <div
-              key={i}
-              ref={i === 0 ? firstColDiv : null}
-              className={styles.containerColumn}
-            >
-              {column.items.map(image => (
-                <Fragment key={image.url}>
-                  <ImageItem
-                    image={image}
-                    clickImage={callbackClickImage}
-                  />
-                </Fragment>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-      <CustomAnimatePresence
-        initial={false}
-        exitBeforeEnter={true}
-      >
-        {selectedImage !== null &&
-          <ImageModal
-            image={selectedImage}
-            close={() => setSelectedImage(null)}
-            getNextImage={dir => {
-              if (!selectedImage) return;
-
-              const allImages: DisplayImage[] = imageColumns
-                .reduce(
-                  (prev, curr) => [...prev, ...curr.items],
-                  [] as DisplayImage[],
-                )
-                .sort((a, b) => a.priority - b.priority);
-
-              const currImageIndex = allImages.findIndex(img => img.url === selectedImage.url);
-              if (dir === Direction.Forward) {
-                if (currImageIndex + 1 === images.length) {
-                  setSelectedImage(null);
-                  return;
-                }
-                if (currImageIndex + 1 === allImages.length) {
-                  setSelectedImage(false);
-                  loadNextPage(true);
-                  return;
-                }
-
-                setSelectedImage(allImages[currImageIndex + 1]);
+    <div className={styles.galleryContainer}>
+      <div className={styles.containerTitle}>
+        {screenType === ScreenType.mobile &&
+          <BurgerButton
+            onClick={() => {
+              if (!hideFilters) {
+                filterAnimation.start({
+                  opacity: 0,
+                  maxHeight: '0rem',
+                  transition: {
+                    duration: 0.35,
+                  },
+                });
+              } else {
+                filterAnimation.start({
+                  opacity: 1,
+                  maxHeight: '10rem',
+                  transition: {
+                    duration: 0.35,
+                  },
+                });
               }
-
-              if (dir === Direction.Backward) {
-                if (currImageIndex === 0) {
-                  setSelectedImage(null);
-                  return;
-                }
-
-                setSelectedImage(allImages[currImageIndex - 1]);
-              }
+              setHideFilters(prev => !prev);
             }}
           />
         }
-      </CustomAnimatePresence>
-    </>
+        <h2>Gallery</h2>
+      </div>
+      <motion.div
+        className={styles.containerToggleFilters}
+        initial={{opacity: 0, maxHeight: '0rem'}}
+        animate={filterAnimation}
+        exit={{opacity: 0, maxHeight: '0rem'}}
+      >
+        <Filters
+          filters={tags}
+          changeSelected={callbackChangeFilter}
+        />
+      </motion.div>
+      <div className={styles.containerAllColumns}>
+        {imageColumns.map((column, i) => (
+          <div
+            key={i}
+            ref={i === 0 ? firstColDiv : null}
+            className={styles.containerColumn}
+          >
+            {column.items.map(image => (
+              <Fragment key={image.url}>
+                <ImageItem
+                  image={image}
+                  clickImage={callbackClickImage}
+                />
+              </Fragment>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
