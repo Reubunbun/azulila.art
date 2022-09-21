@@ -7,13 +7,13 @@ import sharedStyles from '../shared.module.css';
 import styles from './BackgroundDesign.module.css';
 
 const c_backgroundDesignImages = [
-  '/popslinger/concept-art/1.png',
-  '/popslinger/concept-art/2.png',
-  '/popslinger/concept-art/3.png',
-  '/popslinger/concept-art/4.png',
-  '/popslinger/concept-art/6.png',
-  '/popslinger/concept-art/7.jpg',
-  '/popslinger/concept-art/test.png',
+  '/popslinger/backgrounds/Beach.png',
+  '/popslinger/backgrounds/City.png',
+  '/popslinger/backgrounds/Diner-Inside.png',
+  '/popslinger/backgrounds/Diner.png',
+  '/popslinger/backgrounds/NW.png',
+  '/popslinger/backgrounds/Planet.png',
+  '/popslinger/backgrounds/Set-District.png',
 ];
 
 const BackgroundDesign: FC = () => {

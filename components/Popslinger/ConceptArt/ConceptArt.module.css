@@ -4,6 +4,7 @@
 
 .textContainer, .textWithImageContainer {
     width: min(95%, 90rem);
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,6 +34,7 @@
     .textWithImageContainer {
         padding-bottom: 2rem;
         padding-top: .5rem;
+        height: 42rem;
     }
 
     .textWithImageContainer > p {

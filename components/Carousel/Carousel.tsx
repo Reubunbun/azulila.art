@@ -19,9 +19,10 @@ const c_imageAnimationOptions = {
 interface Props {
   images: string[];
   randomOrder: boolean;
+  maxHeight?: `${number}rem`;
 };
 
-const Carousel: FC<Props> = ({images, randomOrder}) => {
+const Carousel: FC<Props> = ({images, randomOrder, maxHeight}) => {
   const [imageIndex, setImageIndex] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const loadedImages = useRef<{[url: string]: boolean}>({[images[0]]: true});
@@ -67,6 +68,9 @@ const Carousel: FC<Props> = ({images, randomOrder}) => {
                 onLoad={() => {
                   imgTransitionAnimation.start(c_imageAnimationOptions);
                   loadedImages.current[images[imageIndex]] = true;
+                }}
+                style={{
+                  maxHeight: maxHeight,
                 }}
                 onClick={() => setModalOpen(true)}
                 key={imageIndex}

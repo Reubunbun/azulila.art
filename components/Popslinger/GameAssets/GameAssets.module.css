@@ -4,10 +4,10 @@
 
 .textContainer {
     width: min(95%, 90rem);
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding-top: .5rem;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
@@ -31,5 +31,6 @@
 @media only screen and (min-width: 1024px) {
     .carouselContainer {
         margin-top: 2rem;
+        height: 42rem;
     }
 }

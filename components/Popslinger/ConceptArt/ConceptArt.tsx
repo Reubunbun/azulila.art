@@ -1,19 +1,20 @@
 import { FC, useEffect } from 'react';
 import { memo, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { animate, motion, useAnimation } from 'framer-motion';
+import { useAnimation } from 'framer-motion';
 import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './ConceptArt.module.css';
 
-const c_placeholderImages = [
-  '/popslinger/concept-art/1.png',
-  '/popslinger/concept-art/2.png',
-  '/popslinger/concept-art/3.png',
-  '/popslinger/concept-art/4.png',
-  '/popslinger/concept-art/6.png',
-  '/popslinger/concept-art/7.jpg',
-  '/popslinger/concept-art/test.png',
+const c_conceptImages = [
+  '/popslinger/concept-art/Diner-Concept.png',
+  '/popslinger/concept-art/Maid-Outfits.png',
+  '/popslinger/concept-art/Other-Concept-1.png',
+  '/popslinger/concept-art/Other-Concept-2.png',
+  '/popslinger/concept-art/PurpleLounge-Concept-1.png',
+  '/popslinger/concept-art/PurpleLounge-Concept-2.png',
+  '/popslinger/concept-art/PurpleLounge-Concept-3.png',
+  '/popslinger/concept-art/RiaSketch.png',
 ];
 
 const Placeholder: FC = () => {
@@ -69,8 +70,9 @@ const Placeholder: FC = () => {
         </p>
         <div className={styles.carouselContainer}>
           <Carousel
-            images={c_placeholderImages}
+            images={c_conceptImages}
             randomOrder={false}
+            maxHeight='42rem'
           />
         </div>
       </div>

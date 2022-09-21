@@ -32,7 +32,7 @@ const Popslinger: Page = () => {
             </h1>
           }
           <img
-            src='/popslinger/Popslinger_Logo_T3.png'
+            src='/popslinger/popslinger-logo.png'
             alt='Logo for popslinger'
             onLoad={() => setLogoLoaded(true)}
             style={{display: logoLoaded ? undefined : 'none'}}
@@ -42,25 +42,25 @@ const Popslinger: Page = () => {
       <StaticContainer>
         <Summary />
       </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/backgrounds-title.jpg' imgAlt='fill this later'>
+      <ParallaxContainer imgSrc='/popslinger/backgrounds/Planet.png' imgAlt='fill this later'>
         <h1 className={styles.sectionTitle}>Background Design</h1>
       </ParallaxContainer>
       <StaticContainer>
         <BackgroundDesign />
       </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/concept-art/test.png' imgAlt='fill this later'>
+      <ParallaxContainer imgSrc='/popslinger/concept-art/PurpleLounge-Concept-3.png' imgAlt='fill this later'>
         <h1 className={styles.sectionTitle}>Concept Art</h1>
       </ParallaxContainer>
       <StaticContainer>
         <ConceptArt />
       </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/main-title.jpg' imgAlt='fill this later'>
+      <ParallaxContainer imgSrc='/popslinger/assets/Props1.png' imgAlt='fill this later'>
         <h1 className={styles.sectionTitle}>Game Assets</h1>
       </ParallaxContainer>
       <StaticContainer>
         <GameAssets />
       </StaticContainer>
-      <ParallaxContainer imgSrc='/popslinger/backgrounds-title.jpg' imgAlt='fill this later'>
+      <ParallaxContainer imgSrc='/popslinger/illustrations/Wave.png' imgAlt='fill this later'>
         <h1 className={styles.sectionTitle}>Promotional Comic</h1>
       </ParallaxContainer>
       <StaticContainer>

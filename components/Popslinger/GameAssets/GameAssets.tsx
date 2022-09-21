@@ -4,14 +4,12 @@ import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './GameAssets.module.css';
 
-const c_placeholderImages = [
-  '/popslinger/concept-art/1.png',
-  '/popslinger/concept-art/2.png',
-  '/popslinger/concept-art/3.png',
-  '/popslinger/concept-art/4.png',
-  '/popslinger/concept-art/6.png',
-  '/popslinger/concept-art/7.jpg',
-  '/popslinger/concept-art/test.png',
+const c_assetImages = [
+  '/popslinger/assets/Hub-Buildings.png',
+  '/popslinger/assets/Hub-Buildings2.png',
+  '/popslinger/assets/Profiles.png',
+  '/popslinger/assets/Props1.png',
+  '/popslinger/assets/Props2.png',
 ];
 
 const GameAssets: FC = () => {
@@ -28,8 +26,9 @@ const GameAssets: FC = () => {
         </p>
         <div className={styles.carouselContainer}>
           <Carousel
-            images={c_placeholderImages}
+            images={c_assetImages}
             randomOrder={false}
+            maxHeight='40rem'
           />
         </div>
       </div>
