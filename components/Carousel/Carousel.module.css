@@ -3,7 +3,7 @@
     height: 40vh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     cursor: pointer;
     height: 100%;
