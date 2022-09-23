@@ -38,6 +38,48 @@
     height: 100%;
 }
 
+.containerGifs {
+    transform: translateY(5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.containerGifs * {
+    position: relative;
+}
+.containerGifs *:first-child {
+    width: 154px;
+    height: 252px;
+    margin-left: 1rem;
+    margin-right: auto;
+}
+.containerGifs *:nth-child(2) {
+    width: 186px;
+    height: 246px;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.containerGifs .spriteSheet {
+    background-image: url('/popslinger/gifs/VictoryWSheet.png');
+    width: 512px;
+    height: 512px;
+    animation: sprite 1.5s steps(11) 1;
+    -webkit-animation: sprite 1.5s steps(10) 1;
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+
+    animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+
+    transform: scale(0.6) translateX(-15%);
+}
+@keyframes sprite {
+    0% { background-position: 0px; }
+    100% { background-position: -5120px; }
+}
+
 @media only screen and (min-width: 1024px) {
     .mainContainer {
         margin-top: 3rem;
@@ -47,5 +89,21 @@
     .youtubeWrapper h3 {
         margin-top: 1.75rem;
         margin-bottom: 1.5rem;
+    }
+
+    .containerGifs *:first-child {
+        width: 231px;
+        height: 378px;
+        margin-left: unset;
+        margin-right: 40rem;
+    }
+    .containerGifs *:nth-child(2) {
+        width: 279px;
+        height: 369px;
+        margin-left: 40rem;
+        margin-right: unset;
+    }
+    .containerGifs .spriteSheet {
+        transform: scale(0.75) translateX(-15%);
     }
 }
