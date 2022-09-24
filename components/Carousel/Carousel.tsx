@@ -50,79 +50,77 @@ const Carousel: FC<Props> = ({images, maxHeight, minHeight}) => {
   return (
     <div className={styles.containerCarouselImg}>
       <h4>Click the image to view full size!</h4>
-      <LazyLoad>
-        <CustomAnimatePresence exitBeforeEnter>
-          <motion.img
-            src={images[imageIndex]}
-            alt='Carousel Image'
-            onLoad={() => {
-              imgTransitionAnimation.start(c_imageAnimationOptions);
-              loadedImages.current[images[imageIndex]] = true;
-            }}
-            style={{ maxHeight, minHeight }}
-            onClick={() => setModalContent(
-              <ImageModal
-                image={{
-                  id: imageIndex,
-                  url: images[imageIndex],
-                  width: 0,
-                  height: 0,
-                  tags: [],
-                  priority: 0,
-                }}
-                close={() => setModalContent(false)}
-                getNextImage={(dir, currImage) => {
-                  if (!currImage) return null;
+      <CustomAnimatePresence exitBeforeEnter>
+        <motion.img
+          src={images[imageIndex]}
+          alt='Carousel Image'
+          onLoad={() => {
+            imgTransitionAnimation.start(c_imageAnimationOptions);
+            loadedImages.current[images[imageIndex]] = true;
+          }}
+          style={{ maxHeight, minHeight }}
+          onClick={() => setModalContent(
+            <ImageModal
+              image={{
+                id: imageIndex,
+                url: images[imageIndex],
+                width: 0,
+                height: 0,
+                tags: [],
+                priority: 0,
+              }}
+              close={() => setModalContent(false)}
+              getNextImage={(dir, currImage) => {
+                if (!currImage) return null;
 
-                  const currentIndex = images.findIndex(url => url === currImage?.url);
+                const currentIndex = images.findIndex(url => url === currImage?.url);
 
-                  if (dir === Direction.Forward) {
-                    const nextIndex = currentIndex === images.length - 1
-                      ? 0
-                      : currentIndex + 1;
+                if (dir === Direction.Forward) {
+                  const nextIndex = currentIndex === images.length - 1
+                    ? 0
+                    : currentIndex + 1;
 
-                    return {
-                      id: nextIndex,
-                      url: images[nextIndex],
-                      width: 0,
-                      height: 0,
-                      tags: [],
-                      priority: 0,
-                    };
-                  }
+                  return {
+                    id: nextIndex,
+                    url: images[nextIndex],
+                    width: 0,
+                    height: 0,
+                    tags: [],
+                    priority: 0,
+                  };
+                }
 
-                  if (dir === Direction.Backward) {
-                    const nextIndex = currentIndex === 1
-                      ? images.length - 1
-                      : currentIndex - 1;
+                if (dir === Direction.Backward) {
+                  const nextIndex = currentIndex === 1
+                    ? images.length - 1
+                    : currentIndex - 1;
 
-                    return {
-                      id: nextIndex,
-                      url: images[nextIndex],
-                      width: 0,
-                      height: 0,
-                      tags: [],
-                      priority: 0,
-                    };
-                  }
+                  return {
+                    id: nextIndex,
+                    url: images[nextIndex],
+                    width: 0,
+                    height: 0,
+                    tags: [],
+                    priority: 0,
+                  };
+                }
 
-                  return null;
-                }}
-                hideDescriptions={true}
-              />
-            )}
-            key={imageIndex}
-            initial={{
-              opacity: 0,
-            }}
-            animate={imgTransitionAnimation}
-            exit={{
-              opacity: 0,
-              transition: {...c_imageAnimationOptions.transition}
-            }}
-          />
-        </CustomAnimatePresence>
-      </LazyLoad>
+                return null;
+              }}
+              hideDescriptions={true}
+            />
+          )}
+          key={imageIndex}
+          initial={{
+            opacity: 0,
+          }}
+          animate={imgTransitionAnimation}
+          exit={{
+            opacity: 0,
+            transition: {...c_imageAnimationOptions.transition}
+          }}
+        />
+      </CustomAnimatePresence>
     </div>
   );
 };
