@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { memo, useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { Direction } from 'interfaces';
 import { useUIContext } from 'context/UIContext';
@@ -132,4 +132,4 @@ const Carousel: FC<Props> = ({images, maxHeight, minHeight}) => {
   );
 };
 
-export default memo(Carousel);
+export default Carousel;
