@@ -26,7 +26,6 @@ const GameAssets: FC = () => {
           <Carousel
             images={c_comicImages}
             maxHeight='40rem'
-            minHeight='20rem'
           />
         </div>
       </div>

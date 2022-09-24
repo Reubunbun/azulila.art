@@ -49,14 +49,14 @@
 }
 
 .containerGifs > div img:first-child {
-    width: 193px;
-    height: 315px;
+    width: 174px;
+    height: 284px;
     margin-right: auto;
     margin-left: 1rem;
 }
 .containerGifs > div img:last-child {
-    width: 233px;
-    height: 308px;
+    width: 210px;
+    height: 277px;
     margin-left: auto;
 }
 
