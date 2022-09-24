@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { useState, useEffect, useRef, memo } from 'react';
+import { type FC, useState, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import styles from './Filters.module.css';
 

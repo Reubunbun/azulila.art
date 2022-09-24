@@ -1,8 +1,8 @@
-import type { Page, Image } from '../../interfaces/index';
+import type { Page, Image } from 'interfaces/index';
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import scrollToTop from '../../helpers/smoothScroll';
-import WorkItem from '../../components/WorkItem/WorkItem';
+import scrollToTop from 'helpers/smoothScroll';
+import WorkItem from 'components/WorkItem/WorkItem';
 import styles from './Work.module.css';
 
 interface WorkItem {

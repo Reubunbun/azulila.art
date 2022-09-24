@@ -1,17 +1,16 @@
 import type { GetStaticProps } from 'next';
-import type { Page, Image } from '../../interfaces';
-import { ScreenType, Direction } from '../../interfaces';
+import {type Page, type Image, ScreenType, Direction } from 'interfaces';
 import { useState, useRef, useEffect, useCallback, Fragment } from 'react';
 import sql from 'mysql';
-import DaoPortfolioImages from '../../dao/images';
-import DaoTags from '../../dao/tags';
+import DaoPortfolioImages from 'dao/images';
+import DaoTags from 'dao/tags';
 import { motion, useAnimation } from 'framer-motion';
-import { useUIContext } from '../../context/UIContext';
-import BurgerButton from '../../components/BurgerButton/BurgerButton';
-import Filters from '../../components/Filters/Filters';
-import ImageItem from '../../components/ImageItem/ImageItem';
-import ImageModal from '../../components/ImageModal/ImageModal';
-import useScreenType from '../../hooks/useScreenType';
+import { useUIContext } from 'context/UIContext';
+import BurgerButton from 'components/BurgerButton/BurgerButton';
+import Filters from 'components/Filters/Filters';
+import ImageItem from 'components/ImageItem/ImageItem';
+import ImageModal from 'components/ImageModal/ImageModal';
+import useScreenType from 'hooks/useScreenType';
 import styles from './Gallery.module.css';
 
 interface Props {

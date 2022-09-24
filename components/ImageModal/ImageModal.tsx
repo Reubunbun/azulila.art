@@ -1,11 +1,10 @@
 import type { FC } from 'react';
-import { Image as ImageType, ScreenType } from '../../interfaces';
+import { Image as ImageType, ScreenType, Direction } from 'interfaces';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Direction } from '../../interfaces';
-import { useUIContext } from '../../context/UIContext';
+import { useUIContext } from 'context/UIContext';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
-import useScreenType from '../../hooks/useScreenType';
+import useScreenType from 'hooks/useScreenType';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ModalBackdrop from '../ModalBackdrop/ModalBackdrop';
 import ImageItem from '../ImageItem/ImageItem';

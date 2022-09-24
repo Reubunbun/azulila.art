@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { memo, useEffect, useRef } from 'react';
+import { type FC, memo, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
 import Carousel from '../../Carousel/Carousel';

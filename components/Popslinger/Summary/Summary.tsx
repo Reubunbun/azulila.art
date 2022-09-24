@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { memo, useEffect, useRef, MutableRefObject } from 'react';
+import { type FC, memo, useEffect, useRef, MutableRefObject } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
 import sharedStyles from '../shared.module.css';

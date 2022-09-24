@@ -1,10 +1,10 @@
-import type { Page } from '../../../interfaces';
+import type { Page } from 'interfaces';
 import { useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
-import { useCommissionContext } from '../../../context/CommissionContext';
-import CommissionHeaderText from '../../../components/CommissionHeaderText/CommissionHeaderText';
-import scrollToTop from '../../../helpers/smoothScroll';
+import { useCommissionContext } from 'context/CommissionContext';
+import CommissionHeaderText from 'components/CommissionHeaderText/CommissionHeaderText';
+import scrollToTop from 'helpers/smoothScroll';
 import styles from './DescribeCharacters.module.css';
 
 const c_maxFilesPerCharacter = 6;

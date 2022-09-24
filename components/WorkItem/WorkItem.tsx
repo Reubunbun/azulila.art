@@ -1,8 +1,7 @@
-import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
-import type { Image } from '../../interfaces';
+import type { Image } from 'interfaces';
 import ImageItem from '../ImageItem/ImageItem';
 import styles from './WorkItem.module.css';
 

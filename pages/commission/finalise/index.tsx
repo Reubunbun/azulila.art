@@ -1,13 +1,13 @@
-import type { Page, CommissionPost } from '../../../interfaces';
+import type { Page, CommissionPost } from 'interfaces';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import { useCommissionContext } from '../../../context/CommissionContext';
-import RadioButtons from '../../../components/RadioButtons/RadioButtons';
-import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
-import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import scrollToTop from '../../../helpers/smoothScroll';
+import { useCommissionContext } from 'context/CommissionContext';
+import RadioButtons from 'components/RadioButtons/RadioButtons';
+import CustomAnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import scrollToTop from 'helpers/smoothScroll';
 import styles from './Finalise.module.css';
 
 interface PermissionOption {

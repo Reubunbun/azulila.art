@@ -1,13 +1,13 @@
-import type { Page } from '../../../interfaces/index';
+import type { Page } from 'interfaces';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import StaticContainer from '../../../components/Popslinger/StaticContainer/StaticContainer';
-import ParallaxContainer from '../../../components/Popslinger/ParallaxContainer/ParallaxContainer';
-import Summary from '../../../components/Popslinger/Summary/Summary';
-import BackgroundDesign from '../../../components/Popslinger/BackgroundDesign/BackgroundDesign';
-import ConceptArt from '../../../components/Popslinger/ConceptArt/ConceptArt';
-import GameAssets from '../../../components/Popslinger/GameAssets/GameAssets';
-import PromotionalComic from '../../../components/Popslinger/PromotionalComic/PromotionalComic';
+import StaticContainer from 'components/Popslinger/StaticContainer/StaticContainer';
+import ParallaxContainer from 'components/Popslinger/ParallaxContainer/ParallaxContainer';
+import Summary from 'components/Popslinger/Summary/Summary';
+import BackgroundDesign from 'components/Popslinger/BackgroundDesign/BackgroundDesign';
+import ConceptArt from 'components/Popslinger/ConceptArt/ConceptArt';
+import GameAssets from 'components/Popslinger/GameAssets/GameAssets';
+import PromotionalComic from 'components/Popslinger/PromotionalComic/PromotionalComic';
 import styles from './Popslinger.module.css';
 
 const Popslinger: Page = () => {

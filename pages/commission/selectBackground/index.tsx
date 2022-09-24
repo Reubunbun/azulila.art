@@ -1,12 +1,12 @@
-import { Page } from '../../../interfaces';
+import { Page } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
 import { useRef, useEffect } from 'react';
-import { useCommissionContext } from '../../../context/CommissionContext';
-import CommissionHeaderText from '../../../components/CommissionHeaderText/CommissionHeaderText';
-import RadioButtons from '../../../components/RadioButtons/RadioButtons';
-import CustomAnimatePresence from '../../../components/CustomAnimatePresence/CustomAnimatePresence';
-import scrollToTop from '../../../helpers/smoothScroll';
+import { useCommissionContext } from 'context/CommissionContext';
+import CommissionHeaderText from 'components/CommissionHeaderText/CommissionHeaderText';
+import RadioButtons from 'components/RadioButtons/RadioButtons';
+import CustomAnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
+import scrollToTop from 'helpers/smoothScroll';
 import selectStyles from '../selectType/SelectType.module.css';
 import styles from './SelectBackground.module.css';
 

@@ -1,10 +1,10 @@
-import type { Page } from '../../interfaces/index';
+import type { Page } from 'interfaces';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { useCommissionContext } from '../../context/CommissionContext';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
-import scrollToTop from '../../helpers/smoothScroll';
+import { useCommissionContext } from 'context/CommissionContext';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
+import scrollToTop from 'helpers/smoothScroll';
 import styles from './Commission.module.css';
 
 const c_ToSList: string[] = [

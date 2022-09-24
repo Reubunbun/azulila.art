@@ -2,9 +2,9 @@ import type { ReactNode, FC } from 'react';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
-import { useUIContext } from '../../context/UIContext';
-import NavBar from '../../components/NavBar/NavBar';
-import CustomAnimatePresence from '../../components/CustomAnimatePresence/CustomAnimatePresence';
+import { useUIContext } from 'context/UIContext';
+import NavBar from 'components/NavBar/NavBar';
+import CustomAnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
 import styles from './Default.module.css';
 
 interface Props {

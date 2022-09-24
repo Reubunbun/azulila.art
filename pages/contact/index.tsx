@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
-import type { Page } from '../../interfaces/index';
+import type { Page } from 'interfaces';
 import ReCAPTCHA from 'react-google-recaptcha';
 import axios from 'axios';
-import LoadingSpinner from '../../components/LoadingSpinner/LoadingSpinner';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './Contact.module.css';
 
 const Contact: Page = () => {

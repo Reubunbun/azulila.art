@@ -1,13 +1,12 @@
-import type { FC } from 'react';
-import { useState, useEffect, memo } from 'react';
+import { type FC, useState, useEffect, memo } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ScreenType } from '../../interfaces';
-import { useCommissionContext } from '../../context/CommissionContext';
-import scrollToTop from '../../helpers/smoothScroll';
-import useScreenType from '../../hooks/useScreenType';
+import { ScreenType } from 'interfaces';
+import { useCommissionContext } from 'context/CommissionContext';
+import scrollToTop from 'helpers/smoothScroll';
+import useScreenType from 'hooks/useScreenType';
 import BurgerButton from '../BurgerButton/BurgerButton';
 import styles from './NavBar.module.css';
 

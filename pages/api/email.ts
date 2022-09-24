@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { GenericError } from '../../interfaces';
+import type { GenericError } from 'interfaces';
 import aws from 'aws-sdk';
 import Handlebars from 'handlebars';
 import fs from 'fs';
@@ -22,14 +22,14 @@ export default async function handler(
 
     let recaptchaIsValid = false;
     try {
-        const recaptchaResponse = await axios({
-          method: 'POST',
-          url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${ReCaptchaToken}`
-        });
+      const recaptchaResponse = await axios({
+        method: 'POST',
+        url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${ReCaptchaToken}`
+      });
 
-        if (recaptchaResponse.data?.success) {
-            recaptchaIsValid = true;
-        }
+      if (recaptchaResponse.data?.success) {
+        recaptchaIsValid = true;
+      }
     } catch (err) {
       console.log('recaptcha req error:', err);
     }

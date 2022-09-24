@@ -1,5 +1,4 @@
-import type { FC, ReactNode } from 'react';
-import { useRef } from 'react';
+import { type FC, type ReactNode, useRef } from 'react';
 import { motion, useTransform, useViewportScroll } from 'framer-motion';
 import styles from './ParallaxContainer.module.css';
 

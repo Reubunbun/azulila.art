@@ -1,6 +1,5 @@
-import type { FC, Ref } from 'react';
-import type { Image as ImageType } from '../../interfaces';
-import { memo, useState } from 'react';
+import { type FC, type Ref, memo, useState } from 'react';
+import type { Image as ImageType } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';

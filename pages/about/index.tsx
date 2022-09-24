@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { Page } from '../../interfaces/index';
+import type { Page } from 'interfaces';
 import styles from './About.module.css';
 
 const About: Page = () => {

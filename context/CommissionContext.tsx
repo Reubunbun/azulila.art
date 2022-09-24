@@ -1,9 +1,16 @@
-import { FC, ReactNode, useEffect, Dispatch } from 'react';
+import {
+  type FC,
+  type ReactNode,
+  type Dispatch,
+  createContext,
+  useState,
+  useContext,
+  useReducer,
+} from 'react';
 import type {
   CommissionData as CommissionResponseData,
   CommissionType,
-} from '../interfaces/index';
-import { createContext, useState, useContext, useReducer } from 'react';
+} from 'interfaces';
 import axios from 'axios';
 
 /** USER STATE DEFINITION */
@@ -352,10 +359,6 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
       })
       .catch(console.dir);
   };
-
-  useEffect(() => {
-
-  }, []);
 
   return (
     <CommissionContext.Provider

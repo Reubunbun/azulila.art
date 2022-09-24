@@ -4,15 +4,15 @@ import type {
   GenericError,
   CommissionType,
   CommissionPost,
-} from '../../interfaces';
+} from 'interfaces';
 import aws from 'aws-sdk';
 import sql from 'mysql';
 import Handlebars from 'handlebars';
 import fs from 'fs';
 import path from 'path';
-import DaoCommissionSpaces from '../../dao/commissions';
-import DaoCommissionBaseType from '../../dao/CommissionBaseType';
-import DaoCommissionBackgroundType from '../../dao/CommissionBackgroundType';
+import DaoCommissionSpaces from 'dao/commissions';
+import DaoCommissionBaseType from 'dao/CommissionBaseType';
+import DaoCommissionBackgroundType from 'dao/CommissionBackgroundType';
 
 export default async function handler(
   req: NextApiRequest,

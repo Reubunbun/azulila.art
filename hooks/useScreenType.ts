@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ScreenType } from '../interfaces';
+import { ScreenType } from 'interfaces';
 
 const c_determinScreenType = (mobileThreshold: number): ScreenType => {
   if (typeof window === 'undefined') return ScreenType.desktop;

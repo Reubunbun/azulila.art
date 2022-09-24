@@ -1,4 +1,4 @@
-import type { Page } from '../../../interfaces';
+import type { Page } from 'interfaces';
 
 const Work: Page = () => {
   return (
