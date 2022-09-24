@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { memo, useState, useRef, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import LazyLoad from 'react-lazyload';
 import { Direction } from 'interfaces';
 import { useUIContext } from 'context/UIContext';
 import CustomAnimatePresence from '../CustomAnimatePresence/CustomAnimatePresence';
@@ -46,6 +45,14 @@ const Carousel: FC<Props> = ({images, maxHeight, minHeight}) => {
 
     return () => clearInterval(intervalId);
   }, [modalContent]);
+
+  useEffect(() => {
+    if (!loadedImages.current[images[imageIndex]]) {
+      return;
+    }
+
+    imgTransitionAnimation.start(c_imageAnimationOptions);
+  }, [imageIndex]);
 
   return (
     <div className={styles.containerCarouselImg}>

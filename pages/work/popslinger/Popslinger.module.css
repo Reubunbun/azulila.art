@@ -1,5 +1,6 @@
 .sectionTitle {
     font-size: clamp(3.5rem, 1.4545rem + 10.2273vw, 8rem);
+    line-height: clamp(3.65rem, 1.2102rem + 10.8434vw, 8.15rem);
     padding-top: 10rem;
     text-align: center;
     text-shadow: 2px 2px 8px #FF0000;
