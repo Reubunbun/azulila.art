@@ -1,8 +1,10 @@
 .sectionSubTitle {
+    margin-bottom: 1rem;
     text-align: center;
     color: #e95e4c;
     font-weight: bold;
-    font-size: clamp(1.7rem, 1.1091rem + 2.9545vw, 3rem);
+    font-size: clamp(2.1rem, 1.6120rem + 2.1687vw, 3rem);
+    line-height: clamp(2.25rem, 1.7620rem + 2.1687vw, 3.15rem);
 }
 
 .textContainer > p {

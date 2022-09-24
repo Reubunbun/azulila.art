@@ -39,26 +39,25 @@
 }
 
 .containerGifs {
-    transform: translateY(5rem);
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
 }
-.containerGifs * {
-    position: relative;
+
+.containerGifs > div {
+    display: flex;
 }
-.containerGifs *:first-child {
-    width: 154px;
-    height: 252px;
-    margin-left: 1rem;
+
+.containerGifs > div img:first-child {
+    width: 193px;
+    height: 315px;
     margin-right: auto;
+    margin-left: 1rem;
 }
-.containerGifs *:nth-child(2) {
-    width: 186px;
-    height: 246px;
+.containerGifs > div img:last-child {
+    width: 233px;
+    height: 308px;
     margin-left: auto;
-    margin-right: 1rem;
 }
 
 .containerGifs .spriteSheet {
@@ -73,7 +72,11 @@
     animation-play-state: paused;
     -webkit-animation-play-state: paused;
 
-    transform: scale(0.6) translateX(-15%);
+    transform:
+        scale(0.7)
+        translateX(-25%)
+        translateY(-5%)
+    ;
 }
 @keyframes sprite {
     0% { background-position: 0px; }
@@ -91,19 +94,31 @@
         margin-bottom: 1.5rem;
     }
 
-    .containerGifs *:first-child {
+    .containerGifs {
+        align-items: center;
+    }
+
+    .containerGifs > div {
+        display: flex;
+        justify-content: center;
+        gap: 5rem;
+    }
+
+    .containerGifs > div img:first-child {
         width: 231px;
         height: 378px;
-        margin-left: unset;
-        margin-right: 40rem;
+        margin-left: 0rem;
+        margin-right: 0rem;
     }
-    .containerGifs *:nth-child(2) {
+    .containerGifs > div img:last-child {
         width: 279px;
         height: 369px;
-        margin-left: 40rem;
-        margin-right: unset;
+        margin-left: 0rem;
+        margin-right: 0rem;
     }
     .containerGifs .spriteSheet {
-        transform: scale(0.75) translateX(-15%);
+        transform:
+            scale(0.75)
+            translateX(-25%);
     }
 }

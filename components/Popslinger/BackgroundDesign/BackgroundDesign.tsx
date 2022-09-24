@@ -60,7 +60,7 @@ const BackgroundDesign: FC = () => {
         >
           <Carousel
             images={c_backgroundDesignImages}
-            randomOrder={false}
+            minHeight='10rem'
           />
         </motion.div>
       </div>
@@ -70,7 +70,8 @@ const BackgroundDesign: FC = () => {
         className={`${sharedStyles.textContainer} ${styles.textContainer}`}
       >
         <p>
-          Background design was something that I wanted to focus in my art career and this game shows my knowledge regarding this area, I learned how to apply it from an animation viewpoint to a video game one, which include background assets, floor tiles, props and more.<br />My inspirations while designing these assets included games, artists and musicians like The World Ends With You, Streets of Rage, Hiroshi Nagai and Tatsuro Yamashita.
+          Background design was something that I wanted to focus in my art career and this game shows my knowledge regarding this area, I learned how to apply it from an animation viewpoint to a video game one, which include background assets, floor tiles, props and more. <br />
+          My inspirations while designing these assets included games, artists and musicians like The World Ends With You, Streets of Rage, Hiroshi Nagai and Tatsuro Yamashita.
         </p>
       </motion.div>
     </>

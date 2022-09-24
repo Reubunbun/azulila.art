@@ -1,6 +1,6 @@
 .sectionTitle {
     font-size: clamp(3.5rem, 1.4545rem + 10.2273vw, 8rem);
-    padding-top: 6rem;
+    padding-top: 10rem;
     text-align: center;
     text-shadow: 2px 2px 8px #FF0000;
     color: #fffae6;
@@ -41,11 +41,16 @@
 }
 
 .containerLogo {
+    margin-top: 5rem;
     position: relative;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.containerLogo h1 {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
 }
 
 .containerLogo img {
@@ -81,6 +86,10 @@
 }
 
 @media only screen and (min-width: 1024px) {
+    .containerLogo {
+        margin-top: 0;
+    }
+
     .sectionTitle {
         padding-top: 11rem;
     }

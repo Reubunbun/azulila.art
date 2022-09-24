@@ -56,7 +56,7 @@ const Summary: FC = () => {
     if (gifContainerInView) {
       animGif1.start({
         opacity: 1,
-        top: '0px',
+        y: '0rem',
         transition: {
           type: 'tween',
           duration: animDuration,
@@ -64,7 +64,7 @@ const Summary: FC = () => {
       });
       animGif2.start({
         opacity: 1,
-        top: '-13%',
+        y: '4rem',
         transition: {
           type: 'tween',
           duration: animDuration,
@@ -73,7 +73,6 @@ const Summary: FC = () => {
       });
       animGif3.start({
         opacity: 1,
-        top: '-22%',
         transition: {
           type: 'tween',
           duration: animDuration,
@@ -139,28 +138,29 @@ const Summary: FC = () => {
         ref={gifContainerRef}
         className={styles.containerGifs}
       >
-        <motion.img
-          initial={{
-            opacity: 0,
-            top: '15%',
-          }}
-          animate={animGif1}
-          src='/popslinger/gifs/Gin.gif'
-          alt='Gin talking gif'
-        />
-        <motion.img
-          initial={{
-            opacity: 0,
-            top: '0%',
-          }}
-          animate={animGif2}
-          src='/popslinger/gifs/RiaProfile.gif'
-          alt='Ria talking gif'
-        />
+        <div>
+          <motion.img
+            initial={{
+              opacity: 0,
+              y: '-4rem'
+            }}
+            animate={animGif1}
+            src='/popslinger/gifs/Gin.gif'
+            alt='Gin talking gif'
+          />
+          <motion.img
+            initial={{
+              opacity: 0,
+              y: '-4rem'
+            }}
+            animate={animGif2}
+            src='/popslinger/gifs/RiaProfile.gif'
+            alt='Ria talking gif'
+          />
+        </div>
         <motion.div
           initial={{
             opacity: 0,
-            top: '0%',
           }}
           animate={animGif3}
           className={styles.spriteSheet}
