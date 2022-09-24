@@ -60,7 +60,7 @@ const BackgroundDesign: FC = () => {
         >
           <Carousel
             images={c_backgroundDesignImages}
-            minHeight='10rem'
+            minHeight='15rem'
           />
         </motion.div>
       </div>

@@ -70,7 +70,6 @@ const Placeholder: FC = () => {
         <div className={styles.carouselContainer}>
           <Carousel
             images={c_conceptImages}
-            randomOrder={false}
             maxHeight='42rem'
           />
         </div>

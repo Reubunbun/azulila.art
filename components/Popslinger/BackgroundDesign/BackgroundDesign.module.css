@@ -1,3 +1,7 @@
+.carouselContainer {
+    width: 100%;
+}
+
 .textContainer, .textWithImageContainer {
     width: min(95%, 90rem);
     display: flex;
