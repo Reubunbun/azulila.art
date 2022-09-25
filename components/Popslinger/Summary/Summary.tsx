@@ -52,7 +52,7 @@ const Summary: FC = () => {
   }, [mainContainerInView]);
 
   useEffect(() => {
-    const animDuration = 1.2;
+    const animDuration = 0.8;
     if (gifContainerInView) {
       animGif1.start({
         opacity: 1,

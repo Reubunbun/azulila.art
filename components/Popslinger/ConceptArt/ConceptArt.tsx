@@ -1,6 +1,6 @@
 import { type FC, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useAnimation } from 'framer-motion';
+import { useAnimation, motion } from 'framer-motion';
 import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './ConceptArt.module.css';
@@ -17,64 +17,57 @@ const c_conceptImages = [
 ];
 
 const Placeholder: FC = () => {
-  const slowTextAnimation = useAnimation();
-  const fastTextAnimation = useAnimation();
+  const textAnimation = useAnimation();
   const imgAnimation = useAnimation();
-  const refCarouselContainer = useRef<HTMLDivElement>(null);
-  const { ref, inView } = useInView({ threshold: 0.8 });
+  const { ref, inView } = useInView({ threshold: 0.5 });
 
   useEffect(() => {
     if (inView) {
-      slowTextAnimation.start({
-        x: '0%',
+      textAnimation.start({
         opacity: 1,
         transition: {
-          type: 'tween',
-          duration: 1.2,
-        },
-      });
-      fastTextAnimation.start({
-        x: '0%',
-        opacity: 1,
-        transition: {
-          duration: 1.2,
+          duration: 1,
         },
       });
       imgAnimation.start({
-        x: '0%',
         opacity: 1,
         transition: {
-          type: 'tween',
-          duration: 0.6,
+          duration: 1,
+          delay: 0.5,
         },
-      }).then(() => {
-        if (refCarouselContainer.current) {
-          refCarouselContainer.current.classList.add(sharedStyles.overrideTransform);
-        }
       });
     }
   }, [inView]);
 
   return (
-    <>
-      <h3 className={`${sharedStyles.sectionSubTitle} ${styles.sectionSubTitle}`}>
-        Concept Art
-      </h3>
-      <div
-        ref={ref}
-        className={`${sharedStyles.textContainer} ${styles.textWithImageContainer}`}
+    <div
+      ref={ref}
+      className={`${sharedStyles.textContainer} ${styles.textWithImageContainer}`}
+    >
+      <motion.h3
+        initial={{opacity: 0}}
+        animate={textAnimation}
+        className={`${sharedStyles.sectionSubTitle} ${styles.sectionSubTitle}`}
       >
-        <p>
-          We went through various different stages for the backgrounds and character design, but we eventually picked the best option after many decisions.
-        </p>
-        <div className={styles.carouselContainer}>
-          <Carousel
-            images={c_conceptImages}
-            maxHeight='70vh'
-          />
-        </div>
-      </div>
-    </>
+        Concept Art
+      </motion.h3>
+      <motion.p
+        initial={{opacity: 0}}
+        animate={textAnimation}
+      >
+        We went through various different stages for the backgrounds and character design, but we eventually picked the best option after many decisions.
+      </motion.p>
+      <motion.div
+        className={styles.carouselContainer}
+        initial={{opacity: 0}}
+        animate={imgAnimation}
+      >
+        <Carousel
+          images={c_conceptImages}
+          maxHeight='70vh'
+        />
+      </motion.div>
+    </div>
   );
 };
 

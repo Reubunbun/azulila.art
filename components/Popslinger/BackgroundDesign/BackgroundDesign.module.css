@@ -30,6 +30,7 @@
 @media only screen and (min-width: 1024px) {
     .sectionSubTitle {
         margin-bottom: 0;
+        margin-top: 1.5rem;
     }
 
     .textContainer {
@@ -40,7 +41,7 @@
     .textWithImageContainer {
         flex-direction: row;
         padding-bottom: 2rem;
-        padding-top: 4rem;
+        padding-top: 3rem;
     }
 
 
