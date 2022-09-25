@@ -30,6 +30,7 @@ const ImageItem: FC<Props> = ({
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState(false);
   const localImgRef = useRef<HTMLImageElement>(null);
+  const pingAttempts = useRef<number>(0);
 
   const imgLoadCallback = () => {
     imgAnimation.start({
@@ -54,16 +55,30 @@ const ImageItem: FC<Props> = ({
   };
 
   useLayoutEffect(() => {
-    const refToUse = imgRef || localImgRef;
-    if (!refToUse?.current) {
-      setHasLoaded(true);
-      return;
-    }
+    const intervalId = setInterval(() => {
+      if (hasLoaded) {
+        clearInterval(intervalId);
+        return;
+      }
 
-    if (refToUse.current.complete && refToUse.current.naturalHeight !== 0) {
-      imgLoadCallback();
-    }
-  }, [imgRef]);
+      if (pingAttempts.current >= 10) {
+        clearInterval(intervalId);
+        return;
+      }
+
+      const refToUse = imgRef || localImgRef;
+
+      if (!refToUse?.current) {
+        return;
+      }
+
+      if (refToUse.current.complete && refToUse.current.naturalHeight !== 0) {
+        imgLoadCallback();
+      }
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, [imgRef, hasLoaded]);
 
   const imgComponent = <motion.img
     initial={{opacity: 0}}
