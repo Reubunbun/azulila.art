@@ -272,6 +272,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
               }}
             >
               <motion.p
+                unselectable={'on'}
                 className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
                   !dontAnimate && c_desktopSizes.includes(screenType)
