@@ -327,36 +327,36 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
   const fetchCommissionData = async () => {
     if (madeCommissionRequest) return;
 
-    axios({
+    const { data } = await axios({
       method: 'GET',
       url: '/api/commission',
-    })
-      .then(({data}: {data: CommissionResponseData}) => {
-        setMadeCommissionRequest(true);
-        setCommissionServerData(prev => ({
-          spaces: data.spaces,
-          baseTypes: data.baseTypes.map(baseType => ({
-            ...baseType,
-            actualPrice: calcActualPrice(baseType.price, baseType.offer),
-          })),
-          backgroundTypes: [
-            ...prev.backgroundTypes,
-            ...data.backgroundTypes.map(backgroundType => ({
-              ...backgroundType,
-              actualPrice: calcActualPrice(backgroundType.price, backgroundType.offer),
-            })),
-          ],
-        }));
+    }) as {data: CommissionResponseData}
 
-        const defaultSelectedBase = data.baseTypes[0];
-        dispatch({
-          type: 'BASE',
-          payload: {
-            ...defaultSelectedBase,
-            actualPrice: calcActualPrice(defaultSelectedBase.price, defaultSelectedBase.offer),
-          },
-        });
-      })
+    setMadeCommissionRequest(true);
+    setCommissionServerData(prev => ({
+      spaces: data.spaces,
+      baseTypes: data.baseTypes.map(baseType => ({
+        ...baseType,
+        actualPrice: calcActualPrice(baseType.price, baseType.offer),
+      })),
+      backgroundTypes: [
+        ...prev.backgroundTypes,
+        ...data.backgroundTypes.map(backgroundType => ({
+          ...backgroundType,
+          actualPrice: calcActualPrice(backgroundType.price, backgroundType.offer),
+        })),
+      ],
+    }));
+
+    const defaultSelectedBase = data.baseTypes[0];
+    dispatch({
+      type: 'BASE',
+      payload: {
+        ...defaultSelectedBase,
+        actualPrice: calcActualPrice(defaultSelectedBase.price, defaultSelectedBase.offer),
+      },
+    });
+
   };
 
   return (
