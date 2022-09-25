@@ -39,6 +39,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
+  background-color: #f5c9d5;
   background-image: url('/backgrounds/main-bg.gif');
   background-repeat: repeat;
 }
