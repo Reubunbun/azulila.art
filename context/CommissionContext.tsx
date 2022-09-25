@@ -357,7 +357,6 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
           },
         });
       })
-      .catch(console.dir);
   };
 
   return (

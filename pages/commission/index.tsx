@@ -1,6 +1,6 @@
 import type { Page } from 'interfaces';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCommissionContext } from 'context/CommissionContext';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
@@ -21,6 +21,7 @@ const c_ToSList: string[] = [
 ];
 
 const Commission: Page = () => {
+  const [networkError, setNetworkError] = useState<boolean>(false);
   const router = useRouter();
   const {
     spacesOpen,
@@ -29,7 +30,7 @@ const Commission: Page = () => {
   } = useCommissionContext();
 
   useEffect(() => {
-    fetchCommissionData();
+    fetchCommissionData().catch(() => setNetworkError(true));
     dispatchUserState({type: 'PAGE', payload: router.pathname});
   }, []);
 
@@ -50,13 +51,23 @@ const Commission: Page = () => {
         }}
         className={styles.containerTerms}
       >
-        {spacesOpen === null &&
+        {!networkError && spacesOpen === null &&
           <div style={{marginBottom: '1rem'}}>
             <LoadingSpinner
               loadingText='Checking Availability...'
               width='9rem'
             />
           </div>
+        }
+        {networkError &&
+          <p style={{
+            width: '100%',
+            marginTop: 0,
+            textAlign: 'center'
+          }}>
+            There was a network error, please try refreshing the page. <br/>
+            If this problem persists, please feel free to email me your request at azulilah.art@gmail.com
+          </p>
         }
         {spacesOpen === 0 &&
           <p style={{
