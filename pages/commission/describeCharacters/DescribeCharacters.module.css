@@ -98,12 +98,16 @@
 .containerFile b {
     margin-bottom: .3rem;
     max-width: 85%;
+    height: 100%;
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
 }
 .containerFile span {
     width: 15%;
+    transform: translateY(-25%);
     text-align: center;
     font-size: clamp(1.3rem, 1.2020rem + 0.4898vw, 1.6rem);
     color: var(--font-warning);

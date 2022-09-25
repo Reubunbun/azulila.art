@@ -1,4 +1,4 @@
-import { type FC, type Ref, memo, useState } from 'react';
+import { type FC, type RefObject, memo, useState, useLayoutEffect, useRef} from 'react';
 import type { Image as ImageType } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
@@ -10,7 +10,7 @@ interface Props {
   image: ImageType;
   maxHeight?: string;
   onLoad?: () => void;
-  imgRef?: Ref<HTMLImageElement>;
+  imgRef?: RefObject<HTMLImageElement>;
   loadingText?: string;
   simpleLoadStyle?: boolean;
   dontLazyLoad?: boolean;
@@ -29,6 +29,41 @@ const ImageItem: FC<Props> = ({
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState(false);
+  const localImgRef = useRef<HTMLImageElement>(null);
+
+  const imgLoadCallback = () => {
+    imgAnimation.start({
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        type: 'tween',
+      },
+    });
+    placeholderAnimation.start({
+      opacity: 0,
+      transition: {
+        duration: 0.8,
+        type: 'tween',
+      },
+    });
+    setHasLoaded(true);
+
+    if (onLoad) {
+      onLoad();
+    }
+  };
+
+  useLayoutEffect(() => {
+    const refToUse = imgRef || localImgRef;
+    if (!refToUse?.current) {
+      setHasLoaded(true);
+      return;
+    }
+
+    if (refToUse.current.complete && refToUse.current.naturalHeight !== 0) {
+      imgLoadCallback();
+    }
+  }, [imgRef]);
 
   const imgComponent = <motion.img
     initial={{opacity: 0}}
@@ -37,34 +72,14 @@ const ImageItem: FC<Props> = ({
     className={styles.imageItem}
     src={image.url}
     alt={image.description}
-    ref={imgRef ? imgRef : undefined}
+    ref={imgRef ? imgRef : localImgRef}
     onClick={e => {
       e.stopPropagation();
       if (clickImage) {
         clickImage(image);
       }
     }}
-    onLoad={() => {
-      imgAnimation.start({
-        opacity: 1,
-        transition: {
-          duration: 0.8,
-          type: 'tween',
-        },
-      });
-      placeholderAnimation.start({
-        opacity: 0,
-        transition: {
-          duration: 0.8,
-          type: 'tween',
-        },
-      });
-      setHasLoaded(true);
-
-      if (onLoad) {
-        onLoad();
-      }
-    }}
+    onLoad={imgLoadCallback}
   />;
 
   return (
@@ -96,9 +111,7 @@ const ImageItem: FC<Props> = ({
           exit={{opacity: 0}}
           className={`${styles.placeholder} ${simpleLoadStyle ? styles.hideBreathing : ''}`}
         >
-          <LoadingSpinner
-            loadingText={loadingText || ''}
-          />
+          <LoadingSpinner loadingText={loadingText || ''} />
         </motion.div>
       }
     </div>

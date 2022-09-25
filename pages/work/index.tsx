@@ -63,7 +63,7 @@ const Work: Page = () => {
       <div className={styles.containerAllWorkItems}>
         {c_workItems.map(({title, image, linkPath, description}, i) => (
           <Fragment key={title}>
-             <WorkItem
+            <WorkItem
               title={title}
               image={image}
               linkPath={linkPath}
