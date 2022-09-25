@@ -1,4 +1,4 @@
-import { type FC, memo } from 'react';
+import { type FC } from 'react';
 import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './PromotionalComic.module.css';
@@ -20,7 +20,7 @@ const GameAssets: FC = () => {
         className={`${sharedStyles.textContainer} ${styles.textContainer}`}
       >
         <p>
-          A promotional comic for the release of the game, click the cover below to give it a read (I will change this one so its not a carousel, instead the cover of the comic and when you click it you can go left/right to read it like a book)
+          A promotional comic for the release of the game
         </p>
         <div className={styles.carouselContainer}>
           <Carousel
@@ -33,4 +33,4 @@ const GameAssets: FC = () => {
   );
 };
 
-export default memo(GameAssets);
+export default GameAssets;

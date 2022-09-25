@@ -64,8 +64,8 @@
     background-image: url('/popslinger/gifs/VictoryWSheet.png');
     width: 512px;
     height: 512px;
-    animation: sprite 1.5s steps(11) 1;
-    -webkit-animation: sprite 1.5s steps(10) 1;
+    animation: sprite 1s steps(11) 1;
+    -webkit-animation: sprite 1s steps(10) 1;
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 

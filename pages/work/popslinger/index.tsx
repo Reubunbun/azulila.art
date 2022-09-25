@@ -1,6 +1,7 @@
 import type { Page } from 'interfaces';
 import { useRouter } from 'next/router';
 import { useState, useRef, useLayoutEffect } from 'react';
+import scrollToTop from 'helpers/smoothScroll';
 import StaticContainer from 'components/Popslinger/StaticContainer/StaticContainer';
 import ParallaxContainer from 'components/Popslinger/ParallaxContainer/ParallaxContainer';
 import Summary from 'components/Popslinger/Summary/Summary';
@@ -30,7 +31,7 @@ const Popslinger: Page = () => {
     <>
       <button
         className={styles.goBackBtn}
-        onClick={() => router.push('/work')}
+        onClick={() => scrollToTop().then(() => router.push('/work'))}
       >
         Go Back
       </button>

@@ -1,4 +1,4 @@
-import { type FC, memo, useEffect, useRef } from 'react';
+import { type FC, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { motion, useAnimation } from 'framer-motion';
 import Carousel from '../../Carousel/Carousel';
@@ -58,9 +58,7 @@ const BackgroundDesign: FC = () => {
           className={styles.carouselContainer}
           ref={refCarouselContainer}
         >
-          <Carousel
-            images={c_backgroundDesignImages}
-          />
+          <Carousel images={c_backgroundDesignImages} />
         </motion.div>
       </div>
       <motion.div
@@ -77,4 +75,4 @@ const BackgroundDesign: FC = () => {
   );
 };
 
-export default memo(BackgroundDesign);
+export default BackgroundDesign;

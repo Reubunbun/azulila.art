@@ -1,4 +1,4 @@
-import { type FC, memo } from 'react';
+import { type FC } from 'react';
 import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './GameAssets.module.css';
@@ -34,4 +34,4 @@ const GameAssets: FC = () => {
   );
 };
 
-export default memo(GameAssets);
+export default GameAssets;

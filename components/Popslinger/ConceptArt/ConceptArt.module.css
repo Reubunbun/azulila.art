@@ -34,7 +34,6 @@
     .textWithImageContainer {
         padding-bottom: 2rem;
         padding-top: .5rem;
-        height: 42rem;
     }
 
     .textWithImageContainer > p {
@@ -43,5 +42,6 @@
 
     .carouselContainer {
         margin-top: 2rem;
+        height: 42rem;
     }
 }

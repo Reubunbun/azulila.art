@@ -1,4 +1,4 @@
-import { type FC, useEffect, memo, useRef } from 'react';
+import { type FC, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useAnimation } from 'framer-motion';
 import Carousel from '../../Carousel/Carousel';
@@ -78,4 +78,4 @@ const Placeholder: FC = () => {
   );
 };
 
-export default memo(Placeholder);
+export default Placeholder;
