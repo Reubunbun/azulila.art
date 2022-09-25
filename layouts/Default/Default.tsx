@@ -1,5 +1,4 @@
-import type { ReactNode, FC } from 'react';
-import { useState, useEffect } from 'react';
+import { type ReactNode, type FC, useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { useUIContext } from 'context/UIContext';
@@ -39,7 +38,8 @@ const DefaultLayout: FC<Props> = ({
 }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
-  const { modalContent } = useUIContext();
+  const lastScrollPos = useRef<number>(0);
+  const { modalContent, navOpen, setNavOpen } = useUIContext();
 
   useEffect(() => {
     setMainTransitionStage(c_classFadeIn);
@@ -63,6 +63,27 @@ const DefaultLayout: FC<Props> = ({
       elHTML.style.overflowY = 'scroll';
     }
   }, [modalContent]);
+
+  useEffect(() => {
+    if (
+      typeof document === 'undefined' ||
+      !navOpen
+    ) {
+      return;
+    }
+
+    const scrollCallback = () => {
+      const currScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (currScrollTop > lastScrollPos.current) {
+        setNavOpen(false);
+      }
+      lastScrollPos.current = currScrollTop <= 0 ? 0 : currScrollTop;
+    };
+
+    document.addEventListener('scroll', scrollCallback);
+    return () => document.removeEventListener('scroll', scrollCallback);
+  }, [navOpen]);
+
 
   return (
     <>
@@ -101,6 +122,11 @@ const DefaultLayout: FC<Props> = ({
 
         <main
           className={`${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''} ${removeMainBackground ? styles.removeBg : ''} ${removeMainMargin ? styles.removeMargin : ''}`}
+          onClick={() => {
+            if (navOpen) {
+              setNavOpen(false);
+            }
+          }}
         >
           <div
             onTransitionEnd={() => {
@@ -115,7 +141,14 @@ const DefaultLayout: FC<Props> = ({
           </div>
         </main>
       </div>
-      <footer className={styles.footer}>
+      <footer
+        className={styles.footer}
+        onClick={() => {
+          if (navOpen) {
+            setNavOpen(false);
+          }
+        }}
+      >
         <div className={styles.containerSocials}>
           <a href={c_twitterLink} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-twitter.svg' />

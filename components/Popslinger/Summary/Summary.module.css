@@ -122,3 +122,15 @@
             translateX(-25%);
     }
 }
+
+
+@media only screen and (min-width: 1921px) {
+    .mainContainer {
+        width: 120rem;
+        margin-top: 0rem;
+    }
+
+    .youtubeWrapper h3 {
+        font-size: 2.8rem;
+    }
+}

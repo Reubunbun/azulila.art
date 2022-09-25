@@ -53,3 +53,13 @@
         width: 200%;
     }
 }
+
+@media only screen and (min-width: 1921px) {
+    .textContainer, .textWithImageContainer {
+        width: 120rem;
+    }
+
+    .sectionSubTitle {
+        margin-top: 1rem;
+    }
+}

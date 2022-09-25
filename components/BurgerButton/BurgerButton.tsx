@@ -1,20 +1,17 @@
-import { useState, memo } from 'react';
+import { type FC, type MouseEventHandler, memo } from 'react';
 import styles from './BurgerButton.module.css';
 
 interface Props {
-  onClick: Function;
+  onClick: MouseEventHandler<HTMLDivElement>;
+  isOpen: boolean;
 };
 
-const BurgerButton = ({ onClick }: Props) => {
-  const [open, setOpen] = useState<boolean>(false);
+const BurgerButton: FC<Props> = ({ onClick, isOpen }) => {
 
   return (
     <div
-      className={`${styles.burgerBtn} ${open ? styles.open : ''}`}
-      onClick={() => {
-        setOpen(prev => !prev);
-        onClick();
-      }}
+      className={`${styles.burgerBtn} ${isOpen ? styles.open : ''}`}
+      onClick={onClick}
     >
       <span />
       <span />

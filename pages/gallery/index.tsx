@@ -299,6 +299,7 @@ const Gallery: Page<Props> = ({images, tags}) => {
               }
               setHideFilters(prev => !prev);
             }}
+            isOpen={!hideFilters}
           />
         }
         <h2>Gallery</h2>
@@ -315,17 +316,18 @@ const Gallery: Page<Props> = ({images, tags}) => {
         />
       </motion.div>
       <div className={styles.containerAllColumns}>
-        {imageColumns.map((column, i) => (
+        {imageColumns.map((column, colIndex) => (
           <div
-            key={i}
-            ref={i === 0 ? firstColDiv : null}
+            key={colIndex}
+            ref={colIndex === 0 ? firstColDiv : null}
             className={styles.containerColumn}
           >
-            {column.items.map(image => (
+            {column.items.map((image, imgIndex) => (
               <Fragment key={image.url}>
                 <ImageItem
                   image={image}
                   clickImage={callbackClickImage}
+                  dontLazyLoad={imgIndex === 0}
                 />
               </Fragment>
             ))}

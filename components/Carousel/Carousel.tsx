@@ -7,8 +7,8 @@ import styles from './Carousel.module.css';
 
 interface Props {
   images: string[];
-  maxHeight?: `${number}rem`;
-  minHeight?: `${number}rem`;
+  maxHeight?: `${number}rem` | `${number}vh`;
+  minHeight?: `${number}rem` | `${number}vh`;
 };
 
 const Carousel: FC<Props> = ({images, maxHeight, minHeight}) => {

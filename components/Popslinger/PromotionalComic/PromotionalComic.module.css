@@ -8,7 +8,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding-top: .5rem;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
@@ -27,12 +26,17 @@
     width: min(99%, 55rem);
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-    height: 42rem;
+    height: 88.5vh;
 
 }
 
 @media only screen and (min-width: 1024px) {
     .carouselContainer {
         margin-top: 2rem;
+    }
+
+    .textContainer > p {
+        font-size: 3rem;
+        line-height: 3.3rem;
     }
 }

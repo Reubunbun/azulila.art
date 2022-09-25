@@ -13,6 +13,7 @@ interface Props {
   imgRef?: Ref<HTMLImageElement>;
   loadingText?: string;
   simpleLoadStyle?: boolean;
+  dontLazyLoad?: boolean;
 };
 
 const ImageItem: FC<Props> = ({
@@ -23,10 +24,48 @@ const ImageItem: FC<Props> = ({
   imgRef,
   loadingText,
   simpleLoadStyle,
+  dontLazyLoad,
 }) => {
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  const imgComponent = <motion.img
+    initial={{opacity: 0}}
+    animate={imgAnimation}
+    exit={{opacity: 0}}
+    className={styles.imageItem}
+    src={image.url}
+    alt={image.description}
+    ref={imgRef ? imgRef : undefined}
+    onClick={e => {
+      e.stopPropagation();
+      if (clickImage) {
+        clickImage(image);
+      }
+    }}
+    onLoad={() => {
+      imgAnimation.start({
+        opacity: 1,
+        transition: {
+          duration: 0.8,
+          type: 'tween',
+        },
+      });
+      placeholderAnimation.start({
+        opacity: 0,
+        transition: {
+          duration: 0.8,
+          type: 'tween',
+        },
+      });
+      setHasLoaded(true);
+
+      if (onLoad) {
+        onLoad();
+      }
+    }}
+  />;
 
   return (
     <div
@@ -39,44 +78,12 @@ const ImageItem: FC<Props> = ({
             : `${image.height}px`,
       }}
     >
-      <LazyLoad offset={125}>
-        <motion.img
-          initial={{opacity: 0}}
-          animate={imgAnimation}
-          exit={{opacity: 0}}
-          className={styles.imageItem}
-          src={image.url}
-          alt={image.description}
-          ref={imgRef ? imgRef : undefined}
-          onClick={e => {
-            e.stopPropagation();
-            if (clickImage) {
-              clickImage(image);
-            }
-          }}
-          onLoad={() => {
-            imgAnimation.start({
-              opacity: 1,
-              transition: {
-                duration: 0.8,
-                type: 'tween',
-              },
-            });
-            placeholderAnimation.start({
-              opacity: 0,
-              transition: {
-                duration: 0.8,
-                type: 'tween',
-              },
-            });
-            setHasLoaded(true);
-
-            if (onLoad) {
-              onLoad();
-            }
-          }}
-        />
-      </LazyLoad>
+      {dontLazyLoad
+        ? <>{imgComponent}</>
+        : <LazyLoad offset={100}>
+            {imgComponent}
+          </LazyLoad>
+      }
       {clickImage &&
         <div className={styles.imageHover} onClick={() => clickImage(image)}>
           <p>{image.title}</p>

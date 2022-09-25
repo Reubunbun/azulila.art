@@ -26,7 +26,7 @@ const GameAssets: FC = () => {
         <div className={styles.carouselContainer}>
           <Carousel
             images={c_assetImages}
-            maxHeight='40rem'
+            maxHeight='75vh'
           />
         </div>
       </div>

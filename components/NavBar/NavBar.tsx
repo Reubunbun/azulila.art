@@ -1,10 +1,11 @@
-import { type FC, useState, useEffect, memo } from 'react';
+import { type FC, useState, useEffect, useRef ,memo } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { ScreenType } from 'interfaces';
 import { useCommissionContext } from 'context/CommissionContext';
+import { useUIContext } from 'context/UIContext';
 import scrollToTop from 'helpers/smoothScroll';
 import useScreenType from 'hooks/useScreenType';
 import BurgerButton from '../BurgerButton/BurgerButton';
@@ -50,9 +51,9 @@ const NavBar: FC<Props> = ({dontStick}) => {
     screenType !== ScreenType.mobile &&
     dontStick
   );
-  const [navOpen, setNavOpen] = useState<boolean>(false);
 
   const { pageProgress: lastCommissionPath } = useCommissionContext();
+  const { navOpen, setNavOpen } = useUIContext();
 
   // Scroll animation values
   const { scrollY } = useViewportScroll();
@@ -161,21 +162,23 @@ const NavBar: FC<Props> = ({dontStick}) => {
   }, []);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const rootElement = document.querySelector<HTMLElement>(':root');
-      rootElement?.style.setProperty(
-        '--num-links',
-        String(allPaths.length),
-      );
+    if (typeof document === 'undefined') {
+      return;
+    }
 
-      if (rootElement && navOpen) {
-        const openLinksHeight = getComputedStyle(rootElement)
-          .getPropertyValue('--links-open-height');
-        rootElement.style.setProperty('--main-margin-offset', openLinksHeight);
-      }
-      if (rootElement && !navOpen) {
-        rootElement.style.setProperty('--main-margin-offset', '0rem');
-      }
+    const rootElement = document.querySelector<HTMLElement>(':root');
+    rootElement?.style.setProperty(
+      '--num-links',
+      String(allPaths.length),
+    );
+
+    if (rootElement && navOpen) {
+      const openLinksHeight = getComputedStyle(rootElement)
+        .getPropertyValue('--links-open-height');
+      rootElement.style.setProperty('--main-margin-offset', openLinksHeight);
+    }
+    if (rootElement && !navOpen) {
+      rootElement.style.setProperty('--main-margin-offset', '0rem');
     }
   }, [navOpen]);
 
@@ -225,9 +228,10 @@ const NavBar: FC<Props> = ({dontStick}) => {
               Azulila
             </motion.h1>
           </div>
-          <BurgerButton onClick={() => {
-            setNavOpen(prev => !prev);
-          }} />
+          <BurgerButton
+            onClick={() => setNavOpen(prev => !prev)}
+            isOpen={navOpen}
+          />
         </div>
       </div>
       <motion.ul

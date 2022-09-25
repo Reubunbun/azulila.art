@@ -36,11 +36,9 @@ const Popslinger: Page = () => {
         Go Back
       </button>
       <ParallaxContainer imgSrc='/popslinger/main-title.jpg' imgAlt='fill this later'>
-        <div
-          className={styles.containerLogo}
-        >
+        <div className={styles.containerLogo}>
           {!logoLoaded &&
-            <h1 className={styles.sectionTitle} style={{marginBottom: '4rem'}}>
+            <h1 className={styles.sectionTitle}>
               POPSLINGER
             </h1>
           }
