@@ -86,6 +86,7 @@ const WorkItem: FC<Props> = ({
             <p>{description}</p>
             {(linkPath === 'popslinger') &&
               <span
+                unselectable='on'
                 onClick={() => onLinkClicked(`/work/${linkPath}`)}
                 className={styles.link}
               >

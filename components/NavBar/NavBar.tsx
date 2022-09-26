@@ -1,4 +1,4 @@
-import { type FC, useState, useEffect, useRef ,memo } from 'react';
+import { type FC, useEffect, memo } from 'react';
 import { useTransform, useViewportScroll, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -272,7 +272,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
               }}
             >
               <motion.p
-                unselectable={'on'}
+                unselectable='on'
                 className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
                   !dontAnimate && c_desktopSizes.includes(screenType)
