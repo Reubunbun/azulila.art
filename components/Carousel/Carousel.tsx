@@ -67,7 +67,7 @@ const Carousel: FC<Props> = ({images, maxHeight, minHeight}) => {
                   }
 
                   if (dir === Direction.Backward) {
-                    const nextIndex = currentIndex === 1
+                    const nextIndex = currentIndex === 0
                       ? allImages.length - 1
                       : currentIndex - 1;
 
