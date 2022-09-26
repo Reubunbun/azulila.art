@@ -1,4 +1,5 @@
 .sectionSubTitle {
+    margin-top: 0rem;
     margin-bottom: .5rem;
 }
 
@@ -28,6 +29,7 @@
     width: min(99%, 55rem);
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
+    height: 70vh;
 }
 
 @media only screen and (min-width: 1024px) {
@@ -47,7 +49,6 @@
 
     .carouselContainer {
         margin-top: 2rem;
-        height: 70vh;
         width: 80%;
     }
 }

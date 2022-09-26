@@ -1,6 +1,11 @@
+.sectionSubTitle {
+    margin-top: .75rem;
+}
+
 .carouselContainer {
     width: 100%;
     height: 17rem;
+    margin-bottom: 2rem;
 }
 
 .textContainer, .textWithImageContainer {
