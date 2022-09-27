@@ -25,6 +25,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap"
             rel="stylesheet"
           />
+          <meta
+            name="description"
+            content="Portfolio"
+          />
         </Head>
         <body>
           <Main />

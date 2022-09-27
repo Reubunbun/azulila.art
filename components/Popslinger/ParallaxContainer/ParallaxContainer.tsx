@@ -10,7 +10,7 @@ interface Props {
 
 type Pixels = `${number}px`;
 
-const c_pixelsToMove = 100;
+const c_pixelsToMove = 130;
 
 const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const refContainer = useRef<HTMLDivElement>(null);
@@ -69,7 +69,7 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
         className={styles.contentContainer}
         style={{
           top: contentYAdjust,
-          transform: `translateY(${c_pixelsToMove}px)`,
+          transform: `translateY(${c_pixelsToMove / 2}px)`,
         }}
       >
         {children}

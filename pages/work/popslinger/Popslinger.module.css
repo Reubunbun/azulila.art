@@ -1,8 +1,12 @@
+.containerTitle {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .sectionTitle {
     font-size: clamp(3.5rem, 1.4545rem + 10.2273vw, 8rem);
     line-height: clamp(3.65rem, 1.2102rem + 10.8434vw, 8.15rem);
-    margin-top: 8rem;
-    margin-bottom: 4rem;
     text-align: center;
     text-shadow: 2px 2px 8px #FF0000;
     color: #fffae6;
@@ -89,11 +93,7 @@
 
 @media only screen and (min-width: 1024px) {
     .containerLogo {
-        margin-top: 0;
-    }
-
-    .sectionTitle {
-        margin-top: 16rem;
+        margin-top: 5rem;
     }
 
     .sectionSubTitle {
@@ -126,10 +126,6 @@
 @media only screen and (min-width: 1921px) {
     .containerLogo img {
         padding-top: 22.5rem;
-    }
-
-    .sectionTitle {
-        margin-top: 25rem;
     }
 
     .sectionTitle {

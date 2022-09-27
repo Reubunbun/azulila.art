@@ -58,9 +58,11 @@ const Popslinger: Page = () => {
         imgSrc='/popslinger/backgrounds/Planet.png'
         imgAlt='fill this later'
       >
-        <h1 className={styles.sectionTitle} style={{color: '#4481df'}}>
-          Background Design
-        </h1>
+        <div className={styles.containerTitle}>
+          <h1 className={styles.sectionTitle} style={{color: '#4481df'}}>
+            Background Design
+          </h1>
+        </div>
       </ParallaxContainer>
       <StaticContainer>
         <BackgroundDesign />
@@ -69,9 +71,11 @@ const Popslinger: Page = () => {
         imgSrc='/popslinger/concept-art/PurpleLounge-Concept-3.png'
         imgAlt='fill this later'
       >
-        <h1 className={styles.sectionTitle} style={{color: '#df4444'}}>
-          Concept Art
-        </h1>
+        <div className={styles.containerTitle}>
+          <h1 className={styles.sectionTitle} style={{color: '#df4444'}}>
+            Concept Art
+          </h1>
+        </div>
       </ParallaxContainer>
       <StaticContainer>
         <ConceptArt />
@@ -80,9 +84,11 @@ const Popslinger: Page = () => {
         imgSrc='/popslinger/assets/Props1.png'
         imgAlt='fill this later'
       >
-        <h1 className={styles.sectionTitle} style={{color: '#c152b5'}}>
-          Game Assets
-        </h1>
+        <div className={styles.containerTitle}>
+          <h1 className={styles.sectionTitle} style={{color: '#c152b5'}}>
+            Game Assets
+          </h1>
+        </div>
       </ParallaxContainer>
       <StaticContainer>
         <GameAssets />
@@ -91,9 +97,11 @@ const Popslinger: Page = () => {
         imgSrc='/popslinger/illustrations/Wave.png'
         imgAlt='fill this later'
       >
-        <h1 className={styles.sectionTitle} style={{color: '#fffff3'}}>
-          Promotional Comic
-        </h1>
+        <div className={styles.containerTitle}>
+          <h1 className={styles.sectionTitle} style={{color: '#fffff3'}}>
+            Promotional Comic
+          </h1>
+        </div>
       </ParallaxContainer>
       <StaticContainer>
         <PromotionalComic />
