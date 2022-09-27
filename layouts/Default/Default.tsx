@@ -1,4 +1,5 @@
 import { type ReactNode, type FC, useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { useUIContext } from 'context/UIContext';
@@ -38,8 +39,9 @@ const DefaultLayout: FC<Props> = ({
 }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
-  const lastScrollPos = useRef<number>(0);
   const { modalContent, navOpen, setNavOpen } = useUIContext();
+  const router = useRouter();
+  const lastScrollPos = useRef<number>(0);
 
   useEffect(() => {
     setMainTransitionStage(c_classFadeIn);
@@ -84,11 +86,10 @@ const DefaultLayout: FC<Props> = ({
     return () => document.removeEventListener('scroll', scrollCallback);
   }, [navOpen]);
 
-
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{router.asPath === '/' ? 'Tania Reyes' : title}</title>
       </Head>
       <CustomAnimatePresence exitBeforeEnter>
         <motion.div
