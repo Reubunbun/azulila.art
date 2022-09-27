@@ -29,6 +29,7 @@ export default class MyDocument extends Document {
             name="description"
             content="Portfolio"
           />
+          <title>Tania Reyes</title>
         </Head>
         <body>
           <Main />
