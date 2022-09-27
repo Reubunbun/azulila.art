@@ -37,10 +37,11 @@ const DefaultLayout: FC<Props> = ({
   background,
   noNav,
 }) => {
+  const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
+  const [useDefaultTitle, setUseDefaultTitle] = useState(router.asPath === '/');
   const { modalContent, navOpen, setNavOpen } = useUIContext();
-  const router = useRouter();
   const lastScrollPos = useRef<number>(0);
 
   useEffect(() => {
@@ -86,10 +87,16 @@ const DefaultLayout: FC<Props> = ({
     return () => document.removeEventListener('scroll', scrollCallback);
   }, [navOpen]);
 
+  useEffect(() => {
+    // Bots will see the default title 'Tania Reyes' for previews
+    // but users should switch back to seeing whatever title the default path is
+    setUseDefaultTitle(false);
+  }, []);
+
   return (
     <>
       <Head>
-        <title>{router.asPath === '/' ? 'Tania Reyes' : title}</title>
+        <title>{useDefaultTitle ? 'Tania Reyes' : title}</title>
       </Head>
       <CustomAnimatePresence exitBeforeEnter>
         <motion.div
