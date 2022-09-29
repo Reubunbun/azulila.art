@@ -92,7 +92,7 @@
     }
 
     .containerImage {
-        justify-content: flex-end;
+        justify-content: flex-start;
         width: unset;
     }
 
@@ -114,6 +114,13 @@
 
     .containerWorkItem .link {
         font-size: clamp(1.3rem, 0.9735rem + 1.6327vw, 2.3rem);
+    }
+
+    .containerDescriptionAndImage {
+        gap: 5rem;
+    }
+    .containerImage img {
+        max-height: 40rem;
     }
 }
 

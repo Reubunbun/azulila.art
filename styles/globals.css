@@ -58,8 +58,13 @@ embed {
   pointer-events: none;
 }
 
-h1, h2, h3, p, b, a, label, button, span {
+h1, h2, h3, button {
   font-family: 'Concert One', cursive;
+  color: var(--font-base);
+}
+p, b, a, label, span, input[type="text"], ::placeholder {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
   color: var(--font-base);
 }
 
@@ -100,7 +105,7 @@ textarea.warning::-ms-input-placeholder {
 }
 ::placeholder {
   color: var(--font-highlight);
-  font-family: 'Concert One', cursive;
+  font-weight: 600;
   opacity: 1;
   overflow: visible;
 }
@@ -124,8 +129,8 @@ textarea:focus {
 }
 
 input[type="text"], textarea {
-  padding-top: .2rem;
-  padding-bottom: .35rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
   padding-left: .2rem;
   padding-right: .2rem;
   border-radius: .5rem;
@@ -134,9 +139,6 @@ input[type="text"], textarea {
   color: var(--font-base);
   font-weight: bold;
   font-size: clamp(1.05rem, 1.0010rem + 0.2449vw, 1.2rem);
-}
-input[type="text"].hasPlaceholder {
-  padding-bottom: .6rem;
 }
 
 textarea {
@@ -259,6 +261,11 @@ textarea.warning {
     justify-content: center;
     gap: 2.5rem;
   }
+
+  input[type="text"], textarea {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
 }
 
 @media only screen and (min-width: 1921px) {
@@ -268,6 +275,11 @@ textarea.warning {
 
   input[type="text"], textarea {
     font-size: clamp(1.2rem, -2.7000rem + 3.2500vw, 2.5rem);
+    font-weight: 600;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
   }
 
   .submitBtn {

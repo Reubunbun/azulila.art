@@ -12,11 +12,11 @@ const c_determinScreenType = (mobileThreshold: number): ScreenType => {
     return ScreenType.tablet;
   }
 
-  if (window.innerWidth < 2560) {
+  if (window.innerWidth <= 1920) {
     return ScreenType.desktop;
   }
 
-  if (window.innerWidth < 3840) {
+  if (window.innerWidth <= 2560) {
     return ScreenType.large;
   }
 

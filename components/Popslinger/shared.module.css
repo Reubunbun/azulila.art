@@ -10,6 +10,7 @@
 .textContainer > p {
     margin-bottom: .4rem;
     margin-top: 0;
+    font-weight: 600;
     font-size: clamp(1.5rem, 0.8223rem + 3.0120vw, 2.75rem);
     line-height: clamp(1.8rem, 1.2036rem + 2.6506vw, 2.9rem);
 }

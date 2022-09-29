@@ -13,7 +13,6 @@
     font-size: clamp(1.2rem, 0.2250rem + 4.3333vw, 2.5rem);
     line-height: clamp(1.2rem, 0.2250rem + 4.3333vw, 2.5rem);
     width: 80%;
-    transform: translateY(-.25rem);
 }
 
 .containerRadioButton .radioText.small {
@@ -60,7 +59,6 @@
     }
 
     .containerRadioButton .radioText {
-        transform: translateY(-.6rem);
         width: unset;
     }
 
@@ -92,9 +90,6 @@
 
 
 @media only screen and (min-width: 2560px) {
-    .containerRadioButton .radioText {
-        transform: translateY(-1rem);
-    }
 
     .containerRadioButton .radioButton {
         min-width: 75px;
@@ -124,7 +119,6 @@
 
 @media only screen and (min-width: 3840px) {
     .containerRadioButton .radioText {
-        transform: translateY(-1.5rem);
         margin-left: 1rem;
     }
 

@@ -57,6 +57,9 @@
     width: 100%;
     text-align: center;
 }
+.footer b {
+    font-family: 'Concert One', cursive;
+}
 
 .backgroundImg {
     position: absolute;

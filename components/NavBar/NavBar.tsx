@@ -79,7 +79,12 @@ const NavBar: FC<Props> = ({dontStick}) => {
       const currShrinkAmount = vwWidthToShrink * percentCompletion;
       const newWidth = window.innerWidth * ((100 - currShrinkAmount) / 100);
 
-      return `${Math.max(newWidth, 900)}px`;
+      const minWidth = screenType === ScreenType.extraLarge
+        ? 1800
+        : screenType === ScreenType.large
+            ? 1600
+            : 900;
+      return `${Math.max(newWidth, minWidth)}px`;
     },
   );
   const navHeight = useTransform<number, ViewportHeight>(
@@ -100,7 +105,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
       screenType === ScreenType.extraLarge
         ? '-8vh'
         : screenType === ScreenType.large
-            ? '-9vh'
+            ? '-9.7vh'
             : '-16vh',
     ],
   )
@@ -133,7 +138,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
       screenType === ScreenType.extraLarge
         ? '-20rem'
         : screenType === ScreenType.large
-            ? '-16rem'
+            ? '-26rem'
             : '-14.5rem',
     ],
   );

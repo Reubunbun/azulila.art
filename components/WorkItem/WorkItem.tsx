@@ -78,23 +78,22 @@ const WorkItem: FC<Props> = ({
     >
       <h3>{title}</h3>
       <div className={styles.containerDescriptionAndImage}>
-        <div className={styles.containerDescription}>
-          <motion.div
-            initial={{x: isReversed ? '-10rem' : '10rem'}}
-            animate={textAnimation}
-          >
-            <p>{description}</p>
-            {(linkPath === 'popslinger') &&
-              <span
-                unselectable='on'
-                onClick={() => onLinkClicked(`/work/${linkPath}`)}
-                className={styles.link}
-              >
-                Click here to see more!
-              </span>
-            }
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{x: isReversed ? '-10rem' : '10rem'}}
+          animate={textAnimation}
+          className={styles.containerDescription}
+        >
+          <p>{description}</p>
+          {(linkPath === 'popslinger') &&
+            <span
+              unselectable='on'
+              onClick={() => onLinkClicked(`/work/${linkPath}`)}
+              className={styles.link}
+            >
+              Click here to see more!
+            </span>
+          }
+        </motion.div>
         <motion.div
           className={styles.containerImage}
           initial={{x: isReversed ? '10rem' : '-10rem'}}

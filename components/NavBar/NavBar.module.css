@@ -84,7 +84,7 @@
     font-weight: bold;
     font-size: clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem);
     margin-top: 0;
-    margin-bottom: 5px !important;
+    margin-bottom: 0px !important;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -188,13 +188,13 @@
         cursor: pointer;
     }
     .linkItem p {
-        font-weight: 600;
+        font-weight: 800;
         transition: color 0.2s ease-in-out;
         text-shadow:
             0
             0
             10px
-            rgb(241 8 230 / var(--link-opacity, 0));
+            rgb(241 8 150 / var(--link-opacity, 0));
 
         --link-opacity: 0;
     }
@@ -202,7 +202,7 @@
         --link-opacity: 0 !important;
     }
     .linkItem:hover p {
-        color: var(--font-highlight) !important;
+        color: rgb(209, 13, 134) !important;
     }
 
     .linkItem .linkUnderline {

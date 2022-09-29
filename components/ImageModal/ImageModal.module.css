@@ -44,7 +44,7 @@
 }
 .leftBtn p {
     margin-right: 1rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .rightBtn {
@@ -53,7 +53,7 @@
 }
 .rightBtn p {
     margin-left: 1rem;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .leftBtn,
@@ -127,7 +127,7 @@
     text-align: center;
     transform: translateX(10%);
     font-size: clamp(1.75rem, 1.0723rem + 3.0120vw, 3rem);
-    line-height: clamp(1.8rem, 1.0410rem + 3.3735vw, 3.2rem);
+    line-height: clamp(2.2rem, 1.0410rem + 3.3735vw, 3.2rem);
     color: rgb(238, 130, 238, 0);
     transition: color .25s ease-in-out;
 }
@@ -243,6 +243,7 @@
     }
     .containerDescription p {
         color: var(--font-base);
+        font-weight: 600;
         width: 100%;
         transform: unset;
         margin-top: 1rem;

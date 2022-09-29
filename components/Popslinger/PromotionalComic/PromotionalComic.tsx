@@ -51,7 +51,7 @@ const GameAssets: FC = () => {
         initial={{opacity: 0}}
         animate={textAnimation}
       >
-        A promotional comic for the release of the game
+        A promotional comic for the release of the game.
       </motion.p>
       <motion.div
         className={styles.carouselContainer}
