@@ -32,21 +32,24 @@
 }
 
 .containerTitle {
-    margin-bottom: .7rem;
-    display: flex;
+    margin-bottom: 1.25rem;
     line-height: 1rem;
+    display: flex;
+    gap: 2rem;
     align-items: center;
     justify-content: center;
 }
 .containerTitle h2 {
     text-align: center;
     margin: 0;
-    padding-left: 3rem;
-    transform: translateX(-20%);
+    transform: translateX(-15%);
+    margin-right: auto;
     pointer-events: none;
+    margin-right: auto;
 }
-.containerTitle {
-    margin-bottom: 1.25rem;
+.containerTitle > div {
+    margin-top: 1rem;
+    margin-right: auto;
 }
 
 .containerAllColumns {
@@ -92,6 +95,18 @@
 }
 
 @media only screen and (min-width: 1024px) {
+    .containerTitle {
+        padding: 0;
+    }
+    .containerTitle h2 {
+        padding: 0;
+        transform: translateY(-.75rem);
+    }
+
+    .containerToggleFilters {
+        margin-bottom: 1rem;
+    }
+
     .errorText {
         text-align: center;
         margin-bottom: 1.5rem;
@@ -129,8 +144,12 @@
 
 @media only screen and (min-width: 2560px) {
     .containerTitle {
-        margin-top: 2rem;
-        margin-bottom: 4rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .containerToggleFilters {
+        margin-bottom: 2rem;
     }
 
     .containerSocials {
