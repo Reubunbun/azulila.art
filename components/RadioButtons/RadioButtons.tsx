@@ -56,7 +56,7 @@ const RadioButtons = <T extends OptionValue>(
                     <s>(${option.price})</s> <br />
                     <span className='highlight-text'>(${formatPrice(option.newPrice)} - {option.offer}% Off!)</span>
                   </>
-                : `($${option.price})`
+                : ` ($${option.price})`
               : ''
             }
           </label>

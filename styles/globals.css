@@ -83,6 +83,7 @@ h2 {
   text-align: center;
   color: var(--font-base);
   font-size: clamp(3rem, 2.0512rem + 4.2169vw, 4.75rem);
+  line-height: clamp(3.15rem, 2.2012rem + 4.2169vw, 4.9rem);
   padding-bottom: .6rem;
   text-shadow:
     0.05em 0.05em 0 rgb(255, 171, 251);
@@ -214,18 +215,19 @@ textarea.warning {
   display: flex;
   justify-content: center;
   gap: .75rem;
+  margin-bottom: 2rem;
 }
 
 .commission-btn {
   margin-top: .75rem;
-  margin-bottom: .75rem;
-  padding-left: .75rem;
-  padding-right: .75rem;
-  padding-bottom: .75rem;
+  margin-bottom: .8rem;
+  padding-left: .8rem;
+  padding-right: .8rem;
+  padding-bottom: .8rem;
   background-color: var(--bg);
   border: 1px solid var(--font-highlight);
   border-radius: .2rem;
-  font-size: clamp(1.5rem, 1.1735rem + 1.6327vw, 2.5rem);
+  font-size: clamp(2rem, 1.5934rem + 1.8072vw, 2.75rem);
   transition: background-color .3s ease-out;
 }
 .commission-btn:not(:disabled):hover {
@@ -259,6 +261,8 @@ textarea.warning {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
     gap: 2.5rem;
   }
 

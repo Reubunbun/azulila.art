@@ -37,7 +37,7 @@ const Commission: Page = () => {
 
   return (
     <>
-      <h2>Commission Me</h2>
+      <h2 className={styles.mainHeader}>Commission Me</h2>
       {(spacesOpen || 0) > 0 &&
         <p className={`highlight-text ${styles.spacesText}`}>
           {spacesOpen} Spaces Open!

@@ -26,12 +26,40 @@
     height: 2.5rem;
 }
 
+.containerExample {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.containerExample img {
+    display: block;
+    max-width: 95%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+
+
 @media only screen and (min-width: 1024px) {
     .containerDescription {
         margin-top: 1.5rem;
     }
 
     .containerText {
+        width: 50%;
+    }
+
+    .containerExample {
+        background-color: var(--bg-transparent);
+        border: 2px solid var(--font-base);
+        border-radius: .5rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+        height: 50vh;
         width: 50%;
     }
 }

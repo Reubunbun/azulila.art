@@ -69,23 +69,21 @@ const CommissionSelectType: Page = () => {
               }}
             />
           </div>
-          <CustomAnimatePresence exitBeforeEnter>
-            <motion.div
-              key={selectedBaseType?.id}
-              initial={{opacity: 0}}
-              animate={
-                (
-                  selectedBaseType?.exampleImage &&
-                  loadedImages.current[selectedBaseType?.exampleImage]
-                )
-                  ? c_exImageAnimationOptions
-                  : exampleImgAnimation
-              }
-              exit={{opacity: 0}}
-              className={styles.containerExample}
-            >
+          <div className={styles.containerExample}>
+            <CustomAnimatePresence exitBeforeEnter>
               {selectedBaseType?.exampleImage &&
-                <img
+                <motion.img
+                  key={selectedBaseType?.id}
+                  initial={{opacity: 0}}
+                  animate={
+                    (
+                      selectedBaseType?.exampleImage &&
+                      loadedImages.current[selectedBaseType?.exampleImage]
+                    )
+                      ? c_exImageAnimationOptions
+                      : exampleImgAnimation
+                  }
+                  exit={{opacity: 0}}
                   src={selectedBaseType.exampleImage}
                   alt={`Example image for ${selectedBaseType.display}`}
                   onLoad={() => {
@@ -94,8 +92,8 @@ const CommissionSelectType: Page = () => {
                   }}
                 />
               }
-            </motion.div>
-          </CustomAnimatePresence>
+            </CustomAnimatePresence>
+          </div>
         </div>
         <div className='commissionsContainerButton'>
           <button

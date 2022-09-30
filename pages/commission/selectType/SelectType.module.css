@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     margin-top: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .containerExample {
@@ -34,14 +35,21 @@
         flex-direction: row;
         justify-content: flex-end;
         align-items: center;
+        margin-top: 2.5rem;
     }
 
     .containerOptions {
         width: 30%;
+        margin-bottom: unset;
     }
 
     .containerExample {
         height: 50vh;
         width: 50%;
+        background-color: var(--bg-transparent);
+        border: 2px solid var(--font-base);
+        border-radius: .5rem;
+        padding-top: .5rem;
+        padding-bottom: .5rem;
     }
 }

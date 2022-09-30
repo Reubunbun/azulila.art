@@ -76,7 +76,7 @@ const CommissionDescribeCharacters: Page = () => {
                 }
               </div>
               <div className={styles.containerAllInputs}>
-                <div className={styles.containerDescriptionInputs}>
+                <div>
                   <div className={styles.containerCharacterInput}>
                     <label htmlFor={`${character.id}-vis-desc`}>
                       Describe {c_NumberToStringMap[i + 1]} Character&apos;s Visual Appearance:

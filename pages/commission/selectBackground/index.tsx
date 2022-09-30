@@ -71,23 +71,21 @@ const CommissionSelectBackgound: Page = () => {
               }}
             />
           </div>
-          <CustomAnimatePresence exitBeforeEnter>
-            <motion.div
-              className={selectStyles.containerExample}
-              key={selectedBackgroundType?.id}
-              initial={{opacity: 0}}
-              animate={
-                (
-                  selectedBackgroundType?.exampleImage &&
-                  loadedImages.current[selectedBackgroundType?.exampleImage]
-                )
-                  ? c_exImageAnimationOptions
-                  : exampleImgAnimation
-              }
-              exit={{opacity: 0}}
-            >
+          <div className={styles.containerExample}>
+            <CustomAnimatePresence exitBeforeEnter>
               {selectedBackgroundType?.exampleImage &&
-                <img
+                <motion.img
+                  key={selectedBackgroundType?.id}
+                  initial={{opacity: 0}}
+                  animate={
+                    (
+                      selectedBackgroundType?.exampleImage &&
+                      loadedImages.current[selectedBackgroundType?.exampleImage]
+                    )
+                      ? c_exImageAnimationOptions
+                      : exampleImgAnimation
+                  }
+                  exit={{opacity: 0}}
                   src={selectedBackgroundType.exampleImage}
                   alt={`Example background for ${selectedBackgroundType.display}`}
                   onLoad={() => {
@@ -96,8 +94,8 @@ const CommissionSelectBackgound: Page = () => {
                   }}
                 />
               }
-            </motion.div>
-          </CustomAnimatePresence>
+            </CustomAnimatePresence>
+          </div>
         </div>
         <div className={styles.containerDescription}>
           <div className={styles.containerText}>
