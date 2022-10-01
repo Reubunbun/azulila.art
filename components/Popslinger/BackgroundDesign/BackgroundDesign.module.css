@@ -39,7 +39,7 @@
     }
 
     .textContainer {
-        padding-top: 2rem;
+        padding-top: 0;
         padding-bottom: 4rem;
     }
 
@@ -62,10 +62,14 @@
 
 @media only screen and (min-width: 1921px) {
     .textContainer, .textWithImageContainer {
-        width: 120rem;
+        width: 130rem;
     }
 
     .sectionSubTitle {
         margin-top: 1rem;
+    }
+
+    .carouselContainer {
+        height: 25rem;
     }
 }

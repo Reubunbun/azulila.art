@@ -90,7 +90,7 @@ const Commission: Page = () => {
                 )}
               </ul>
             </div>
-            <p>If you have further questions, feel free to <Link href='/contact'><a className='highlight-text'>send me an e-mail</a></Link> and I will respond as soon as I&apos;m available.</p>
+            <p style={{marginTop: '2rem'}}>If you have further questions, feel free to <Link href='/contact'><a className='highlight-text'>send me an e-mail</a></Link> and I will respond as soon as I&apos;m available.</p>
             <p>Once form is sent, I will contact you personally to ask for details and send you an invoice via Paypal <small>(@taniareyesramirez@gmail.com)</small>.</p>
             <div className='commissionsContainerButton'>
               <button

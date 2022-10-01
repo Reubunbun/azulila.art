@@ -126,8 +126,8 @@
     width: 80%;
     text-align: center;
     transform: translateX(10%);
-    font-size: clamp(1.75rem, 1.0723rem + 3.0120vw, 3rem);
-    line-height: clamp(2.2rem, 1.0410rem + 3.3735vw, 3.2rem);
+    font-size: clamp(1.25rem, 1.0407rem + 0.9302vw, 2rem);
+    line-height: clamp(1.4rem, 1.1767rem + 0.9922vw, 2.2rem);
     color: rgb(238, 130, 238, 0);
     transition: color .25s ease-in-out;
 }
@@ -252,8 +252,8 @@
 
 @media only screen and (min-width: 1921px) {
     .containerDescription p {
-        font-size: clamp(1.5rem, -4.5000rem + 5.0000vw, 3.5rem);
-        line-height: clamp(1.5rem, -4.5000rem + 5.0000vw, 3.5rem);
+        font-size: clamp(1.9rem, 0.0962rem + 1.5023vw, 2.5rem);
+        line-height: clamp(1.4rem, -2.5081rem + 3.2551vw, 2.7rem);
     }
 
     .containerImg h3 {

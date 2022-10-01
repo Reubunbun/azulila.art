@@ -50,7 +50,8 @@ const BackgroundDesign: FC = () => {
           initial={{opacity: 0, x: '-75%'}}
           animate={animation}
         >
-          Video games have been one of my biggest artistic inspirations in life; when the opportunity arose to work on one, I was thrilled. Working on it was a different story; there was a lot of effort and deadlines to fulfill.
+          Video games have been one of my biggest artistic inspirations in life; when the opportunity arose to work on one, I was thrilled. Working on it was a different story; there was a lot of effort and deadlines to fulfill. <br /> <br />
+          Background design was something that I wanted to focus in my art career and this game shows my knowledge regarding this area, I learned how to apply it from an animation viewpoint to a video game one, which include background assets, floor tiles, props and more.
         </motion.p>
         <motion.div
           initial={{opacity: 0, x: '75%'}}
@@ -67,7 +68,6 @@ const BackgroundDesign: FC = () => {
         className={`${sharedStyles.textContainer} ${styles.textContainer}`}
       >
         <p>
-          Background design was something that I wanted to focus in my art career and this game shows my knowledge regarding this area, I learned how to apply it from an animation viewpoint to a video game one, which include background assets, floor tiles, props and more. <br />
           My inspirations while designing these assets included games, artists and musicians like The World Ends With You, Streets of Rage, Hiroshi Nagai and Tatsuro Yamashita.
         </p>
       </motion.div>

@@ -4,8 +4,8 @@
 }
 
 .containerAbout p {
-    font-size: clamp(1.8rem, 1.4205rem + 1.6867vw, 2.5rem);
-    line-height: clamp(1.9rem, 1.4663rem + 1.9277vw, 2.7rem);
+    font-size: clamp(1.25rem, 1.0686rem + 0.8062vw, 1.9rem);
+    line-height: clamp(1.4rem, 1.1767rem + 0.9922vw, 2.2rem);
     margin-top: .3rem;
 }
 
@@ -29,8 +29,8 @@
 
 @media only screen and (min-width: 1921px) {
     .containerAbout p {
-        font-size: clamp(2rem, -4.0000rem + 5.0000vw, 4rem);
-        line-height: clamp(2.3rem, -3.7000rem + 5.0000vw, 4.3rem);
+        font-size: clamp(1.9rem, 0.0962rem + 1.5023vw, 2.5rem);
+        line-height: clamp(1.4rem, -2.5081rem + 3.2551vw, 2.7rem);
     }
 }
 

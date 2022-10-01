@@ -20,8 +20,8 @@
 }
 
 .containerTerms > p {
-    font-size: clamp(1.5rem, 1.3085rem + 0.8511vw, 2rem);
-    line-height: clamp(1.75rem, 1.5394rem + 0.9362vw, 2.3rem);
+    font-size: clamp(1.25rem, 1.0686rem + 0.8062vw, 1.9rem);
+    line-height: clamp(1.4rem, 1.1767rem + 0.9922vw, 2.2rem);
     margin-top: .3rem;
     margin-bottom: .6rem;
 }
@@ -38,6 +38,8 @@
 
 .listItem {
     display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 .listItem embed {
     width: 45px;
@@ -75,12 +77,12 @@
     }
 
     .containerTerms > p {
-        font-size: clamp(2rem, -1.3000rem + 2.7500vw, 3.1rem);
-        line-height: clamp(2.3rem, -1.0000rem + 2.7500vw, 3.4rem);
+        font-size: clamp(1.9rem, 0.0962rem + 1.5023vw, 2.5rem);
+        line-height: clamp(1.4rem, -2.5081rem + 3.2551vw, 2.7rem);
     }
 
     .listItem p {
-        font-size: clamp(1.6rem, -2.3000rem + 3.2500vw, 2.9rem);
+        font-size: clamp(1.6rem, -0.3541rem + 1.6275vw, 2.25rem);
     }
 
     .containerTerms small {
