@@ -89,7 +89,7 @@ const Contact: Page = () => {
 
   return (
     <>
-      <h2>Contact Me</h2>
+      <h2 className={styles.header}>Contact Me</h2>
       <div className={styles.containerForm}>
         <form>
           <div className={styles.inputBlock}>

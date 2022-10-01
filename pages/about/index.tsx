@@ -5,10 +5,9 @@ import styles from './About.module.css';
 const About: Page = () => {
   return (
     <>
-      <h2>About</h2>
+      <h2 className={styles.header}>About</h2>
       <div className={styles.containerAbout}>
         <p className={styles.hello}><b>Hello!</b></p>
-        <br />
         <p>
           I&apos;m Tania Reyes, also known as Azulila online, I&apos;m an artist based in Mexico.
           <br />
