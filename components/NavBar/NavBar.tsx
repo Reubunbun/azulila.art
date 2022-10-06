@@ -65,7 +65,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   const textShadowOpacity = useTransform<number, number>(
     scrollY,
     c_scrollAnimRange,
-    [0, 1],
+    [0, 0.7],
   );
   const navWidth = useTransform<number, Pixels>(
     scrollY,

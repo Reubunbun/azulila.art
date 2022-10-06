@@ -49,11 +49,11 @@
 .linksList {
     max-height: 0;
     background: linear-gradient(
-        0deg,
+        to bottom,
         rgba(180, 121, 219, 0.35) 0%,
         rgba(180, 121, 219, 0.35) 80%,
         rgba(180, 121, 219, 0.15) 95%,
-        rgba(0, 0, 0, 0) 100%
+        rgba(180, 121, 219, 0) 100%
     );
     display: flex;
     margin: 0;
