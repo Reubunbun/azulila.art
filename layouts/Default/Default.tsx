@@ -25,6 +25,7 @@ const c_classFadeOut = 'fadeOut';
 const c_twitterLink = 'https://twitter.com/azulilah';
 const c_instaLink = 'https://www.instagram.com/azulilah';
 const c_tumblrLink = 'https://azulila.tumblr.com';
+const c_youtubeLink = 'https://youtube.com/channel/UCk1dOImMqTegvSGg1pGhp_w';
 
 const DefaultLayout: FC<Props> = ({
   children,
@@ -166,6 +167,9 @@ const DefaultLayout: FC<Props> = ({
           </a>
           <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-tumblr.svg' />
+          </a>
+          <a href={c_youtubeLink} target='_blank' rel='noreferrer'>
+            <embed src='/icons/social-youtube.svg' />
           </a>
         </div>
         <p>
