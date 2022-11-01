@@ -35,9 +35,14 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <meta
-            name="description"
-            content="Portfolio"
+            name="keywords"
+            content="Azulila, Azulilah, Art, Commission, Popslinger, Tania Reyes"
           />
+          <meta
+            name="description"
+            content="Azulila official portfolio website, view my art and request commissions!"
+          />
+          <meta name="author" content="Reuben Price" />
         </Head>
         <body>
           <Main />
