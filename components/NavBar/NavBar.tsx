@@ -139,7 +139,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
         ? '-20rem'
         : screenType === ScreenType.large
             ? '-26rem'
-            : '-14.5rem',
+            : '-15rem',
     ],
   );
   const logoTransUp = useTransform<number, REM>(
