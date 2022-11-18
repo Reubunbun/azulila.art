@@ -10,6 +10,7 @@ import styles from './Default.module.css';
 interface Props {
   children: ReactNode;
   title: string;
+  description: string;
   transitionTime: number;
   dontStickHeader: boolean;
   removeMainPadding: boolean;
@@ -30,6 +31,7 @@ const c_youtubeLink = 'https://youtube.com/channel/UCk1dOImMqTegvSGg1pGhp_w';
 const DefaultLayout: FC<Props> = ({
   children,
   title,
+  description,
   transitionTime,
   dontStickHeader,
   removeMainPadding,
@@ -41,7 +43,6 @@ const DefaultLayout: FC<Props> = ({
   const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
-  const [useDefaultTitle, setUseDefaultTitle] = useState(router.asPath === '/');
   const { modalContent, navOpen, setNavOpen } = useUIContext();
   const lastScrollPos = useRef<number>(0);
 
@@ -88,16 +89,18 @@ const DefaultLayout: FC<Props> = ({
     return () => document.removeEventListener('scroll', scrollCallback);
   }, [navOpen]);
 
-  useEffect(() => {
-    // Bots will see the default title 'Tania Reyes' for previews
-    // but users should switch back to seeing whatever title the default path is
-    setUseDefaultTitle(false);
-  }, []);
-
   return (
     <>
       <Head>
-        <title>{useDefaultTitle ? 'Tania Reyes' : title}</title>
+        <title>Azulila | {title}</title>
+        <meta
+          name="description"
+          content={description}
+        />
+        <meta
+          name="keywords"
+          content="Azulila, Azulilah, Art, Commission, Popslinger, Tania Reyes"
+        />
       </Head>
       <CustomAnimatePresence exitBeforeEnter>
         <motion.div

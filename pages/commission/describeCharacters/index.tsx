@@ -246,5 +246,6 @@ const CommissionDescribeCharacters: Page = () => {
 
 CommissionDescribeCharacters.title = 'Describe Commission Characters';
 CommissionDescribeCharacters.dontStick = true;
+CommissionDescribeCharacters.description = 'Request a commission here and I\'ll get back to you as soon as possible!';
 
 export default CommissionDescribeCharacters;

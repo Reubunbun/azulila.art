@@ -116,5 +116,6 @@ Popslinger.noNav = true;
 Popslinger.removeBg = true;
 Popslinger.removeMargin = true;
 Popslinger.removePadding = true;
+Popslinger.description = 'Popslinger is a musical shoot-em-up inspired by City Pop and 90\'s anime. I worked in various areas of this game from background design, animation, character design, and more.';
 
 export default Popslinger;

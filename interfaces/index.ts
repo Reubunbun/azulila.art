@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 export type Page<P = {}> = NextPage<P> & {
     title: string;
+    description: string;
     dontStick?: boolean;
     removePadding?: boolean;
     removeMargin?: boolean;

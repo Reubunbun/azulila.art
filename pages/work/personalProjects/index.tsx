@@ -8,5 +8,6 @@ const Work: Page = () => {
   );
 };
 Work.title = 'My Personal Projects';
+Work.description = 'My Personal Projects';
 
 export default Work;

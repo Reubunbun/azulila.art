@@ -34,14 +34,6 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;800&display=swap"
             rel="stylesheet"
           />
-          <meta
-            name="keywords"
-            content="Azulila, Azulilah, Art, Commission, Popslinger, Tania Reyes"
-          />
-          <meta
-            name="description"
-            content="Azulila official portfolio website, view my art and request commissions!"
-          />
           <meta name="author" content="Reuben Price" />
         </Head>
         <body>

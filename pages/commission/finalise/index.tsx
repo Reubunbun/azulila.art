@@ -384,5 +384,6 @@ const CommissionFinalise: Page = () => {
 
 CommissionFinalise.title = 'Finalise Commission Details';
 CommissionFinalise.dontStick = true;
+CommissionFinalise.description = 'Request a commission here and I\'ll get back to you as soon as possible!';
 
 export default CommissionFinalise;

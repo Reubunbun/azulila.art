@@ -8,5 +8,6 @@ const Work: Page = () => {
   );
 };
 Work.title = 'Fanzines';
+Work.description = 'Fanzines';
 
 export default Work;

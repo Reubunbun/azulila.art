@@ -80,5 +80,6 @@ const Work: Page = () => {
 
 Work.title = 'My Work';
 Work.removePadding = true;
+Work.description = 'Tania Reyes (known as Azulila or Azulilah online) portfolio website. Read about my professional work, view my art and request commissions here!';
 
 export default Work;

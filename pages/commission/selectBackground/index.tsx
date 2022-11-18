@@ -170,5 +170,6 @@ const CommissionSelectBackgound: Page = () => {
 
 CommissionSelectBackgound.title = 'Select Commission Background';
 CommissionSelectBackgound.dontStick = true;
+CommissionSelectBackgound.description = 'Request a commission here and I\'ll get back to you as soon as possible!';
 
 export default CommissionSelectBackgound;

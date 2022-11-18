@@ -21,5 +21,6 @@ const About: Page = () => {
   );
 };
 About.title = 'About Me';
+About.description = 'I\'m Tania Reyes, also known as Azulila online, I\'m an artist based in Mexico';
 
 export default About;

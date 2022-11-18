@@ -120,5 +120,7 @@ const CommissionSelectType: Page = () => {
 
 CommissionSelectType.title = 'Select Commission Type';
 CommissionSelectType.dontStick = true;
+CommissionSelectType.description = 'Request a commission here and I\'ll get back to you as soon as possible!';
+
 
 export default CommissionSelectType;

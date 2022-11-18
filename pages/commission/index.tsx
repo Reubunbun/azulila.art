@@ -110,5 +110,6 @@ const Commission: Page = () => {
 };
 
 Commission.title = 'Commission Me';
+Commission.description = 'Request a commission here and I\'ll get back to you as soon as possible!';
 
 export default Commission;

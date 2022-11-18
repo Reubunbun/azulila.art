@@ -21,6 +21,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
         <UIStateProvider>
           <DefaultLayout
             title={Component.title}
+            description={Component.description}
             dontStickHeader={!!Component.dontStick}
             removeMainPadding={!!Component.removePadding}
             removeMainMargin={!!Component.removeMargin}

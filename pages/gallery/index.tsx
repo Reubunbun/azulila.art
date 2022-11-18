@@ -339,5 +339,6 @@ const Gallery: Page<Props> = ({images, tags}) => {
 };
 
 Gallery.title = 'Gallery';
+Gallery.description = 'View my all my art here, or select specific categories';
 
 export default Gallery;

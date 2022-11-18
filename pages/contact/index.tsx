@@ -172,5 +172,6 @@ const Contact: Page = () => {
 };
 Contact.title = 'Contact Me';
 Contact.dontStick = true;
+Contact.description = 'Send me message here or email me at azulilah.art@gmail.com';
 
 export default Contact;
