@@ -230,7 +230,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
                   : {}
               }
             >
-              Azulila
+              Azulilah
             </motion.h1>
           </div>
           <BurgerButton
