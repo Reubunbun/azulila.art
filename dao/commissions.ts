@@ -7,7 +7,7 @@ interface CommissionRow {
 };
 
 export default class CommissionSpaces extends AbstractDao {
-    static readonly TABLE_NAME: string = 'tania_portfolio_comm_spaces';
+    static readonly TABLE_NAME: string = 'tania_comm_spaces';
 
     async getNumSpaces(): Promise<number> {
         const queryResult: CommissionRow[] = await this.createQuery(

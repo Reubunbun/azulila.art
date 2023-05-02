@@ -8,7 +8,7 @@ interface CommissionBaseTypeRow extends CommissionTypeRow {
 
 export default class CommissionBaseType extends CommissionTypeAbstract {
   protected getTableName() : string {
-    return 'tania_portfolio_comm_types';
+    return 'tania_comm_types';
   }
 
   public async getAll() : Promise<CommissionType[]> {

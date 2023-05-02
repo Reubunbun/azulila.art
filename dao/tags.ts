@@ -9,7 +9,7 @@ interface TagRow {
 };
 
 export default class Tags extends AbstractDao {
-    static readonly TABLE_NAME = 'tania_portfolio_tags';
+    static readonly TABLE_NAME = 'tania_tags';
     static readonly COL_IMAGE_ID = COL_IMAGE_ID;
     static readonly COL_TAG_NAME = COL_TAG_NAME;
 

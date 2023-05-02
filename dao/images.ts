@@ -28,7 +28,7 @@ interface ImagesResults {
 };
 
 export default class PortfolioImages extends AbstractDao {
-    static readonly TABLE_NAME: string = 'tania_portfolio_images';
+    static readonly TABLE_NAME: string = 'tania_images';
 
     async getAll() : Promise<ImagesResults> {
         const results: ImageRow[] = await this.createQuery(
