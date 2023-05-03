@@ -1,7 +1,7 @@
 import type { GetStaticProps } from 'next';
 import {type Page, type Image, ScreenType, Direction } from 'interfaces';
 import { useState, useRef, useEffect, useCallback, Fragment } from 'react';
-import sql from 'mysql';
+import { Client as PGClient } from 'pg';
 import DaoPortfolioImages from 'dao/images';
 import DaoTags from 'dao/tags';
 import { motion, useAnimation } from 'framer-motion';
@@ -19,22 +19,25 @@ interface Props {
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const connSQL = sql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: Number(process.env.DB_PORT),
-  });
-
   const props: Props = {
     images: [],
     tags: [],
   };
 
+  const pgClient = new PGClient({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT),
+    ssl: { rejectUnauthorized: false },
+  });
+
   try {
-    const daoPortfolioImages = new DaoPortfolioImages(connSQL);
-    const daoTags = new DaoTags(connSQL);
+    await pgClient.connect();
+
+    const daoPortfolioImages = new DaoPortfolioImages(pgClient);
+    const daoTags = new DaoTags(pgClient);
 
     await Promise.all([
       daoPortfolioImages.getAll().then(res => props.images.push(...res.images)),
@@ -43,7 +46,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
   } catch (err) {
     console.log('err getting static props:', err);
   } finally {
-    connSQL.destroy();
+    await pgClient.end();
   }
 
   return {

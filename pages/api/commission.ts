@@ -6,7 +6,7 @@ import type {
   CommissionPost,
 } from 'interfaces';
 import aws from 'aws-sdk';
-import sql from 'mysql';
+import { Client as PGClient } from 'pg';
 import Handlebars from 'handlebars';
 import fs from 'fs';
 import path from 'path';
@@ -20,18 +20,21 @@ export default async function handler(
 ) {
 
   if (req.method === 'GET') {
-    const connSQL = sql.createConnection({
-      host: process.env.DB_HOST,
+    const pgClient = new PGClient({
       user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
+      host: process.env.DB_HOST,
       database: process.env.DB_NAME,
+      password: process.env.DB_PASSWORD,
       port: Number(process.env.DB_PORT),
+      ssl: { rejectUnauthorized: false },
     });
 
     try {
-      const daoCommissionSpaces = new DaoCommissionSpaces(connSQL);
-      const daoCommissionBaseType = new DaoCommissionBaseType(connSQL);
-      const daoCommissionBackgroundType = new DaoCommissionBackgroundType(connSQL);
+      await pgClient.connect();
+
+      const daoCommissionSpaces = new DaoCommissionSpaces(pgClient);
+      const daoCommissionBaseType = new DaoCommissionBaseType(pgClient);
+      const daoCommissionBackgroundType = new DaoCommissionBackgroundType(pgClient);
 
       let numSpaces: number = 0;
       const commissionBaseTypes: CommissionType[] = [];
@@ -52,7 +55,7 @@ export default async function handler(
       console.log(err);
       return res.status(500).json({message: 'Unknown Server Error'});
     } finally {
-      connSQL.destroy();
+      await pgClient.end();
     }
   }
 

@@ -31,7 +31,7 @@ export default class PortfolioImages extends AbstractDao {
     static readonly TABLE_NAME: string = 'tania_images';
 
     async getAll() : Promise<ImagesResults> {
-        const results: ImageRow[] = await this.createQuery(
+        const results = (await this.pgClient.query<ImageRow>(
             this.knexClient(PortfolioImages.TABLE_NAME)
                 .select(this.knexClient.raw(
                     `${PortfolioImages.TABLE_NAME}.*, ${DaoTags.TABLE_NAME}.${DaoTags.COL_TAG_NAME}`
@@ -43,7 +43,7 @@ export default class PortfolioImages extends AbstractDao {
                 )
                 .orderBy(COL_PRIORITY)
                 .toString()
-        );
+        )).rows;
 
         const indexedImages = results.reduce(
             (indexedImages, imageRow) => {

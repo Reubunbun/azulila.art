@@ -1,16 +1,15 @@
-import type { Connection } from 'mysql';
+import { Client as PGClient } from 'pg';
 import type { Knex } from 'knex';
-import Util from 'util';
 import KnexInitialiser from 'knex';
 
 export default abstract class AbstractDao {
-    protected readonly createQuery: (query: string) => Promise<any>;
     protected readonly knexClient: Knex;
+    protected readonly pgClient: PGClient;
 
-    constructor(connSQL: Connection) {
-        this.createQuery = Util.promisify(connSQL.query).bind(connSQL);
+    constructor(pgClient: PGClient) {
+        this.pgClient = pgClient;
         this.knexClient = KnexInitialiser({
-            client: require('knex-serverless-mysql'),
+            client: 'pg',
         });
     }
 };

@@ -14,11 +14,11 @@ export default class Tags extends AbstractDao {
     static readonly COL_TAG_NAME = COL_TAG_NAME;
 
     public async getAll(): Promise<string[]> {
-        const allRows: TagRow[] = await this.createQuery(
+        const allRows = (await this.pgClient.query<TagRow>(
             this.knexClient(Tags.TABLE_NAME)
                 .distinct(COL_TAG_NAME)
                 .toString(),
-        );
+        )).rows;
 
         return allRows.map(tagRow => tagRow[COL_TAG_NAME]);
     }
