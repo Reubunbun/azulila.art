@@ -32,7 +32,7 @@ const allPaths: Path[] = [
   {display: 'About', pathname: '/about'},
   {display: 'Commission', pathname: '/commission'},
   {display: 'Contact', pathname: '/contact'},
-  {display: 'Shop', pathname: 'https://azulila.bigcartel.com/', external: true},
+  {display: 'Shop', pathname: 'https://form.jotform.com/azulilahart/shop', external: true},
 ];
 
 const c_comparePath = (currUrl: string, pathname: string) : boolean => (
