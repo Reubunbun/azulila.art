@@ -71,6 +71,30 @@ export type CommissionPost = {
     failedImages: boolean;
 };
 
+type Product = {
+    productId: number;
+    groupId: number;
+    name: string;
+    description: string;
+    price: number;
+    offer: number;
+    isUnavailable: boolean;
+};
+
+export type ProductGroup = {
+    groupId: number;
+    name: string;
+    imageUrl: string;
+    imageWidth: number;
+    imageHeight: number;
+    products: Product[];
+    tags: string[];
+};
+
+export type ProductsResult = {
+    productGroups: ProductGroup[];
+};
+
 /**
  * ENUMS
  */
