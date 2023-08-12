@@ -7,8 +7,8 @@ import CommissionHeaderText from 'components/CommissionHeaderText/CommissionHead
 import scrollToTop from 'helpers/smoothScroll';
 import styles from './DescribeCharacters.module.css';
 
-const c_maxFilesPerCharacter = 6;
-const c_NumberToStringMap: {[key: number]: string} = {
+const MAX_FILES_PER_CHARACTER = 6;
+const NUMBER_TO_STRING_MAP: {[key: number]: string} = {
   1: 'First',
   2: 'Second',
   3: 'Third',
@@ -64,7 +64,7 @@ const CommissionDescribeCharacters: Page = () => {
               key={character.id}
             >
               <div className={styles.containerCharacterHeader}>
-                <b>{c_NumberToStringMap[i + 1]} Character</b>
+                <b>{NUMBER_TO_STRING_MAP[i + 1]} Character</b>
                 {characters.length > 1
                   ? <button onClick={() => dispatchUserState({
                       type: 'CHARACTER-REMOVE',
@@ -79,7 +79,7 @@ const CommissionDescribeCharacters: Page = () => {
                 <div>
                   <div className={styles.containerCharacterInput}>
                     <label htmlFor={`${character.id}-vis-desc`}>
-                      Describe {c_NumberToStringMap[i + 1]} Character&apos;s Visual Appearance:
+                      Describe {NUMBER_TO_STRING_MAP[i + 1]} Character&apos;s Visual Appearance:
                     </label>
                     <textarea
                       ref={refs[i].visInput}
@@ -94,7 +94,7 @@ const CommissionDescribeCharacters: Page = () => {
                   </div>
                   <div className={styles.containerCharacterInput}>
                     <label htmlFor={`${character.id}-pers-desc`}>
-                      (Optional) Describe {c_NumberToStringMap[i + 1]} Character&apos;s Personality:
+                      (Optional) Describe {NUMBER_TO_STRING_MAP[i + 1]} Character&apos;s Personality:
                     </label>
                     <textarea
                       ref={refs[i].persInput}
@@ -131,7 +131,7 @@ const CommissionDescribeCharacters: Page = () => {
                           continue;
                         }
 
-                        if (numberOfExistingFiles + numberOfNewFiles === c_maxFilesPerCharacter) {
+                        if (numberOfExistingFiles + numberOfNewFiles === MAX_FILES_PER_CHARACTER) {
                           tooMany.push(file.name);
                           continue;
                         }
@@ -160,11 +160,11 @@ const CommissionDescribeCharacters: Page = () => {
                   <button
                     className='commission-btn'
                     onClick={() => refs[i].uploadInput.current?.click()}
-                    disabled={Object.keys(character.fileMap).length === c_maxFilesPerCharacter}
+                    disabled={Object.keys(character.fileMap).length === MAX_FILES_PER_CHARACTER}
                   >
-                    {Object.keys(character.fileMap).length === c_maxFilesPerCharacter
+                    {Object.keys(character.fileMap).length === MAX_FILES_PER_CHARACTER
                       ? 'Upload Limit Reached'
-                      : `Add Images For ${c_NumberToStringMap[i + 1]} Character`
+                      : `Add Images For ${NUMBER_TO_STRING_MAP[i + 1]} Character`
                     }
                   </button>
                   <div className={styles.containerAllFiles}>

@@ -25,7 +25,7 @@ type Pixels = `${number}px`;
 type ViewportHeight = `${number}vh`;
 type REM = `${number}rem`;
 
-const allPaths: Path[] = [
+const ALL_PATHS: Path[] = [
   {display: 'Work', pathname: '/work'},
   {display: 'Popslinger', pathname: '/work/popslinger'},
   {display: 'Gallery', pathname: '/gallery'},
@@ -35,14 +35,14 @@ const allPaths: Path[] = [
   {display: 'Shop', pathname: 'https://form.jotform.com/azulilahart/shop', external: true},
 ];
 
-const c_comparePath = (currUrl: string, pathname: string) : boolean => (
+const comparePath = (currUrl: string, pathname: string) : boolean => (
   currUrl === '/work/popslinger'
     ? pathname === '/work/popslinger'
     : currUrl.startsWith(pathname)
 );
 
-const c_desktopSizes = [ScreenType.desktop, ScreenType.large, ScreenType.extraLarge];
-const c_scrollAnimRange: number[] = [0, 200];
+const DESKTOP_SIZES = [ScreenType.desktop, ScreenType.large, ScreenType.extraLarge];
+const SCROLL_ANIM_RANGE: number[] = [0, 200];
 
 const NavBar: FC<Props> = ({dontStick}) => {
   const screenType = useScreenType();
@@ -59,19 +59,19 @@ const NavBar: FC<Props> = ({dontStick}) => {
   const { scrollY } = useViewportScroll();
   const titleOpacity = useTransform<number, number>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [1, 0],
   );
   const textShadowOpacity = useTransform<number, number>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [0, 0.7],
   );
   const navWidth = useTransform<number, Pixels>(
     scrollY,
     yPos => {
       const percentCompletion = Math.min(
-        yPos / c_scrollAnimRange[1],
+        yPos / SCROLL_ANIM_RANGE[1],
         1
       )
 
@@ -89,7 +89,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   );
   const navHeight = useTransform<number, ViewportHeight>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [
       '20vh',
       screenType === ScreenType.large
@@ -99,7 +99,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   );
   const navTransBottom = useTransform<number, ViewportHeight>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [
       '0vh',
       screenType === ScreenType.extraLarge
@@ -111,7 +111,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   )
   const logoMaxWidth = useTransform<number, REM>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [
       screenType === ScreenType.extraLarge
         ? '18rem'
@@ -127,12 +127,12 @@ const NavBar: FC<Props> = ({dontStick}) => {
   );
   const logoMaxWidthMob = useTransform<number, REM>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     ['6rem', '4rem'],
   );
   const logoTransRight = useTransform<number, REM>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [
       '0rem',
       screenType === ScreenType.extraLarge
@@ -144,7 +144,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   );
   const logoTransUp = useTransform<number, REM>(
     scrollY,
-    c_scrollAnimRange,
+    SCROLL_ANIM_RANGE,
     [
       '0rem',
       screenType === ScreenType.large || screenType === ScreenType.extraLarge
@@ -174,7 +174,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
     const rootElement = document.querySelector<HTMLElement>(':root');
     rootElement?.style.setProperty(
       '--num-links',
-      String(allPaths.length),
+      String(ALL_PATHS.length),
     );
 
     if (rootElement && navOpen) {
@@ -203,7 +203,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
             style={
               dontAnimate
                 ? {}
-                : c_desktopSizes.includes(screenType)
+                : DESKTOP_SIZES.includes(screenType)
                     ? {
                         minWidth: logoMaxWidth,
                         minHeight: logoMaxWidth,
@@ -225,7 +225,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
           <div className={styles.containerTitleAndSocials}>
             <motion.h1
               style={
-                !dontAnimate && c_desktopSizes.includes(screenType)
+                !dontAnimate && DESKTOP_SIZES.includes(screenType)
                   ? {opacity: titleOpacity}
                   : {}
               }
@@ -242,7 +242,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
       <motion.ul
         className={`${styles.linksList} ${navOpen ? styles.openLinksList : ''}`}
         style={
-          !dontAnimate && c_desktopSizes.includes(screenType)
+          !dontAnimate && DESKTOP_SIZES.includes(screenType)
             ? {
                 y: navTransBottom,
                 width: navWidth,
@@ -250,7 +250,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
             : {}
         }
       >
-        {allPaths.map((path: Path) => (
+        {ALL_PATHS.map((path: Path) => (
           <li key={path.pathname}>
             <div
               className={styles.linkItem}
@@ -278,16 +278,16 @@ const NavBar: FC<Props> = ({dontStick}) => {
             >
               <motion.p
                 unselectable='on'
-                className={c_comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
+                className={comparePath(router.pathname, path.pathname) ? styles.linkSelected : ''}
                 style={
-                  !dontAnimate && c_desktopSizes.includes(screenType)
+                  !dontAnimate && DESKTOP_SIZES.includes(screenType)
                     ? {'--link-opacity': textShadowOpacity}
                     : {}
                 }
               >
                 {path.display}
               </motion.p>
-              {c_comparePath(router.pathname, path.pathname) &&
+              {comparePath(router.pathname, path.pathname) &&
                 <motion.div
                   transition={{
                     duration: 0.8,

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { useUIContext } from 'context/UIContext';
 import NavBar from 'components/NavBar/NavBar';
+import ShopNavBar from 'components/ShopNavBar/ShopNavBar';
 import CustomAnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
 import styles from './Default.module.css';
 
@@ -20,13 +21,13 @@ interface Props {
   noNav?: boolean;
 };
 
-const c_classFadeIn = 'fadeIn';
-const c_classFadeOut = 'fadeOut';
+const CLASS_FADE_IN = 'fadeIn';
+const CLASS_FADE_OUT = 'fadeOut';
 
-const c_twitterLink = 'https://twitter.com/azulilah';
-const c_instaLink = 'https://www.instagram.com/azulilah';
-const c_tumblrLink = 'https://azulila.tumblr.com';
-const c_youtubeLink = 'https://youtube.com/channel/UCk1dOImMqTegvSGg1pGhp_w';
+const TWITTER_LINK = 'https://twitter.com/azulilah';
+const INSTA_LINK = 'https://www.instagram.com/azulilah';
+const TUMBLR_LINK = 'https://azulila.tumblr.com';
+const YOUTUBE_LINK = 'https://youtube.com/channel/UCk1dOImMqTegvSGg1pGhp_w';
 
 const DefaultLayout: FC<Props> = ({
   children,
@@ -42,17 +43,17 @@ const DefaultLayout: FC<Props> = ({
 }) => {
   const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
-  const [mainTransitionStage, setMainTransitionStage] = useState(c_classFadeOut);
+  const [mainTransitionStage, setMainTransitionStage] = useState(CLASS_FADE_OUT);
   const { modalContent, navOpen, setNavOpen } = useUIContext();
   const lastScrollPos = useRef<number>(0);
 
   useEffect(() => {
-    setMainTransitionStage(c_classFadeIn);
+    setMainTransitionStage(CLASS_FADE_IN);
   }, []);
 
   useEffect(() => {
     if (children !== displayChildren) {
-      setMainTransitionStage(c_classFadeOut);
+      setMainTransitionStage(CLASS_FADE_OUT);
     }
   }, [children, setDisplayChildren, displayChildren]);
 
@@ -126,8 +127,11 @@ const DefaultLayout: FC<Props> = ({
             transition={{duration: transitionTime}}
             key={noNav ? 'NoNav' : 'DefaultNav'}
           >
-            {!noNav &&
-              <NavBar dontStick={dontStickHeader} />
+            {noNav
+              ? <></>
+              : router.pathname.startsWith('/shop')
+                  ? <ShopNavBar />
+                  : <NavBar dontStick={dontStickHeader} />
             }
           </motion.div>
         </CustomAnimatePresence>
@@ -142,9 +146,9 @@ const DefaultLayout: FC<Props> = ({
         >
           <div
             onTransitionEnd={() => {
-              if (mainTransitionStage === c_classFadeOut) {
+              if (mainTransitionStage === CLASS_FADE_OUT) {
                 setDisplayChildren(children);
-                setMainTransitionStage(c_classFadeIn);
+                setMainTransitionStage(CLASS_FADE_IN);
               }
             }}
             className={`${styles.transitionContainer} ${styles[mainTransitionStage]}`}
@@ -162,16 +166,16 @@ const DefaultLayout: FC<Props> = ({
         }}
       >
         <div className={styles.containerSocials}>
-          <a href={c_twitterLink} target='_blank' rel='noreferrer'>
+          <a href={TWITTER_LINK} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-twitter.svg' />
           </a>
-          <a href={c_instaLink} target='_blank' rel='noreferrer'>
+          <a href={INSTA_LINK} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-insta.svg' />
           </a>
-          <a href={c_tumblrLink} target='_blank' rel='noreferrer'>
+          <a href={TUMBLR_LINK} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-tumblr.svg' />
           </a>
-          <a href={c_youtubeLink} target='_blank' rel='noreferrer'>
+          <a href={YOUTUBE_LINK} target='_blank' rel='noreferrer'>
             <embed src='/icons/social-youtube.svg' />
           </a>
         </div>

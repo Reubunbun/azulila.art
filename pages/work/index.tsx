@@ -12,7 +12,7 @@ interface WorkItem {
   linkPath: string;
 };
 
-const c_workItems: WorkItem[] = [
+const WORK_ITEMS: WorkItem[] = [
   {
     title: 'Popslinger',
     image: {
@@ -61,7 +61,7 @@ const Work: Page = () => {
     <>
       <h2 className={styles.mainHeader}>My Work</h2>
       <div className={styles.containerAllWorkItems}>
-        {c_workItems.map(({title, image, linkPath, description}, i) => (
+        {WORK_ITEMS.map(({title, image, linkPath, description}, i) => (
           <Fragment key={title}>
             <WorkItem
               title={title}

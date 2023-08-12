@@ -5,7 +5,7 @@ import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './GameAssets.module.css';
 
-const c_assetImages = [
+const ASSET_IMAGES = [
   '/popslinger/assets/Hub-Buildings.png',
   '/popslinger/assets/Hub-Buildings2.png',
   '/popslinger/assets/Profiles.png',
@@ -60,7 +60,7 @@ const GameAssets: FC = () => {
         animate={imgAnimation}
       >
         <Carousel
-          images={c_assetImages}
+          images={ASSET_IMAGES}
           maxHeight='75vh'
         />
       </motion.div>

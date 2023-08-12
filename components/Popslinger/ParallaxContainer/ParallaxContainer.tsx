@@ -10,7 +10,7 @@ interface Props {
 
 type Pixels = `${number}px`;
 
-const c_pixelsToMove = 130;
+const PIXELS_TO_MOVE = 130;
 
 const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const refContainer = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const imgYAdjust = useTransform<number, Pixels>(
     scrollY,
     () => {
-      if (!refContainer.current) return `${c_pixelsToMove}px`;
+      if (!refContainer.current) return `${PIXELS_TO_MOVE}px`;
 
       const screenHeight = window.innerHeight;
       const { top: topOfImage } = refContainer.current?.getBoundingClientRect();
@@ -28,7 +28,7 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
       }
 
       const percentScrolled = 1 - (topOfImage / screenHeight);
-      const distanceToMove = c_pixelsToMove * percentScrolled;
+      const distanceToMove = PIXELS_TO_MOVE * percentScrolled;
 
       return `${distanceToMove}px`;
     }
@@ -36,7 +36,7 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
   const contentYAdjust = useTransform<number, Pixels>(
     scrollY,
     () => {
-      if (!refContainer.current) return `${-c_pixelsToMove}px`;
+      if (!refContainer.current) return `${-PIXELS_TO_MOVE}px`;
 
       const screenHeight = window.innerHeight;
       const { top: topOfImage } = refContainer.current?.getBoundingClientRect();
@@ -45,7 +45,7 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
       }
 
       const percentScrolled = 1 - (topOfImage / screenHeight);
-      const distanceToMove = c_pixelsToMove * percentScrolled;
+      const distanceToMove = PIXELS_TO_MOVE * percentScrolled;
 
       return `${-distanceToMove}px`;
     }
@@ -61,15 +61,15 @@ const ParallaxContainer: FC<Props> = ({ children, imgSrc, imgAlt }) => {
         alt={imgAlt}
         style={{
           top: imgYAdjust,
-          height: `calc(100% + ${c_pixelsToMove * 2}px)`,
-          transform: `translateY(-${c_pixelsToMove * 2}px)`,
+          height: `calc(100% + ${PIXELS_TO_MOVE * 2}px)`,
+          transform: `translateY(-${PIXELS_TO_MOVE * 2}px)`,
         }}
       />
       <motion.div
         className={styles.contentContainer}
         style={{
           top: contentYAdjust,
-          transform: `translateY(${c_pixelsToMove / 2}px)`,
+          transform: `translateY(${PIXELS_TO_MOVE / 2}px)`,
         }}
       >
         {children}

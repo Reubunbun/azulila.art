@@ -71,13 +71,14 @@ export type CommissionPost = {
     failedImages: boolean;
 };
 
-type Product = {
+export type Product = {
     productId: number;
     groupId: number;
     name: string;
     description: string;
     price: number;
     offer: number;
+    actualPrice: number;
     isUnavailable: boolean;
 };
 
@@ -89,6 +90,7 @@ export type ProductGroup = {
     imageHeight: number;
     products: Product[];
     tags: string[];
+    mainCategory: string;
 };
 
 export type ProductsResult = {

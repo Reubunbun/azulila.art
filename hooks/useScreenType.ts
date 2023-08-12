@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ScreenType } from 'interfaces';
 
-const c_determinScreenType = (mobileThreshold: number): ScreenType => {
+const determineScreenType = (mobileThreshold: number): ScreenType => {
   if (typeof window === 'undefined') return ScreenType.desktop;
 
   if (window.innerWidth <= mobileThreshold) {
@@ -27,11 +27,11 @@ export default function useScreenType(
   mobileThreshold: number = 768,
 ) : ScreenType {
   const [screenType, setScreenType] = useState<ScreenType>(
-    c_determinScreenType(mobileThreshold),
+    determineScreenType(mobileThreshold),
   );
 
   useEffect(() => {
-    const resize = () => setScreenType(c_determinScreenType(mobileThreshold));
+    const resize = () => setScreenType(determineScreenType(mobileThreshold));
 
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);

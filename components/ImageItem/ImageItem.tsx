@@ -1,4 +1,4 @@
-import { type FC, type RefObject, memo, useState, useLayoutEffect, useRef} from 'react';
+import { type FC, type RefObject, memo, useState, useEffect, useRef} from 'react';
 import type { Image as ImageType } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
@@ -54,7 +54,7 @@ const ImageItem: FC<Props> = ({
     }
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const intervalId = setInterval(() => {
       if (hasLoaded) {
         clearInterval(intervalId);

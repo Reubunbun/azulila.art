@@ -5,7 +5,7 @@ import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './ConceptArt.module.css';
 
-const c_conceptImages = [
+const CONCEPT_IMAGES = [
   '/popslinger/concept-art/Diner-Concept.png',
   '/popslinger/concept-art/Maid-Outfits.png',
   '/popslinger/concept-art/Other-Concept-1.png',
@@ -63,7 +63,7 @@ const Placeholder: FC = () => {
         animate={imgAnimation}
       >
         <Carousel
-          images={c_conceptImages}
+          images={CONCEPT_IMAGES}
           maxHeight='70vh'
         />
       </motion.div>

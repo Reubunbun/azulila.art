@@ -11,8 +11,8 @@ interface CustomAppProps extends AppProps {
   Component: Page;
 };
 
-const c_pageTransitionTime = 0.5 // seconds
-fixTransition(c_pageTransitionTime * 1000);
+const PAGE_TRANSITION_TIME = 0.5 // seconds
+fixTransition(PAGE_TRANSITION_TIME * 1000);
 
 function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
             removeMainBackground={!!Component.removeBg}
             background={Component.background}
             noNav={Component.noNav}
-            transitionTime={c_pageTransitionTime}
+            transitionTime={PAGE_TRANSITION_TIME}
           >
             <Component {...pageProps}/>
           </DefaultLayout>

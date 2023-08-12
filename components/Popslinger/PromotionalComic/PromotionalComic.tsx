@@ -5,7 +5,7 @@ import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './PromotionalComic.module.css';
 
-const c_comicImages = [
+const COMIC_IMAGES = [
   '/popslinger/comic/1.jpg',
   '/popslinger/comic/2.jpg',
   '/popslinger/comic/3.jpg',
@@ -59,7 +59,7 @@ const GameAssets: FC = () => {
         animate={imgAnimation}
       >
         <Carousel
-          images={c_comicImages}
+          images={COMIC_IMAGES}
           maxHeight='88.5vh'
         />
       </motion.div>

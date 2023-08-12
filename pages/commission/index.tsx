@@ -7,7 +7,7 @@ import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import scrollToTop from 'helpers/smoothScroll';
 import styles from './Commission.module.css';
 
-const c_ToSList: string[] = [
+const TO_LIST: string[] = [
   'Payment is up-front and in full. I do not accept partial payments.',
   'All commission types are Full Body.',
   'A maximum of three characters per artwork + full price for each character.',
@@ -83,7 +83,7 @@ const Commission: Page = () => {
             <p>Thank you for your interest in commissioning me! Before continuing, please read my terms and conditions:</p>
             <div className={styles.containerList}>
               <ul>
-                {c_ToSList.map(item =>
+                {TO_LIST.map(item =>
                   <li key={item} className={styles.listItem}>
                     <embed src='/icons/list-icon.svg' /> <p>{item}</p>
                   </li>

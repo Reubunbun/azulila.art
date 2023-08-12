@@ -5,7 +5,7 @@ import Carousel from '../../Carousel/Carousel';
 import sharedStyles from '../shared.module.css';
 import styles from './BackgroundDesign.module.css';
 
-const c_backgroundDesignImages = [
+const BACKGROUND_DESIGN_IMAGES = [
   '/popslinger/backgrounds/Beach.png',
   '/popslinger/backgrounds/City.png',
   '/popslinger/backgrounds/Diner-Inside.png',
@@ -59,7 +59,7 @@ const BackgroundDesign: FC = () => {
           className={styles.carouselContainer}
           ref={refCarouselContainer}
         >
-          <Carousel images={c_backgroundDesignImages} />
+          <Carousel images={BACKGROUND_DESIGN_IMAGES} />
         </motion.div>
       </div>
       <motion.div

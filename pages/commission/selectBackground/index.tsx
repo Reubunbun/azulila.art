@@ -10,7 +10,7 @@ import scrollToTop from 'helpers/smoothScroll';
 import selectStyles from '../selectType/SelectType.module.css';
 import styles from './SelectBackground.module.css';
 
-const c_exImageAnimationOptions = {
+const EX_IMAGE_ANIMATION_OPTIONS = {
   opacity: 1,
   transition: {
     duration: 0.8,
@@ -82,14 +82,14 @@ const CommissionSelectBackgound: Page = () => {
                       selectedBackgroundType?.exampleImage &&
                       loadedImages.current[selectedBackgroundType?.exampleImage]
                     )
-                      ? c_exImageAnimationOptions
+                      ? EX_IMAGE_ANIMATION_OPTIONS
                       : exampleImgAnimation
                   }
                   exit={{opacity: 0}}
                   src={selectedBackgroundType.exampleImage}
                   alt={`Example background for ${selectedBackgroundType.display}`}
                   onLoad={() => {
-                    exampleImgAnimation.start(c_exImageAnimationOptions);
+                    exampleImgAnimation.start(EX_IMAGE_ANIMATION_OPTIONS);
                     loadedImages.current[selectedBackgroundType.exampleImage] = true;
                   }}
                 />

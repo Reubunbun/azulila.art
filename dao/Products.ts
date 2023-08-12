@@ -10,6 +10,7 @@ const COL_IMG_URL = 'img_url';
 const COL_IMG_WIDTH = 'img_width';
 const COL_IMG_HEIGHT = 'img_height';
 const COL_IS_UNAVAILABLE = 'is_unavailable';
+const COL_TYPE = 'type';
 
 const COL_PRODUCT_ID = 'product_id';
 const ALIAS_PRODUCT_NAME = 'product_name';
@@ -33,6 +34,7 @@ interface JoinedProductRow {
     [COL_PRICE]: number;
     [COL_OFFER]: number;
     [COL_TAG_NAME]: string;
+    [COL_TYPE]: string;
 };
 
 export default class Products extends AbstractDao {
@@ -71,6 +73,7 @@ export default class Products extends AbstractDao {
                 .select(COL_PRICE)
                 .select(COL_OFFER)
                 .select(COL_TAG_NAME)
+                .select(COL_TYPE)
                 .leftJoin(
                     Products.PRODUCT_TABLE_NAME,
                     `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,
@@ -108,9 +111,11 @@ export default class Products extends AbstractDao {
                                 price: row[COL_PRICE],
                                 offer: row[COL_OFFER],
                                 isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
+                                actualPrice: row[COL_PRICE] * (row[COL_OFFER] / 100),
                             },
                         ],
-                        tags: [ row[COL_TAG_NAME] ]
+                        tags: [ row[COL_TAG_NAME] ],
+                        mainCategory: row[COL_TYPE],
                     },
                 );
 
@@ -137,6 +142,7 @@ export default class Products extends AbstractDao {
                     price: row[COL_PRICE],
                     offer: row[COL_OFFER],
                     isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
+                    actualPrice: row[COL_PRICE] * (row[COL_OFFER] / 100),
                 });
             }
         }

@@ -28,7 +28,8 @@ export default async function handler(
         });
         try {
             await pgClient.connect();
-            await get(req, res, pgClient);
+            const daoProducts = new DaoProducts(pgClient);
+            const result = await daoProducts.getAll();
         } catch (err) {
             console.log(err);
             return res.status(500).json({message: 'Unknown Server Error'});

@@ -10,7 +10,7 @@ import CommissionHeaderText from 'components/CommissionHeaderText/CommissionHead
 import styles from './SelectType.module.css';
 import { useEffect } from 'react';
 
-const c_exImageAnimationOptions = {
+const EX_IMAGE_ANIMATION_OPTIONS = {
   opacity: 1,
   transition: {
     duration: 0.8,
@@ -80,14 +80,14 @@ const CommissionSelectType: Page = () => {
                       selectedBaseType?.exampleImage &&
                       loadedImages.current[selectedBaseType?.exampleImage]
                     )
-                      ? c_exImageAnimationOptions
+                      ? EX_IMAGE_ANIMATION_OPTIONS
                       : exampleImgAnimation
                   }
                   exit={{opacity: 0}}
                   src={selectedBaseType.exampleImage}
                   alt={`Example image for ${selectedBaseType.display}`}
                   onLoad={() => {
-                    exampleImgAnimation.start(c_exImageAnimationOptions);
+                    exampleImgAnimation.start(EX_IMAGE_ANIMATION_OPTIONS);
                     loadedImages.current[selectedBaseType.exampleImage] = true;
                   }}
                 />

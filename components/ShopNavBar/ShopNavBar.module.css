@@ -1,0 +1,108 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    background-image: none;
+    border-bottom: none;
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0)  0%,
+        var(--bg-header) 100%
+    );
+    top: -1px;
+    position: fixed;
+    z-index: 9;
+    width: 100vw;
+    height: 30vh;
+    pointer-events: none;
+}
+
+.headerWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.headerWrapper h1 {
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--font-base);
+    text-shadow: 0.05em 0.05em 0 rgb(255, 171, 251);
+    font-size: clamp(2.25rem, 1.0053rem + 5.5319vw, 5.5rem);
+    letter-spacing: clamp(0rem, -0.5224rem + 2.6122vw, 1.6rem);
+    font-family: 'Concert One', cursive;
+    margin: 0;
+    margin-top: .75rem;
+    align-items: center;
+    text-align: center;
+}
+
+.linksList {
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    list-style-type: none;
+    padding: 0;
+}
+.linkItem {
+    --underline-height: 1px;
+    --underline-gap: 2px;
+
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: none;
+    justify-content: none;
+    width: auto;
+    height: calc(
+        1.5rem +
+        calc(var(--underline-height) + var(--underline-gap))
+    );
+    pointer-events: auto;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    color: var(--font-base);
+    font-family: 'Concert One', cursive;
+    display: flex;
+}
+
+.linkItem p {
+    font-weight: 800;
+    transition: color 0.2s ease-in-out;
+    text-shadow:
+        0
+        0
+        10px
+        rgb(241 8 150 / var(--link-opacity, 0));
+    font-size: clamp(1.1rem, 0.9367rem + 0.8163vw, 1.6rem);
+    margin-top: 0;
+    margin-bottom: 0px !important;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    --link-opacity: 0;
+}
+.linkItem p.linkSelected {
+    --link-opacity: 0 !important;
+}
+.linkItem:hover p {
+    color: rgb(209, 13, 134) !important;
+}
+
+.linkItem .linkUnderline {
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    bottom: calc(-1 * var(--underline-gap));
+    left: 0;
+    height: calc(var(--underline-height) + var(--underline-gap));
+    border: none;
+    background-color: var(--font-highlight);
+}

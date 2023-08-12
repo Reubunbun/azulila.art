@@ -65,17 +65,17 @@ interface Column {
   height: number;
 }
 
-const c_imageLimit = 10;
-const c_columnMap: {[key in ScreenType]: number} = {
+const IMAGE_LIMIT = 10;
+const COLUMN_MAP: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
   [ScreenType.tablet]: 2,
   [ScreenType.desktop]: 3,
   [ScreenType.large]: 3,
   [ScreenType.extraLarge]: 3,
 };
-const c_genNewColumns = (screenType: ScreenType): Column[] => {
+const genNewColumns = (screenType: ScreenType): Column[] => {
   const finalColumns: Column[] = [];
-  for (let i = 0; i < c_columnMap[screenType]; i++) {
+  for (let i = 0; i < COLUMN_MAP[screenType]; i++) {
     finalColumns.push({items: [], height: 0});
   }
   return finalColumns;
@@ -94,7 +94,7 @@ const Gallery: Page<Props> = ({images, tags}) => {
   const [hideFilters, setHideFilters] = useState<boolean>(true);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [imageColumns, setImageColumns] = useState<Column[]>(
-    c_genNewColumns(screenType),
+    genNewColumns(screenType),
   );
 
   const callbackChangeFilter = useCallback((selected: string | null) => {
@@ -165,16 +165,16 @@ const Gallery: Page<Props> = ({images, tags}) => {
         foundUnloadedImage = true;
         loadedImages.current[image.url] = true;
 
-        if (imagesLoaded >= c_imageLimit) {
+        if (imagesLoaded >= IMAGE_LIMIT) {
           break;
         }
       }
     }
 
-    const newColumns = c_genNewColumns(screenType);
+    const newColumns = genNewColumns(screenType);
 
     while (imagesToLoad.length) {
-      const nextBatch = imagesToLoad.splice(0, c_imageLimit);
+      const nextBatch = imagesToLoad.splice(0, IMAGE_LIMIT);
       const colWidth = firstColDiv.current?.offsetWidth;
       for (const image of nextBatch) {
         const smallestColumn = newColumns.reduce(

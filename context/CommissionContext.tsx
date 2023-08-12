@@ -64,7 +64,7 @@ const createNewUserState = (): CommissionState => ({
   pageProgress: '',
   totalPrice: 0,
   characters: [createNewCharacter()],
-  backgroundType: c_bgTypeFlatColour,
+  backgroundType: BG_TYPE_FLAT_COLOUR,
   backgroundDescription: '',
   userName: '',
   userContactEmail: '',
@@ -265,7 +265,7 @@ interface CommissionContextType extends CommissionState {
   dispatchUserState: Dispatch<CommissionAction>;
 };
 
-const c_bgTypeFlatColour: CommissionOption = {
+const BG_TYPE_FLAT_COLOUR: CommissionOption = {
   price: 0,
   display: 'Flat Color or Transparent',
   id: -1,
@@ -322,7 +322,7 @@ export const CommissionStateProvider: FC<{children: ReactNode}> = ({children}) =
     baseTypes: CommissionOption[],
     backgroundTypes: CommissionOption[],
   }>
-  ({spaces: null, baseTypes: [], backgroundTypes: [c_bgTypeFlatColour]})
+  ({spaces: null, baseTypes: [], backgroundTypes: [BG_TYPE_FLAT_COLOUR]})
 
   const fetchCommissionData = async () => {
     if (madeCommissionRequest) return;
