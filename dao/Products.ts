@@ -26,7 +26,7 @@ interface JoinedProductRow {
     [ALIAS_GROUP_NAME]: string;
     [ALIAS_PRODUCT_NAME]: string;
     [COL_DESCRIPTION]: string;
-    [COL_PRIORITY]: string;
+    [COL_PRIORITY]: number;
     [COL_IMG_URL]: string;
     [COL_IMG_WIDTH]: number;
     [COL_IMG_HEIGHT]: number;
@@ -92,6 +92,9 @@ export default class Products extends AbstractDao {
         const productGroupsById = new Map<number, ProductGroup>();
         for (const row of results) {
             const groupId = row[COL_GROUP_ID];
+            const price = row[COL_PRICE];
+            const offerAsPercent = (row[COL_OFFER] / 100);
+            const actualPrice = price - (price * offerAsPercent);
 
             if (!productGroupsById.has(groupId)) {
                 productGroupsById.set(
@@ -99,6 +102,7 @@ export default class Products extends AbstractDao {
                     {
                         groupId,
                         name: row[ALIAS_GROUP_NAME],
+                        priority: row[COL_PRIORITY],
                         imageUrl: row[COL_IMG_URL],
                         imageWidth: row[COL_IMG_WIDTH],
                         imageHeight: row[COL_IMG_HEIGHT],
@@ -108,10 +112,10 @@ export default class Products extends AbstractDao {
                                 groupId,
                                 name: row[ALIAS_PRODUCT_NAME],
                                 description: row[COL_DESCRIPTION],
-                                price: row[COL_PRICE],
+                                price,
                                 offer: row[COL_OFFER],
                                 isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
-                                actualPrice: row[COL_PRICE] * (row[COL_OFFER] / 100),
+                                actualPrice,
                             },
                         ],
                         tags: [ row[COL_TAG_NAME] ],
@@ -139,10 +143,10 @@ export default class Products extends AbstractDao {
                     groupId,
                     name: row[ALIAS_PRODUCT_NAME],
                     description: row[COL_DESCRIPTION],
-                    price: row[COL_PRICE],
+                    price,
                     offer: row[COL_OFFER],
                     isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
-                    actualPrice: row[COL_PRICE] * (row[COL_OFFER] / 100),
+                    actualPrice,
                 });
             }
         }

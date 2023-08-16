@@ -82,14 +82,16 @@ const Product: FC<Props> = ({
 
 
   return (
-    <div
-      className={styles.containerImageItem}
-    >
-      <LazyLoad offset={100}>
+    <div className={styles.containerImageItem}>
+      <LazyLoad className={styles.lazyLoadWrapper} offset={100}>
         {imgComponent}
       </LazyLoad>
       <div className={styles.imageHover} onClick={() => onClick(groupId)}>
-        <p>{name}</p>
+        <p className={styles.imageHoverText}>
+          <span className={styles.bold}>{name}</span>
+          <br className={styles.lineBreak}/>
+          {` ${minPrice}$ - ${maxPrice}$`}
+        </p>
       </div>
       {!hasLoaded &&
         <motion.div

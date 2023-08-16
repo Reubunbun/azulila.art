@@ -1,0 +1,13 @@
+.listingsWrapper {
+    width: 100%;
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 0.5rem;
+}
+
+.listingsColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

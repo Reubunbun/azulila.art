@@ -10,7 +10,8 @@
   --icon-shadow-spread: 3rem;
   --image-border-radius: 0.5rem;
   --main-header-height: 20vh;
-  --shop-header-height: 15vh;
+  --shop-header-height: 12vh;
+  --shop-header-height-mob: 17.5vh;
   --header-height: var(--main-header-height);
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;

@@ -2,8 +2,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: .8rem;
     position: relative;
+    max-height: 30rem;
+    z-index: 1;
+}
+
+.lazyLoadWrapper {
+    height: 100%;
 }
 
 .placeholder {
@@ -56,24 +61,40 @@
 
 .imageItem {
     width: 100%;
+    height: 100%;
     border-radius: var(--image-border-radius);
 }
 .imageHover {
-    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 10%;
+    top: 0;
+    border-top-left-radius: var(--image-border-radius);
+    border-top-right-radius: var(--image-border-radius);
+    background-color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imageHover .bold {
+    font-weight: 700;
+}
+.imageHover .bold::after {
+    content: ":";
+}
+.imageHover .lineBreak {
     display: none;
 }
 
-@media only screen and (min-width: 700px) {
-    .containerImageItem {
-        margin-bottom: 1.2rem;
-    }
-
+@media only screen and (min-width: 1024px) {
     .imageHover {
-        display: block;
         position: absolute;
         opacity: 0;
         cursor: pointer;
-        background-color: rgba(214, 214, 214, 0.7);
+        background-color: rgba(180, 121, 219, 0.6);
+        display: flex;
+        justify-content: center;
         width: 100%;
         height: 100%;
         transition: opacity .3s ease-out;
@@ -81,31 +102,24 @@
     .imageHover:hover {
         opacity: 1;
     }
-    .imageHover p {
-        margin-left: 1rem;
-        margin-top: 1rem;
-        font-size: 2rem;
-        font-weight: 800;
-        text-shadow: 2px 2px 4px #919191;
+    .imageHover .bold::after {
+        content: "";
+    }
+    .imageHover .lineBreak {
+        display: unset;
     }
 
-}
-
-@media only screen and (min-width: 1024px) {
-    .containerImageItem {
-        margin-bottom: 2rem;
+    .imageHoverText, .imageHover span {
+        color: white;
     }
-}
 
-
-@media only screen and (min-width: 1921px) {
-    .imageHover p {
-        font-size: clamp(2rem, -0.2500rem + 1.8750vw, 2.75rem);
+    .imageHoverText {
+        text-align: center;
+        font-size: 1.5em;
+        margin-top: 5rem;
+        transition: margin-top .3s ease-out;
     }
-}
-
-@media only screen and (min-width: 2561px) {
-    .imageHover p {
-        font-size: clamp(2.75rem, 0.2500rem + 1.5625vw, 4rem);
+    .imageHover:hover .imageHoverText {
+        margin-top: 0rem;
     }
 }

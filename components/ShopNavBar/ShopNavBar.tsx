@@ -27,51 +27,55 @@ const ShopNavBar: FC = () => {
     const rootElement = document.querySelector<HTMLElement>(':root');
     if (!rootElement) return;
 
-    const shopNavHeight = getComputedStyle(rootElement)
-      .getPropertyValue('--shop-header-height');
-    rootElement.style.setProperty('--header-height', shopNavHeight);
-
     if (screenType === ScreenType.mobile) {
+      const shopNavHeight = getComputedStyle(rootElement)
+        .getPropertyValue('--shop-header-height-mob');
+      rootElement.style.setProperty('--header-height', shopNavHeight);
       rootElement.style.setProperty('--num-links', '0');
-      rootElement.style.setProperty('--main-margin-offset', '1.5rem');
+      rootElement.style.setProperty('--main-margin-offset', '0.1rem');
+    } else {
+      const shopNavHeight = getComputedStyle(rootElement)
+        .getPropertyValue('--shop-header-height');
+      rootElement.style.setProperty('--header-height', shopNavHeight);
     }
-
   }, []);
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.headerWrapper}>
-        <h1>Azulilah Shop</h1>
-      </div>
-      <motion.ul
-        className={styles.linksList}
-      >
-        {ALL_PATHS.map(({ pathname, display }) =>
-          <li key={pathname}>
-            <div
-              className={styles.linkItem}
-              onClick={() => router.push(pathname)}
-            >
-              <p
-                unselectable='on'
-                className={router.pathname === pathname ? styles.linkSelected : ''}
+      <div className={styles.content}>
+        <div className={styles.headerWrapper}>
+          <h1>Azulilah Shop</h1>
+        </div>
+        <motion.ul
+          className={styles.linksList}
+        >
+          {ALL_PATHS.map(({ pathname, display }) =>
+            <li key={pathname}>
+              <div
+                className={styles.linkItem}
+                onClick={() => router.push(pathname)}
               >
-                {display}
-              </p>
-              {router.pathname === pathname &&
-                <motion.div
-                  transition={{
-                    duration: 0.8,
-                    ease: 'easeInOut'
-                  }}
-                  className={styles.linkUnderline}
-                  layoutId='underline'
-                />
-              }
-            </div>
-          </li>
-        )}
-      </motion.ul>
+                <p
+                  unselectable='on'
+                  className={router.pathname === pathname ? styles.linkSelected : ''}
+                >
+                  {display}
+                </p>
+                {router.pathname === pathname &&
+                  <motion.div
+                    transition={{
+                      duration: 0.8,
+                      ease: 'easeInOut'
+                    }}
+                    className={styles.linkUnderline}
+                    layoutId='underline'
+                  />
+                }
+              </div>
+            </li>
+          )}
+        </motion.ul>
+      </div>
     </nav>
   );
 };

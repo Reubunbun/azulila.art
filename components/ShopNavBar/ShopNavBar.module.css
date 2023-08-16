@@ -1,19 +1,31 @@
 .nav {
     display: flex;
     flex-direction: column;
-    background-image: none;
-    border-bottom: none;
-    background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0)  0%,
-        var(--bg-header) 100%
-    );
+    background-image: url('/backgrounds/main-bg.gif');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    border-bottom: 2px solid var(--font-highlight);
     top: -1px;
     position: fixed;
     z-index: 9;
     width: 100vw;
-    height: 30vh;
     pointer-events: none;
+    min-height: var(--header-height);
+}
+.nav::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(180, 121, 219, 0.4);
+}
+
+.content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
 }
 
 .headerWrapper {
@@ -27,8 +39,7 @@
     text-align: center;
     color: var(--font-base);
     text-shadow: 0.05em 0.05em 0 rgb(255, 171, 251);
-    font-size: clamp(2.25rem, 1.0053rem + 5.5319vw, 5.5rem);
-    letter-spacing: clamp(0rem, -0.5224rem + 2.6122vw, 1.6rem);
+    font-size: clamp(2.25rem, 0.9375rem + 5.8333vw, 4rem);
     font-family: 'Concert One', cursive;
     margin: 0;
     margin-top: .75rem;
@@ -105,4 +116,46 @@
     height: calc(var(--underline-height) + var(--underline-gap));
     border: none;
     background-color: var(--font-highlight);
+}
+
+@media only screen and (min-width: 1650px) {
+    .nav {
+        flex-direction: row;
+        min-height: unset;
+        height: var(--header-height);
+    }
+
+    .content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .headerWrapper {
+        width: 60%;
+        align-items: center;
+    }
+
+    .headerWrapper h1 {
+        margin-top: unset;
+        margin-bottom: 1rem;
+    }
+
+    .linksList {
+        position: absolute;
+        right: 3rem;
+        margin-top: unset;
+        margin-bottom: unset;
+        margin-left: unset;
+        margin-right: unset;
+        width: unset;
+        gap: 1.5rem;
+    }
+
+    .linkItem {
+        --underline-height: 1px;
+        --underline-gap: 4px;
+    }
 }

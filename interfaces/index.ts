@@ -85,6 +85,7 @@ export type Product = {
 export type ProductGroup = {
     groupId: number;
     name: string;
+    priority: number;
     imageUrl: string;
     imageWidth: number;
     imageHeight: number;
