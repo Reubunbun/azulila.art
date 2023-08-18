@@ -22,7 +22,7 @@
     "react-dom": "18.0.0",
     "react-google-recaptcha": "^2.1.0",
     "react-intersection-observer": "^9.0.0",
-    "react-lazyload": "^3.2.0",
+    "react-lazy-load": "^4.0.1",
     "util": "^0.12.4"
   },
   "devDependencies": {
@@ -31,7 +31,6 @@
     "@types/react": "18.0.0",
     "@types/react-dom": "18.0.0",
     "@types/react-google-recaptcha": "^2.1.5",
-    "@types/react-lazyload": "^3.2.0",
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.4",
     "typescript": "4.6.3"

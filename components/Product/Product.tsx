@@ -1,7 +1,7 @@
 import { type FC, useState, useRef, useEffect, memo } from 'react';
 import { ProductGroup } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './Product.module.css';
 

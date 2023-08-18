@@ -1,7 +1,7 @@
 import { type FC, type RefObject, memo, useState, useEffect, useRef} from 'react';
 import type { Image as ImageType } from 'interfaces';
 import { motion, useAnimation } from 'framer-motion';
-import LazyLoad from 'react-lazyload';
+import LazyLoad from 'react-lazy-load';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import styles from './ImageItem.module.css';
 
