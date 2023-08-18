@@ -92,6 +92,7 @@ export type ProductGroup = {
     products: Product[];
     tags: string[];
     mainCategory: string;
+    description: string;
 };
 
 export type ProductsResult = {

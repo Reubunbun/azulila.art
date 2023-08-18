@@ -120,6 +120,7 @@ export default class Products extends AbstractDao {
                         ],
                         tags: [ row[COL_TAG_NAME] ],
                         mainCategory: row[COL_TYPE],
+                        description: row[COL_DESCRIPTION],
                     },
                 );
 

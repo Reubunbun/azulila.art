@@ -1,6 +1,7 @@
 .listingsWrapper {
     width: 100%;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 4rem;
     display: flex;
     justify-content: space-evenly;
     gap: 0.5rem;

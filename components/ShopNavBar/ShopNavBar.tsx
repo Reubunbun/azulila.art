@@ -1,4 +1,4 @@
-import { type FC, useEffect, memo } from 'react';
+import { type FC, useEffect, useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -20,6 +20,7 @@ const ALL_PATHS: Path[] = [
 const ShopNavBar: FC = () => {
   const router = useRouter();
   const screenType = useScreenType();
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -27,12 +28,15 @@ const ShopNavBar: FC = () => {
     const rootElement = document.querySelector<HTMLElement>(':root');
     if (!rootElement) return;
 
+    if (!navRef.current) return;
+
     if (screenType === ScreenType.mobile) {
-      const shopNavHeight = getComputedStyle(rootElement)
-        .getPropertyValue('--shop-header-height-mob');
-      rootElement.style.setProperty('--header-height', shopNavHeight);
+      rootElement.style.setProperty('--header-height', '0px');
       rootElement.style.setProperty('--num-links', '0');
-      rootElement.style.setProperty('--main-margin-offset', '0.1rem');
+      rootElement.style.setProperty(
+        '--main-margin-offset',
+        `${navRef.current.getBoundingClientRect().height}px`,
+      );
     } else {
       const shopNavHeight = getComputedStyle(rootElement)
         .getPropertyValue('--shop-header-height');
@@ -42,7 +46,7 @@ const ShopNavBar: FC = () => {
 
   return (
     <nav className={styles.nav}>
-      <div className={styles.content}>
+      <div ref={navRef} className={styles.content}>
         <div className={styles.headerWrapper}>
           <h1>Azulilah Shop</h1>
         </div>

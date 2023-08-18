@@ -99,10 +99,7 @@ const Shop: Page<Props> = ({ products, categories }) => {
         >
           {column.map(product =>
             <Fragment key={product.groupId}>
-              <Product
-                {...product}
-                onClick={() => {}}
-              />
+              <Product {...product}/>
             </Fragment>
           )}
         </div>

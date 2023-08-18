@@ -1,29 +1,34 @@
 import { type FC, useState, useRef, useEffect, memo } from 'react';
-import { ProductGroup } from 'interfaces';
-import { motion, useAnimation } from 'framer-motion';
 import LazyLoad from 'react-lazy-load';
+import { motion, useAnimation } from 'framer-motion';
+import { type ProductGroup } from 'interfaces';
+import { useUIContext } from 'context/UIContext';
+import ProductModal from 'components/ProductModal/ProductModal';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './Product.module.css';
 
-interface Props extends ProductGroup {
-  onClick: (groupId: number) => void;
-}
 
-const Product: FC<Props> = ({
-  name,
-  groupId,
-  imageUrl,
-  products,
-  onClick,
-}) => {
+const Product: FC<ProductGroup> = (props) => {
+  const { name, imageUrl, products } = props;
+
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
   const localImgRef = useRef<HTMLImageElement>(null);
+  const { setModalContent } = useUIContext();
 
   const allPrices = products.map(product => product.actualPrice);
   const minPrice = Math.min(...allPrices).toFixed(2);
   const maxPrice = Math.max(...allPrices).toFixed(2);
+
+  const clickProduct = () => {
+    setModalContent(
+      <ProductModal
+        productGroup={props}
+        close={() => setModalContent(null)}
+      />
+    );
+  };
 
   const imgLoadCallback = () => {
     imgAnimation.start({
@@ -51,10 +56,6 @@ const Product: FC<Props> = ({
     src={imageUrl}
     alt={name}
     ref={localImgRef}
-    onClick={e => {
-      e.stopPropagation();
-      onClick(groupId);
-    }}
     onLoad={imgLoadCallback}
   />;
 
@@ -82,11 +83,11 @@ const Product: FC<Props> = ({
 
 
   return (
-    <div className={styles.containerImageItem}>
+    <div className={styles.containerImageItem} onClick={clickProduct}>
       <LazyLoad className={styles.lazyLoadWrapper} offset={100}>
         {imgComponent}
       </LazyLoad>
-      <div className={styles.imageHover} onClick={() => onClick(groupId)}>
+      <div className={styles.imageHover}>
         <p className={styles.imageHoverText}>
           <span className={styles.bold}>{name}</span>
           <br className={styles.lineBreak}/>

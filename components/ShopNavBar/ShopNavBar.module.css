@@ -10,7 +10,6 @@
     z-index: 9;
     width: 100vw;
     pointer-events: none;
-    min-height: var(--header-height);
 }
 .nav::before {
     content: "";
