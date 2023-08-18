@@ -129,7 +129,7 @@ const DefaultLayout: FC<Props> = ({
           >
             {noNav
               ? <></>
-              : router.pathname.startsWith('/shop')
+              : router.pathname.startsWith('/secret-shop')
                   ? <ShopNavBar />
                   : <NavBar dontStick={dontStickHeader} />
             }
