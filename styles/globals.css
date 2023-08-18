@@ -63,7 +63,7 @@ h1, h2, h3, button {
   font-family: 'Concert One', cursive;
   color: var(--font-base);
 }
-p, b, a, label, span, input[type="text"], ::placeholder {
+p, b, a, label, span, input[type="text"], input[type="number"], ::placeholder {
   font-family: 'Work Sans', sans-serif;
   font-weight: 400;
   color: var(--font-base);
@@ -91,17 +91,20 @@ h2 {
 }
 
 input[type="text"].warning::placeholder,
+input[type="number"].warning::placeholder,
 textarea.warning::placeholder {
   color: var(--font-warning);
   opacity: 1;
 }
 
 input[type="text"].warning:-ms-input-placeholder,
+input[type="number"].warning:-ms-input-placeholder,
 textarea.warning:-ms-input-placeholder {
   color: var(--font-warning);
 }
 
 input[type="text"].warning::-ms-input-placeholder,
+input[type="number"].warning::-ms-input-placeholder,
 textarea.warning::-ms-input-placeholder {
   color: var(--font-warning);
 }
@@ -130,7 +133,9 @@ textarea:focus {
   outline: none;
 }
 
-input[type="text"], textarea {
+input[type="text"],
+input[type="number"],
+textarea {
   padding-top: .25rem;
   padding-bottom: .25rem;
   padding-left: .2rem;
@@ -150,6 +155,7 @@ textarea {
 }
 
 input[type="text"].warning,
+input[type="number"].warning,
 textarea.warning {
   animation: inputError .82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
@@ -267,7 +273,9 @@ textarea.warning {
     gap: 2.5rem;
   }
 
-  input[type="text"], textarea {
+  input[type="text"],
+  input[type="number"]
+  textarea {
     padding-left: .5rem;
     padding-right: .5rem;
   }
@@ -278,7 +286,9 @@ textarea.warning {
     font-size: clamp(2.85rem, -2.8500rem + 4.7500vw, 4.75rem);
   }
 
-  input[type="text"], textarea {
+  input[type="text"],
+  input[type="number"],
+  textarea {
     font-size: clamp(1.2rem, -2.7000rem + 3.2500vw, 2.5rem);
     font-weight: 600;
     padding-left: .75rem;
@@ -297,7 +307,9 @@ textarea.warning {
 }
 
 @media only screen and (min-width: 2560px) {
-  input[type="text"], textarea {
+  input[type="text"],
+  input[type="number"],
+  textarea {
     border: none;
     box-shadow: 0 0 2px 2px var(--font-highlight);
   }
@@ -313,7 +325,9 @@ textarea.warning {
     font-size: clamp(4.75rem, -1.7500rem + 4.0625vw, 8rem);
   }
 
-  input[type="text"], textarea {
+  input[type="text"],
+  input[type="number"],
+  textarea {
     font-size: clamp(2.5rem, 0.0000rem + 1.5625vw, 3.75rem);
   }
 

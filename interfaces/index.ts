@@ -75,7 +75,6 @@ export type Product = {
     productId: number;
     groupId: number;
     name: string;
-    description: string;
     price: number;
     offer: number;
     actualPrice: number;

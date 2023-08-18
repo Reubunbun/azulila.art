@@ -1,0 +1,179 @@
+.containerProductModal {
+    --border-radius: 0.25rem;
+
+    --input-radius: 0.5rem;
+    --dd-base-fg: var(--font-highlight);
+    --input-bg: #ffe3f1;
+    --dd-accent-fg: var(--font-highlight);
+    --dd-accent-bg: #ffaad4;
+
+    --close-section-height: 10%;
+
+    background-color: var(--bg);
+    width: min(95%, 80rem);
+    height: 75vh;
+    border-radius: var(--border-radius);
+
+    cursor: default;
+}
+
+.containerProductModal p {
+    margin: 0;
+}
+
+.containerCloseBtn {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    height: var(--close-section-height);
+}
+
+.containerCloseBtn .closeBtn {
+    width: 4rem;
+    background-color: #d84054;
+    border: none;
+    border-top-right-radius: var(--border-radius);
+    transition: background-color .3s ease-out;
+}
+
+.containerCloseBtn .closeBtn:hover {
+    background-color: #fd4b63
+}
+
+.containerCloseBtn p {
+    color: black;
+    font-size: 2em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.containerMainContent {
+    width: 100%;
+    height: calc(100% - var(--close-section-height));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.containerMainContent > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.containerOptions {
+    margin-top: 2rem;
+}
+
+.containerPrice {
+    margin-top: 1rem;
+}
+
+.price {
+    color: var(--font-highlight);
+    font-weight: 600;
+    font-size: 1.3em;
+}
+
+.price span {
+    color: var(--font-highlight);
+}
+
+.containerSelect, .containerQuantity {
+    width: min(80%, 40rem);
+}
+
+.containerSelect select {
+    margin-top: 0.1rem;
+    width: 100%;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    color: var(--dd-base-fg);
+    border: 1px solid var(--dd-base-fg);
+    line-height: 1;
+    outline: 0;
+    padding: 0.65em 2.5em 0.55em 0.75em;
+    border-radius: var(--input-radius);
+    background-color: var(--input-bg);
+    background-image:
+        linear-gradient(var(--dd-base-fg), var(--dd-base-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-bg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-bg) 50%),
+        linear-gradient(var(--dd-accent-bg) 42%, var(--dd-accent-fg) 42%);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: 1px 100%, 20px 22px, 20px 22px, 20px 100%;
+    background-position: right 20px center, right bottom, right bottom, right bottom;
+}
+
+.containerSelect select:hover {
+    background-image:
+        linear-gradient(var(--dd-accent-fg), var(--dd-accent-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(var(--dd-accent-fg) 42%, var(--dd-accent-bg) 42%);
+}
+
+.containerSelect select:active {
+    background-image:
+        linear-gradient(var(--dd-accent-fg), var(--dd-accent-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(var(--dd-accent-fg) 42%, var(--dd-accent-bg) 42%);
+    color: var(--dd-accent-bg);
+    border-color: var(--dd-accent-fg);
+    background-color: var(--dd-accent-fg);
+}
+
+.containerQuantity {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+}
+
+.containerQuantity input[type="number"] {
+    width: 5rem;
+    padding-left: .5rem;
+    background-color: var(--input-bg);
+    border-radius: var(--input-radius);
+}
+
+.containerBasketButton {
+    margin-top: 1rem;
+}
+
+.containerBasketButton button {
+    background-color: var(--input-bg);
+}
+
+.containerImage {
+    display: none;
+}
+
+@media only screen and (min-width: 1024px) {
+    .containerDesktopSplit {
+        display: flex;
+        height: calc(100% - var(--close-section-height));
+    }
+
+    .containerMainContent {
+        width: 50%;
+    }
+
+    .containerImage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+    }
+
+    .containerImage img {
+        max-width: 95%;
+        height: auto;
+        border-radius: var(--input-radius);
+        border: 4px solid var(--font-highlight);
+    }
+}
