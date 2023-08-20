@@ -1,8 +1,11 @@
 import type { Page } from 'interfaces';
+import { useShopContext } from 'context/ShopContext';
 
 const Basket: Page = () => {
+  const { getBasket } = useShopContext();
+
   return (
-    <div>Basket</div>
+    <pre>{JSON.stringify(getBasket(), null, 2)}</pre>
   );
 };
 

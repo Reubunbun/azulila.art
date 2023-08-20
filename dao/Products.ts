@@ -1,5 +1,5 @@
 import AbstractDao from './abstract';
-import type { ProductGroup, ProductsResult } from '../interfaces';
+import type { ProductGroup } from '../interfaces';
 
 const COL_GROUP_ID = 'group_id';
 const COL_NAME = 'name';
@@ -42,7 +42,7 @@ export default class Products extends AbstractDao {
     static readonly PRODUCT_TABLE_NAME: string = 'tania_product';
     static readonly TAGS_TABLE_NAME: string = 'tania_product_tags';
 
-    async getAll() : Promise<ProductsResult> {
+    async getAll() : Promise<ProductGroup[]> {
         const results = (await this.pgClient.query<JoinedProductRow>(
             this.knexClient(Products.GROUP_TABLE_NAME)
                 .select({
@@ -150,6 +150,6 @@ export default class Products extends AbstractDao {
             }
         }
 
-        return { productGroups: Array.from(productGroupsById.values()) };
+        return Array.from(productGroupsById.values());
     }
 }

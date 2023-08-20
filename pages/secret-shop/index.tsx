@@ -1,52 +1,10 @@
 import { type Page, type ProductGroup, ScreenType } from 'interfaces';
-import type { GetStaticProps } from 'next';
 import { Fragment, useEffect, useState } from 'react';
-import { Client as PGClient } from 'pg';
 import useScreenType from 'hooks/useScreenType';
+import { useShopContext } from 'context/ShopContext';
+import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import Product from 'components/Product/Product';
-import DaoProducts from 'dao/Products';
 import styles from './shop.module.css';
-
-interface Props {
-  products: ProductGroup[],
-  categories: string[],
-};
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const pgClient = new PGClient({
-      user: process.env.DB_USER,
-      host: process.env.DB_HOST,
-      database: process.env.DB_NAME,
-      password: process.env.DB_PASSWORD,
-      port: Number(process.env.DB_PORT),
-      ssl: { rejectUnauthorized: false },
-  });
-
-  const props: Props = {
-    products: [],
-    categories: [],
-  };
-
-  try {
-      await pgClient.connect();
-      const daoProducts = new DaoProducts(pgClient);
-      const { productGroups } = await daoProducts.getAll();
-
-      props.products.push(...productGroups);
-      props.categories.push(
-        ...productGroups.map(({ mainCategory }) => mainCategory),
-      );
-  } catch (err) {
-      console.log(err);
-  } finally {
-      await pgClient.end();
-  }
-
-  return {
-    props,
-    revalidate: 300,
-  };
-};
 
 const COLUMN_MAP: {[key in ScreenType]: number} = {
   [ScreenType.mobile]: 1,
@@ -63,10 +21,20 @@ const genNewColumns = (screenType: ScreenType): ProductGroup[][] => {
   return finalColumns;
 }
 
-const Shop: Page<Props> = ({ products, categories }) => {
+const Shop: Page = () => {
   const screenType = useScreenType();
-
+  const {
+    madeInitialRequest,
+    fetchProducts,
+    products,
+    categories,
+  } = useShopContext();
+  const [networkError, setNetworkError] = useState<boolean>(false);
   const [productColumns, setProductColumns] = useState<ProductGroup[][]>([]);
+
+  useEffect(() => {
+    fetchProducts().catch(() => setNetworkError(true));
+  }, []);
 
   useEffect(() => {
     const columns = genNewColumns(screenType);
@@ -82,6 +50,29 @@ const Shop: Page<Props> = ({ products, categories }) => {
 
     setProductColumns(columns);
   }, [screenType, products]);
+
+  if (networkError) {
+    return (
+      <p style={{
+        width: '100%',
+        marginTop: 0,
+        textAlign: 'center'
+      }}>
+        There was a network error, please try refreshing the page.
+      </p>
+    );
+  }
+
+  if (!madeInitialRequest) {
+    return (
+      <div>
+        <LoadingSpinner
+          loadingText='Loading Products...'
+          width='9rem'
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.listingsWrapper}>

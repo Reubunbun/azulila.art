@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import useScreenType from 'hooks/useScreenType';
+import { useShopContext } from 'context/ShopContext';
 import styles from './ShopNavBar.module.css';
 import { ScreenType } from 'interfaces';
 
@@ -11,16 +12,21 @@ interface Path {
   pathname: string;
 };
 
+const BASKET_PATH = '/secret-shop/basket';
+
 const ALL_PATHS: Path[] = [
   { display: 'Back To Main Site', pathname: '/work' },
-  { display: 'Products', pathname: '/shop' },
-  { display: 'Basket', pathname: '/shop/basket' },
+  { display: 'Products', pathname: '/secret-shop' },
+  { display: 'Basket', pathname: BASKET_PATH },
 ];
 
 const ShopNavBar: FC = () => {
   const router = useRouter();
   const screenType = useScreenType();
   const navRef = useRef<HTMLDivElement>(null);
+  const { selectedProducts } = useShopContext();
+  const numInBasket = Object.keys(selectedProducts).length;
+  const refBasketLink = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -44,6 +50,15 @@ const ShopNavBar: FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (!refBasketLink.current) return;
+
+    refBasketLink.current.classList.remove(styles.basketUpdate);
+    void refBasketLink.current.offsetWidth;
+    refBasketLink.current.classList.add(styles.basketUpdate);
+
+  }, [selectedProducts]);
+
   return (
     <nav className={styles.nav}>
       <div ref={navRef} className={styles.content}>
@@ -62,14 +77,19 @@ const ShopNavBar: FC = () => {
                 <p
                   unselectable='on'
                   className={router.pathname === pathname ? styles.linkSelected : ''}
+                  ref={pathname === BASKET_PATH ? refBasketLink : null}
                 >
-                  {display}
+                  {`${display} ${
+                    pathname === BASKET_PATH && numInBasket
+                      ? `(${numInBasket})`
+                      : ''
+                  }`}
                 </p>
                 {router.pathname === pathname &&
                   <motion.div
                     transition={{
                       duration: 0.8,
-                      ease: 'easeInOut'
+                      ease: 'easeInOut',
                     }}
                     className={styles.linkUnderline}
                     layoutId='underline'

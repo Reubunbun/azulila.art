@@ -4,6 +4,7 @@ import { AnimateSharedLayout } from 'framer-motion';
 import { fixTransition } from 'helpers/fixTransition';
 import { CommissionStateProvider } from 'context/CommissionContext';
 import { UIStateProvider } from 'context/UIContext';
+import { ShopStateProvider } from 'context/ShopContext';
 import DefaultLayout from 'layouts/Default/Default';
 import 'styles/globals.css';
 
@@ -18,21 +19,23 @@ function MyApp({ Component, pageProps }: CustomAppProps) {
   return (
     <AnimateSharedLayout>
       <CommissionStateProvider>
-        <UIStateProvider>
-          <DefaultLayout
-            title={Component.title}
-            description={Component.description}
-            dontStickHeader={!!Component.dontStick}
-            removeMainPadding={!!Component.removePadding}
-            removeMainMargin={!!Component.removeMargin}
-            removeMainBackground={!!Component.removeBg}
-            background={Component.background}
-            noNav={Component.noNav}
-            transitionTime={PAGE_TRANSITION_TIME}
-          >
-            <Component {...pageProps}/>
-          </DefaultLayout>
-        </UIStateProvider>
+        <ShopStateProvider>
+          <UIStateProvider>
+            <DefaultLayout
+              title={Component.title}
+              description={Component.description}
+              dontStickHeader={!!Component.dontStick}
+              removeMainPadding={!!Component.removePadding}
+              removeMainMargin={!!Component.removeMargin}
+              removeMainBackground={!!Component.removeBg}
+              background={Component.background}
+              noNav={Component.noNav}
+              transitionTime={PAGE_TRANSITION_TIME}
+            >
+              <Component {...pageProps}/>
+            </DefaultLayout>
+          </UIStateProvider>
+        </ShopStateProvider>
       </CommissionStateProvider>
     </AnimateSharedLayout>
   );

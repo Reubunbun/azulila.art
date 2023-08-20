@@ -1,6 +1,7 @@
-import { type FC, useState, Fragment } from 'react';
+import { type FC, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { ProductGroup, Product } from 'interfaces';
+import { useShopContext } from 'context/ShopContext';
 import ModalBackdrop from 'components/ModalBackdrop/ModalBackdrop';
 import styles from './ProductModal.module.css';
 
@@ -13,10 +14,24 @@ const strikethroughText = (input: string) =>
   [...input].map(char => `${char}\u0336`).join('')
 
 const ProductModal: FC<Props> = ({ productGroup, close }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product>(
-    productGroup.products[0],
+  const [selectedProductId, setSelectedProductId] = useState<number>(
+    productGroup.products[0].productId,
   );
   const [quantity, setQuantity] = useState<number>(1);
+
+  const selectedProduct: Product = productGroup.products.find(
+    product => selectedProductId === product.productId,
+  )!;
+
+  const { dispatchProduct } = useShopContext();
+
+  const addProductToBasket = () => {
+    dispatchProduct({
+      type: 'ADD-PRODUCT',
+      payload: { id: selectedProduct.productId, quantity: quantity },
+    });
+    close();
+  };
 
   return (
     <ModalBackdrop close={close} key='modal'>
@@ -46,11 +61,11 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
             <div>
               <div className={styles.containerSelect}>
                 <p>Select Option:</p>
-                <select>
+                <select onChange={e => setSelectedProductId(Number(e.target.value))}>
                   {productGroup.products.map(product =>
                     <option
                       key={product.productId}
-                      onClick={() => setSelectedProduct(product)}
+                      value={product.productId}
                     >
                       {
                         `${product.name} - ${
@@ -85,7 +100,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
             </div>
             <div>
               <div className={styles.containerBasketButton}>
-                <button className='commission-btn'>
+                <button className='commission-btn' onClick={addProductToBasket}>
                   Add To Basket
                 </button>
               </div>

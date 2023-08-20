@@ -9,8 +9,11 @@ async function get(
     pgClient: PGClient,
 ) {
     const daoProducts = new DaoProducts(pgClient);
-    const result = await daoProducts.getAll();
-    return res.status(200).json(result);
+    const productGroups = await daoProducts.getAll();
+    return res.status(200).json({
+        products: productGroups,
+        categories: productGroups.map(({ mainCategory }) => mainCategory),
+    });
 }
 
 export default async function handler(
@@ -28,15 +31,13 @@ export default async function handler(
         });
         try {
             await pgClient.connect();
-            const daoProducts = new DaoProducts(pgClient);
-            const result = await daoProducts.getAll();
+            return await get(req, res, pgClient);
         } catch (err) {
             console.log(err);
             return res.status(500).json({message: 'Unknown Server Error'});
         } finally {
             await pgClient.end();
         }
-        return;
     }
 
     return res.status(410).json({message: 'Inavlid Method'});
