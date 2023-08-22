@@ -7,17 +7,12 @@
     z-index: 1;
 }
 
-.lazyLoadWrapper {
-    height: 100%;
-}
-
 .placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    position: absolute;
     background-color: rgba(243, 63, 135, 0.2);
     border-radius: var(--image-border-radius);
     animation: breathing 2.5s ease-out infinite normal;

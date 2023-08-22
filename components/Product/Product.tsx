@@ -14,12 +14,18 @@ const Product: FC<ProductGroup> = (props) => {
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+  const [hasBuffered, setHasBuffered] = useState<boolean>(false);
   const localImgRef = useRef<HTMLImageElement>(null);
   const { setModalContent } = useUIContext();
 
   const allPrices = products.map(product => product.actualPrice);
   const minPrice = Math.min(...allPrices).toFixed(2);
   const maxPrice = Math.max(...allPrices).toFixed(2);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => setHasBuffered(true), 150);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   const clickProduct = () => {
     setModalContent(
@@ -94,7 +100,7 @@ const Product: FC<ProductGroup> = (props) => {
           {` ${minPrice}$ - ${maxPrice}$`}
         </p>
       </div>
-      {!hasLoaded &&
+      {hasBuffered && !hasLoaded &&
         <motion.div
           initial={{opacity: 1}}
           animate={placeholderAnimation}

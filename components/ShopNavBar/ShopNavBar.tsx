@@ -51,13 +51,13 @@ const ShopNavBar: FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!refBasketLink.current) return;
+    if (!refBasketLink.current || numInBasket === 0) return;
 
     refBasketLink.current.classList.remove(styles.basketUpdate);
     void refBasketLink.current.offsetWidth;
     refBasketLink.current.classList.add(styles.basketUpdate);
 
-  }, [selectedProducts]);
+  }, [numInBasket]);
 
   return (
     <nav className={styles.nav}>

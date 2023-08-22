@@ -1,7 +1,9 @@
 import { type Page, type ProductGroup, ScreenType } from 'interfaces';
 import { Fragment, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import useScreenType from 'hooks/useScreenType';
 import { useShopContext } from 'context/ShopContext';
+import Filters from 'components/Filters/Filters';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import Product from 'components/Product/Product';
 import styles from './shop.module.css';
@@ -31,6 +33,7 @@ const Shop: Page = () => {
   } = useShopContext();
   const [networkError, setNetworkError] = useState<boolean>(false);
   const [productColumns, setProductColumns] = useState<ProductGroup[][]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     fetchProducts().catch(() => setNetworkError(true));
@@ -42,6 +45,8 @@ const Shop: Page = () => {
 
     let columnIndex: number = 0;
     for (const productGroup of orderedProducts) {
+      if (selectedCategory && productGroup.mainCategory !== selectedCategory) continue;
+
       columns[columnIndex].push(productGroup);
       if (++columnIndex > columns.length - 1) {
         columnIndex = 0;
@@ -49,7 +54,7 @@ const Shop: Page = () => {
     }
 
     setProductColumns(columns);
-  }, [screenType, products]);
+  }, [screenType, products, selectedCategory]);
 
   if (networkError) {
     return (
@@ -76,25 +81,33 @@ const Shop: Page = () => {
 
   return (
     <div className={styles.listingsWrapper}>
-      {productColumns.map((column, i) =>
-        <div
-          key={i}
-          className={styles.listingsColumn}
-          style={{
-            width: productColumns.length === 3
-              ? '25vw'
-              : productColumns.length === 2
-                ? '45vw'
-                : 'min(90vw, 30rem)'
-          }}
-        >
-          {column.map(product =>
-            <Fragment key={product.groupId}>
-              <Product {...product}/>
-            </Fragment>
-          )}
-        </div>
-      )}
+      <div className={styles.containerFilters}>
+        <Filters
+          filters={categories}
+          changeSelected={setSelectedCategory}
+        />
+      </div>
+      <div className={styles.containerProducts}>
+        {productColumns.map((column, i) =>
+          <div
+            key={i}
+            className={styles.listingsColumn}
+            style={{
+              width: productColumns.length === 3
+                ? '25vw'
+                : productColumns.length === 2
+                  ? '45vw'
+                  : 'min(90vw, 30rem)'
+            }}
+          >
+            {column.map(product =>
+              <motion.div key={product.groupId}>
+                <Product {...product}/>
+              </motion.div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
