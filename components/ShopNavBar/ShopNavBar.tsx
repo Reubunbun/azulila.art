@@ -48,7 +48,7 @@ const ShopNavBar: FC = () => {
         .getPropertyValue('--shop-header-height');
       rootElement.style.setProperty('--header-height', shopNavHeight);
     }
-  }, []);
+  }, [screenType]);
 
   useEffect(() => {
     if (!refBasketLink.current || numInBasket === 0) return;

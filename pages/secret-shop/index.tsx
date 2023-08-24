@@ -1,7 +1,8 @@
 import { type Page } from 'interfaces';
-import { useRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useShopContext } from 'context/ShopContext';
+import SearchBar from 'components/SearchBar/SearchBar';
 import Filters from 'components/Filters/Filters';
 import AnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
@@ -17,6 +18,7 @@ const Shop: Page = () => {
   } = useShopContext();
   const [networkError, setNetworkError] = useState<boolean>(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [searchFilter, setSearchFilter] = useState<string>('');
   const [loadedProducts, setLoadedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
@@ -48,7 +50,8 @@ const Shop: Page = () => {
 
   return (
     <div className={styles.shopPageContainer}>
-      <div>
+      <div className={styles.searchInputs}>
+        <SearchBar onSearchChange={setSearchFilter}/>
         <Filters
           filters={categories}
           changeSelected={setSelectedCategory}
@@ -58,9 +61,24 @@ const Shop: Page = () => {
       <div className={styles.productListContainer}>
         <AnimatePresence>
           {products
-            .filter(
-              ({ mainCategory }) => selectedCategory ? mainCategory === selectedCategory : true
-            )
+            .filter(({ mainCategory, tags, name }) => {
+              if (selectedCategory && selectedCategory !== mainCategory) {
+                return false;
+              }
+
+              if (!searchFilter) {
+                return true;
+              }
+
+              const searchOn: string[] = [...tags, name].map(s => s.toLowerCase());
+              const searchMatch = searchOn.some(searchOn =>
+                searchFilter.length <= 2
+                  ? searchOn.startsWith(searchFilter)
+                  : searchOn.includes(searchFilter),
+              );
+
+              return searchMatch;
+            })
             .map(product =>
               <motion.div
                 layout

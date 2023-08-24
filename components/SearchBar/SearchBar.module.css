@@ -1,0 +1,36 @@
+.containerSearchBar {
+    position: relative;
+    width: min(85vw, 450px);
+    display: flex;
+    align-items: center;
+
+    --border-width: 2px;
+    --border-radius: .5rem;
+    --padding: .25rem;
+}
+
+.searchInput {
+    width: 100%;
+    background-color: #ffe3f1 !important;
+    border: var(--border-width) solid var(--font-highlight) !important;
+    border-radius: var(--border-radius);
+    padding-top: var(--padding) !important;
+    padding-bottom: var(--padding) !important;
+}
+
+.searchIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--font-highlight);
+    height: calc(
+        100% + calc(
+            var(--padding) - calc(var(--border-width) * 2)
+        )
+    ) !important;
+    width: 13% !important;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    background-color: #ffaad4;
+    border: var(--border-width) solid var(--font-highlight);
+}

@@ -7,8 +7,6 @@
 .containerOptions {
     display: flex;
     justify-content: center;
-    margin-bottom: 1rem;
-    margin-top: .5rem;
     gap: .4rem;
     flex-wrap: wrap;
 }

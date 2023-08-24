@@ -52,6 +52,11 @@
     margin-right: auto;
 }
 
+.containerToggleFilters {
+    margin-bottom: 1rem;
+    margin-top: .5rem;
+}
+
 .containerAllColumns {
     position: relative;
     z-index: 2;
