@@ -9,9 +9,10 @@ export interface FilterOption {
 interface Props {
   filters: string[];
   changeSelected: (filters: string | null) => void;
+  throttle?: number;
 };
 
-const Filters: FC<Props> = ({filters, changeSelected}) => {
+const Filters: FC<Props> = ({ filters, changeSelected, throttle }) => {
   const [selected, setSelected] = useState<FilterOption[]>([]);
 
   const disabledBtns = useRef<{[key: string]: boolean}>({});
@@ -53,7 +54,7 @@ const Filters: FC<Props> = ({filters, changeSelected}) => {
                   disabledBtns.current[currName] = true;
                   setTimeout(
                     () => disabledBtns.current[currName] = false,
-                    900,
+                    throttle || 900,
                   );
 
                   return {

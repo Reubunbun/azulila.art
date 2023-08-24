@@ -7,25 +7,29 @@ import ProductModal from 'components/ProductModal/ProductModal';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import styles from './Product.module.css';
 
+interface Props extends ProductGroup {
+  hasLoadedBefore: boolean;
+  onImageLoad: () => void;
+}
 
-const Product: FC<ProductGroup> = (props) => {
-  const { name, imageUrl, products } = props;
+const Product: FC<Props> = props => {
+  const {
+    name,
+    imageUrl,
+    products,
+    hasLoadedBefore,
+    onImageLoad,
+  } = props;
 
   const imgAnimation = useAnimation();
   const placeholderAnimation = useAnimation();
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
-  const [hasBuffered, setHasBuffered] = useState<boolean>(false);
   const localImgRef = useRef<HTMLImageElement>(null);
   const { setModalContent } = useUIContext();
 
   const allPrices = products.map(product => product.actualPrice);
   const minPrice = Math.min(...allPrices).toFixed(2);
   const maxPrice = Math.max(...allPrices).toFixed(2);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setHasBuffered(true), 150);
-    return () => clearTimeout(timeoutId);
-  }, []);
 
   const clickProduct = () => {
     setModalContent(
@@ -37,6 +41,8 @@ const Product: FC<ProductGroup> = (props) => {
   };
 
   const imgLoadCallback = () => {
+    if (hasLoadedBefore) return;
+
     imgAnimation.start({
       opacity: 1,
       transition: {
@@ -52,12 +58,10 @@ const Product: FC<ProductGroup> = (props) => {
       },
     });
     setHasLoaded(true);
+    onImageLoad();
   };
 
-  const imgComponent = <motion.img
-    initial={{opacity: 0}}
-    animate={imgAnimation}
-    exit={{opacity: 0}}
+  const imgComponent = <img
     className={styles.imageItem}
     src={imageUrl}
     alt={name}
@@ -87,24 +91,29 @@ const Product: FC<ProductGroup> = (props) => {
     return () => clearInterval(intervalId);
   }, [hasLoaded]);
 
-
   return (
     <div className={styles.containerImageItem} onClick={clickProduct}>
       <LazyLoad className={styles.lazyLoadWrapper} offset={100}>
-        {imgComponent}
-      </LazyLoad>
-      <div className={styles.imageHover}>
-        <p className={styles.imageHoverText}>
-          <span className={styles.bold}>{name}</span>
-          <br className={styles.lineBreak}/>
-          {` ${minPrice}$ - ${maxPrice}$`}
-        </p>
-      </div>
-      {hasBuffered && !hasLoaded &&
         <motion.div
-          initial={{opacity: 1}}
+          initial={{ opacity: hasLoadedBefore ? undefined : 0 }}
+          animate={imgAnimation}
+          exit={{ opacity: hasLoadedBefore ? undefined : 0 }}
+        >
+          {imgComponent}
+          <div className={styles.imageHover}>
+            <p className={styles.imageHoverText}>
+              <span className={styles.bold}>{name}</span>
+              <br className={styles.lineBreak}/>
+              {` ${minPrice}$ - ${maxPrice}$`}
+            </p>
+          </div>
+        </motion.div>
+      </LazyLoad>
+      {!hasLoaded && !hasLoadedBefore &&
+        <motion.div
+          initial={{ opacity: 1 }}
           animate={placeholderAnimation}
-          exit={{opacity: 0}}
+          exit={{ opacity: 0 }}
           className={styles.placeholder}
         >
           <LoadingSpinner loadingText={''} />

@@ -1,20 +1,16 @@
-.listingsWrapper {
+.shopPageContainer {
+    height: auto;
+    transition: height 0.3s ease-out;
+}
+
+.productListContainer {
     width: 100%;
-    min-height: calc(100vh - var(--header-height));
-    padding-top: 1rem;
-    padding-bottom: 4rem;
     display: flex;
-    flex-direction: column;
-}
-
-.containerProducts {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 0.5rem;
-}
-
-.listingsColumn {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 1rem;
+}
+
+.productContainer {
+    width: min(90vw, 25rem);
 }

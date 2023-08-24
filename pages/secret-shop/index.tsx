@@ -1,30 +1,14 @@
-import { type Page, type ProductGroup, ScreenType } from 'interfaces';
-import { Fragment, useEffect, useState } from 'react';
+import { type Page } from 'interfaces';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import useScreenType from 'hooks/useScreenType';
 import { useShopContext } from 'context/ShopContext';
 import Filters from 'components/Filters/Filters';
+import AnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
 import LoadingSpinner from 'components/LoadingSpinner/LoadingSpinner';
 import Product from 'components/Product/Product';
 import styles from './shop.module.css';
 
-const COLUMN_MAP: {[key in ScreenType]: number} = {
-  [ScreenType.mobile]: 1,
-  [ScreenType.tablet]: 2,
-  [ScreenType.desktop]: 3,
-  [ScreenType.large]: 3,
-  [ScreenType.extraLarge]: 3,
-};
-const genNewColumns = (screenType: ScreenType): ProductGroup[][] => {
-  const finalColumns: ProductGroup[][] = [];
-  for (let i = 0; i < COLUMN_MAP[screenType]; i++) {
-    finalColumns.push([]);
-  }
-  return finalColumns;
-}
-
 const Shop: Page = () => {
-  const screenType = useScreenType();
   const {
     madeInitialRequest,
     fetchProducts,
@@ -32,29 +16,12 @@ const Shop: Page = () => {
     categories,
   } = useShopContext();
   const [networkError, setNetworkError] = useState<boolean>(false);
-  const [productColumns, setProductColumns] = useState<ProductGroup[][]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [loadedProducts, setLoadedProducts] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     fetchProducts().catch(() => setNetworkError(true));
-  }, []);
-
-  useEffect(() => {
-    const columns = genNewColumns(screenType);
-    const orderedProducts = Array.from(products).sort((a, b) => b.priority - a.priority);
-
-    let columnIndex: number = 0;
-    for (const productGroup of orderedProducts) {
-      if (selectedCategory && productGroup.mainCategory !== selectedCategory) continue;
-
-      columns[columnIndex].push(productGroup);
-      if (++columnIndex > columns.length - 1) {
-        columnIndex = 0;
-      }
-    }
-
-    setProductColumns(columns);
-  }, [screenType, products, selectedCategory]);
+  }, [fetchProducts]);
 
   if (networkError) {
     return (
@@ -80,33 +47,46 @@ const Shop: Page = () => {
   }
 
   return (
-    <div className={styles.listingsWrapper}>
-      <div className={styles.containerFilters}>
+    <div className={styles.shopPageContainer}>
+      <div>
         <Filters
           filters={categories}
           changeSelected={setSelectedCategory}
+          throttle={300}
         />
       </div>
-      <div className={styles.containerProducts}>
-        {productColumns.map((column, i) =>
-          <div
-            key={i}
-            className={styles.listingsColumn}
-            style={{
-              width: productColumns.length === 3
-                ? '25vw'
-                : productColumns.length === 2
-                  ? '45vw'
-                  : 'min(90vw, 30rem)'
-            }}
-          >
-            {column.map(product =>
-              <motion.div key={product.groupId}>
-                <Product {...product}/>
+      <div className={styles.productListContainer}>
+        <AnimatePresence>
+          {products
+            .filter(
+              ({ mainCategory }) => selectedCategory ? mainCategory === selectedCategory : true
+            )
+            .map(product =>
+              <motion.div
+                layout
+                transition={{
+                  duration: 0.2,
+                  ease: 'easeOut',
+                }}
+                initial={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
+                animate={{ scale: loadedProducts.has(product.groupId) ?  1 : undefined }}
+                exit={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
+                className={styles.productContainer}
+                key={product.groupId}
+              >
+                <Product
+                  {...product}
+                  onImageLoad={
+                    () => setLoadedProducts(
+                      prev => new Set([...prev.values(), product.groupId])
+                    )
+                  }
+                  hasLoadedBefore={loadedProducts.has(product.groupId)}
+                />
               </motion.div>
-            )}
-          </div>
-        )}
+            )
+          }
+        </AnimatePresence>
       </div>
     </div>
   );

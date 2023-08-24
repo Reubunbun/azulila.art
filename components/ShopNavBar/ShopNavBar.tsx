@@ -65,9 +65,7 @@ const ShopNavBar: FC = () => {
         <div className={styles.headerWrapper}>
           <h1>Azulilah Shop</h1>
         </div>
-        <motion.ul
-          className={styles.linksList}
-        >
+        <motion.ul className={styles.linksList}>
           {ALL_PATHS.map(({ pathname, display }) =>
             <li key={pathname}>
               <div
