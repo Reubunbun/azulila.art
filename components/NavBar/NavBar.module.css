@@ -118,7 +118,7 @@
         position: fixed;
         z-index: 9;
         width: 100vw;
-        height: 30vh;
+        height: 30dvh;
         pointer-events: none;
     }
     .nav.dontStick {

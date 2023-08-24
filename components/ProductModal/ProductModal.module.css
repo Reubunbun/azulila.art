@@ -11,7 +11,7 @@
 
     background-color: var(--bg);
     width: min(95%, 80rem);
-    height: 75vh;
+    height: 75dvh;
     border-radius: var(--border-radius);
 
     cursor: default;

@@ -9,8 +9,8 @@
   --bg-icon-shadow: #f108e6;
   --icon-shadow-spread: 3rem;
   --image-border-radius: 0.5rem;
-  --main-header-height: 20vh;
-  --shop-header-height: 12vh;
+  --main-header-height: 20dvh;
+  --shop-header-height: 12dvh;
   --header-height: var(--main-header-height);
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;
