@@ -26,6 +26,11 @@
     width: min(90vw, 25rem);
 }
 
+.noResultsText {
+    font-weight: 600;
+    font-size: clamp(1.2rem, 0.3325rem + 3.8554vw, 2.8rem);
+}
+
 @media only screen and (min-width: 1024px) {
     .shopPageContainer {
         padding-bottom: unset;

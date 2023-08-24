@@ -7,6 +7,8 @@
     --border-width: 2px;
     --border-radius: .5rem;
     --padding: .25rem;
+    --search-icon-width: 13%;
+    --close-icon-width: 8%;
 }
 
 .searchInput {
@@ -16,11 +18,13 @@
     border-radius: var(--border-radius);
     padding-top: var(--padding) !important;
     padding-bottom: var(--padding) !important;
+    padding-left: calc(var(--search-icon-width) + calc(var(--padding) * 2)) !important;
+    padding-right: calc(var(--close-icon-width)) !important;
 }
 
 .searchIcon {
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     color: var(--font-highlight);
     height: calc(
@@ -28,9 +32,28 @@
             var(--padding) - calc(var(--border-width) * 2)
         )
     ) !important;
-    width: 13% !important;
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    width: var(--search-icon-width) !important;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
     background-color: #ffaad4;
     border: var(--border-width) solid var(--font-highlight);
+}
+
+.closeIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: calc(
+        100% + calc(
+            var(--padding) - calc(var(--border-width) * 2)
+        )
+    ) !important;
+    width: var(--close-icon-width) !important;
+    color: var(--font-base);
+    cursor: pointer;
+    transition: color .2s ease-out !important;
+}
+
+.closeIcon:hover {
+    color: var(--font-highlight);
 }

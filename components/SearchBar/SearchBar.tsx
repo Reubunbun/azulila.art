@@ -1,5 +1,6 @@
 import { type FC, type ChangeEvent, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
 import styles from './SearchBar.module.css';
 
 interface Props {
@@ -36,6 +37,16 @@ const SearchBar: FC<Props> = ({ onSearchChange }) => {
         color='inherit'
         className={styles.searchIcon}
       />
+      {searchValue &&
+        <CloseIcon
+          color='inherit'
+          className={styles.closeIcon}
+          onClick={() => {
+            setSearchValue('');
+            onSearchChange('');
+          }}
+        />
+      }
     </div>
   );
 };
