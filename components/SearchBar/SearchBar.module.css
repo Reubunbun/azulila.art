@@ -21,7 +21,7 @@
     padding-left: calc(var(--search-icon-width) + calc(var(--padding) * 2)) !important;
     padding-right: calc(var(--close-icon-width)) !important;
 
-    transition: border .1s ease-out;
+    transition: all .1s ease-in;
 }
 
 .searchIcon {
@@ -40,14 +40,17 @@
     background-color: #ffaad4;
     border: var(--border-width) solid var(--font-base);
 
-    transition: color .1s ease-out !important;
+    transition: all .1s ease-in !important;
 }
 
 .searchInput.focused {
     border: var(--border-width) solid var(--font-highlight) !important;
+    outline: none !important;
+    box-shadow: 0 0 10px var(--font-highlight);
 }
 .searchIcon.focused {
     color: var(--font-highlight);
+    border: var(--border-width) solid var(--font-highlight);
 }
 
 .closeIcon {

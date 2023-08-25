@@ -6,9 +6,10 @@ import {
   useState,
   useContext,
   useReducer,
+  useEffect,
 } from 'react';
 import axios from 'axios'
-import { ProductGroup, Product, ProductsResult } from 'interfaces';
+import { type ProductsResult } from 'interfaces';
 
 type ProductId = number;
 type Quantity = number;
@@ -32,36 +33,37 @@ const reducer = (state: SelectedProducts, action: ProductAction) : SelectedProdu
     case 'QUANTITY':
       return {
         ...state,
-        [action.payload.id]: state[action.payload.id] + action.payload.quantity,
+        [action.payload.id]: action.payload.quantity,
       };
     default:
       return state;
   }
 };
 
+export interface BasketItem {
+  groupId: number;
+  productId: number;
+  imageURL: string;
+  groupName: string;
+  productName: string;
+  price: number;
+  actualPrice: number;
+  totalPrice: number;
+  actualTotalPrice: number;
+  quantity: number;
+};
+
 interface Basket {
   totalPrice: number;
   actualTotalPrice: number;
-  groups: {
-    groupId: number;
-    name: string;
-    groupPrice: number;
-    actualGroupPrice: number;
-    products: {
-      productId: number;
-      name: string;
-      price: number;
-      actualPrice: number;
-      quantity: number;
-    }[];
-  }[];
+  products: BasketItem[],
 }
 
 interface ShopContextType extends ProductsResult {
   madeInitialRequest: boolean;
   fetchProducts: () => Promise<void>;
   dispatchProduct: Dispatch<ProductAction>;
-  getBasket: () => Basket;
+  basket: Basket;
   selectedProducts: SelectedProducts;
 }
 
@@ -71,11 +73,11 @@ const ShopContext = createContext<ShopContextType>({
   madeInitialRequest: false,
   fetchProducts: async () => {},
   dispatchProduct: () => {},
-  getBasket: () => ({
+  basket: {
     totalPrice: 0,
     actualTotalPrice: 0,
-    groups: [],
-  }),
+    products: [],
+  },
   selectedProducts: {},
 });
 
@@ -83,6 +85,11 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const [madeInitialRequest, setMadeInitialRequest] = useState<boolean>(false);
   const [shopServerData, setShopServerData] = useState<ProductsResult | null>(null);
   const [selectedProducts, dispatch] = useReducer(reducer, {});
+  const [basket, setBasket] = useState<Basket>({
+    totalPrice: 0,
+    actualTotalPrice: 0,
+    products: [],
+  });
 
   const fetchProducts = async () => {
     if (madeInitialRequest) return;
@@ -96,79 +103,59 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
     setShopServerData(data);
   };
 
-  const getBasket = () : Basket => {
+  useEffect(() => {
     const basket: Basket = {
       totalPrice: 0,
       actualTotalPrice: 0,
-      groups: [],
+      products: [],
     };
 
     if (!shopServerData) {
-      return basket;
+      return;
     }
 
     const selectedProductIds = Object.keys(selectedProducts).map(Number);
-
-    for (const selectedProductId of selectedProductIds) {
-      let productGroup: ProductGroup | null = null;
-      let product: Product | null = null;
-
-      for (const group of shopServerData.products) {
-        const foundProduct = group.products.find(
-          ({ productId }) => productId === selectedProductId,
-        );
-        if (foundProduct) {
-          product = foundProduct;
-          productGroup = group;
-          break;
-        }
-      }
-
-      if (productGroup === null || product === null) {
-        throw new Error('Cant find product');
-      }
-
-      const quantity = selectedProducts[selectedProductId];
-      const priceForProduct = product.price * quantity;
-      const actualPriceForProduct = product.actualPrice * quantity;
-
-      const basketProduct = {
-        productId: product.productId,
-        name: product.name,
-        price: priceForProduct,
-        actualPrice: actualPriceForProduct,
-        quantity,
-      };
-
-      const basketGroup = basket.groups.find(
-        ({ groupId }) => groupId === productGroup!.groupId,
+    for (const productId of selectedProductIds) {
+      const foundGroup = shopServerData.products.find(group =>
+        group.products.some(product => product.productId === productId),
       );
-      if (!basketGroup) {
-        basket.groups.push({
-          groupId: productGroup.groupId,
-          name: productGroup.name,
-          groupPrice: priceForProduct,
-          actualGroupPrice: actualPriceForProduct,
-          products: [basketProduct],
-        });
-      } else {
-        basketGroup.products.push(basketProduct);
-        basketGroup.groupPrice += priceForProduct;
-        basketGroup.actualGroupPrice += actualPriceForProduct;
+
+      if (!foundGroup) {
+        throw new Error(`Couldn't find group containing product with id: ${productId}`);
       }
+
+      const foundProduct = foundGroup.products.find(
+        product => product.productId === productId,
+      );
+
+      if (!foundProduct) {
+        throw new Error(`Couldn't find product with id: ${productId}`);
+      }
+
+      const quantity = selectedProducts[productId];
+
+      const totalPrice = foundProduct.price * quantity;
+      const actualTotalPrice = foundProduct.actualPrice * quantity;
+
+      basket.products.push({
+        groupId: foundGroup.groupId,
+        productId: foundProduct.productId,
+        imageURL: foundGroup.imageUrl,
+        groupName: foundGroup.name,
+        productName: foundProduct.name,
+        price: foundProduct.price,
+        actualPrice: foundProduct.actualPrice,
+        totalPrice,
+        actualTotalPrice,
+        quantity,
+      });
+
+      basket.totalPrice += totalPrice;
+      basket.actualTotalPrice += actualTotalPrice;
     }
 
-    basket.totalPrice = basket.groups.reduce(
-      (prev: number, curr) => prev + curr.groupPrice,
-      0,
-    );
-    basket.actualTotalPrice = basket.groups.reduce(
-      (prev: number, curr) => prev + curr.actualGroupPrice,
-      0,
-    );
-
-    return basket;
-  };
+    setBasket(basket);
+  }, [selectedProducts, shopServerData]);
 
   return (
     <ShopContext.Provider
@@ -178,7 +165,7 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
         madeInitialRequest,
         fetchProducts,
         dispatchProduct: dispatch,
-        getBasket,
+        basket,
         selectedProducts,
       }}
     >

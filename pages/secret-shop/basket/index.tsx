@@ -1,11 +1,20 @@
+import { Fragment } from 'react';
 import type { Page } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
+import BasketItem from 'components/BasketItem/BasketItem';
+import styles from './basket.module.css';
 
 const Basket: Page = () => {
-  const { getBasket } = useShopContext();
+  const { basket } = useShopContext();
 
   return (
-    <pre>{JSON.stringify(getBasket(), null, 2)}</pre>
+    <>
+      {basket.products.map(basketItem =>
+        <Fragment key={basketItem.productId}>
+          <BasketItem {...basketItem} />
+        </Fragment>
+      )}
+    </>
   );
 };
 
