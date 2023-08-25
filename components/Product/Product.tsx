@@ -88,6 +88,8 @@ const Product: FC<Props> = props => {
       }
     }, 500);
 
+    const timeoutId = setTimeout(() => {}, 3000);
+
     return () => clearInterval(intervalId);
   }, [hasLoaded]);
 
@@ -95,8 +97,8 @@ const Product: FC<Props> = props => {
     <div className={styles.containerImageItem} onClick={clickProduct}>
       <LazyLoad className={styles.lazyLoadWrapper} offset={100}>
         <motion.div
-          initial={{ opacity: hasLoadedBefore ? undefined : 0 }}
-          animate={imgAnimation}
+          initial={{ opacity: hasLoadedBefore ? 1 : 0 }}
+          animate={hasLoadedBefore ? undefined : imgAnimation}
           exit={{ opacity: hasLoadedBefore ? undefined : 0 }}
         >
           {imgComponent}
