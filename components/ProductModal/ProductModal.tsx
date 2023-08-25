@@ -79,23 +79,25 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                   )}
                 </select>
               </div>
-              <div className={styles.containerQuantity}>
-                <p>Quantity:</p>
-                <input
-                  type='number'
-                  min={1}
-                  value={quantity}
-                  onChange={e => setQuantity(Number(e.target.value))}
-                />
-              </div>
-              <div className={styles.containerPrice}>
-                <p className={styles.price}>
-                  {selectedProduct.offer
-                    ? <span><s>{selectedProduct.price * quantity}$</s> </span>
-                    : <></>
-                  }
-                  {selectedProduct.actualPrice * quantity}$
-                </p>
+              <div className={styles.containerQuantityAndPrice}>
+                <div className={styles.containerQuantity}>
+                  <p>Quantity:</p>
+                  <input
+                    type='number'
+                    min={1}
+                    value={quantity}
+                    onChange={e => setQuantity(Number(e.target.value))}
+                  />
+                </div>
+                <div>
+                  <p className={styles.price}>
+                    {selectedProduct.offer
+                      ? <span><s>{selectedProduct.price * quantity}$</s> </span>
+                      : <></>
+                    }
+                    {selectedProduct.actualPrice * quantity}$
+                  </p>
+                </div>
               </div>
             </div>
             <div>

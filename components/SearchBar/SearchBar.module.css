@@ -14,19 +14,21 @@
 .searchInput {
     width: 100%;
     background-color: #ffe3f1 !important;
-    border: var(--border-width) solid var(--font-highlight) !important;
+    border: var(--border-width) solid var(--font-base) !important;
     border-radius: var(--border-radius);
     padding-top: var(--padding) !important;
     padding-bottom: var(--padding) !important;
     padding-left: calc(var(--search-icon-width) + calc(var(--padding) * 2)) !important;
     padding-right: calc(var(--close-icon-width)) !important;
+
+    transition: border .1s ease-out;
 }
 
 .searchIcon {
     position: absolute;
     left: 0;
     top: 0;
-    color: var(--font-highlight);
+    color: var(--font-base);
     height: calc(
         100% + calc(
             var(--padding) - calc(var(--border-width) * 2)
@@ -36,7 +38,16 @@
     border-top-left-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
     background-color: #ffaad4;
-    border: var(--border-width) solid var(--font-highlight);
+    border: var(--border-width) solid var(--font-base);
+
+    transition: color .1s ease-out !important;
+}
+
+.searchInput.focused {
+    border: var(--border-width) solid var(--font-highlight) !important;
+}
+.searchIcon.focused {
+    color: var(--font-highlight);
 }
 
 .closeIcon {
