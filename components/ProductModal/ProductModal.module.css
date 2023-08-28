@@ -186,6 +186,11 @@
         width: 50%;
     }
 
+    .containerMainContent > div {
+        width: var(--selection-width);
+        align-items: unset;
+    }
+
     .containerImage {
         display: flex;
         justify-content: center;

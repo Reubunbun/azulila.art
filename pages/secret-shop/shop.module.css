@@ -1,7 +1,8 @@
 .shopPageContainer {
-    height: auto;
-    transition: height 0.3s ease-out;
     padding-bottom: 3rem;
+
+    --product-max-width: 450px;
+    --product-gap: 1rem;
 }
 
 .searchInputs {
@@ -14,16 +15,22 @@
     padding-top: 1.25rem;
 }
 
-.productListContainer {
-    width: 100%;
+.productsOuterContainer {
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+.productsInnerContainer {
+    width: min(90vw, var(--product-max-width));
+
+    display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: var(--product-gap);
 }
 
 .productContainer {
-    width: min(90vw, 25rem);
+    width: min(90vw, var(--product-max-width));
 }
 
 .noResultsText {
@@ -31,8 +38,19 @@
     font-size: clamp(1.2rem, 0.3325rem + 3.8554vw, 2.8rem);
 }
 
-@media only screen and (min-width: 1024px) {
-    .shopPageContainer {
-        padding-bottom: unset;
+@media only screen and (min-width: 925px) {
+    .productsInnerContainer {
+        --col-num: 2;
+
+        width: calc(
+            calc(var(--product-max-width) * var(--col-num)) +
+            calc(var(--product-gap) * calc(var(--col-num) - 1))
+        );
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    .productsInnerContainer {
+        --col-num: 3;
     }
 }

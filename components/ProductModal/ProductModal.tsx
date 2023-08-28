@@ -59,26 +59,29 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
               </p>
             </div>
             <div>
-              <div className={styles.containerSelect}>
-                <p>Select Option:</p>
-                <select onChange={e => setSelectedProductId(Number(e.target.value))}>
-                  {productGroup.products.map(product =>
-                    <option
-                      key={product.productId}
-                      value={product.productId}
-                    >
-                      {
-                        `${product.name} - ${
-                          `${
-                              product.offer
-                                ? strikethroughText(`${product.price}$`)
-                                : ''
-                            } ${product.actualPrice}$`.trim()}`
-                        }
-                    </option>
-                  )}
-                </select>
-              </div>
+              {productGroup.products.length > 1 &&
+                <div className={styles.containerSelect}>
+                  <p>Select Option:</p>
+                  <select onChange={e => setSelectedProductId(Number(e.target.value))}>
+                    {productGroup.products.map(product =>
+                      <option
+                        key={product.productId}
+                        value={product.productId}
+                        disabled={product.isUnavailable}
+                      >
+                        {
+                          `${product.name} - ${
+                            `${
+                                product.offer
+                                  ? strikethroughText(`${product.price}$`)
+                                  : ''
+                              } ${product.actualPrice}$`.trim()}`
+                          }
+                      </option>
+                    )}
+                  </select>
+                </div>
+              }
               <div className={styles.containerQuantityAndPrice}>
                 <div className={styles.containerQuantity}>
                   <p>Quantity:</p>

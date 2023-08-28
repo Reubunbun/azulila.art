@@ -1,7 +1,8 @@
 import { type Page } from 'interfaces';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useShopContext } from 'context/ShopContext';
+import { type ProductGroup } from 'interfaces';
 import SearchBar from 'components/SearchBar/SearchBar';
 import Filters from 'components/Filters/Filters';
 import AnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
@@ -20,10 +21,32 @@ const Shop: Page = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [loadedProducts, setLoadedProducts] = useState<Set<number>>(new Set());
+  const [filteredProducts, setFilteredProducts] = useState<ProductGroup[]>(products);
 
   useEffect(() => {
     fetchProducts().catch(() => setNetworkError(true));
   }, [fetchProducts]);
+
+  useEffect(() => {
+    setFilteredProducts(products.filter(({ mainCategory, tags, name }) => {
+      if (selectedCategory && selectedCategory !== mainCategory) {
+        return false;
+      }
+
+      if (!searchFilter) {
+        return true;
+      }
+
+      const searchOn: string[] = [...tags, name].map(s => s.toLowerCase());
+      const searchMatch = searchOn.some(searchOn =>
+        searchFilter.length <= 2
+          ? searchOn.startsWith(searchFilter)
+          : searchOn.includes(searchFilter),
+      );
+
+      return searchMatch;
+    }));
+  }, [products, selectedCategory, searchFilter]);
 
   if (networkError) {
     return (
@@ -48,25 +71,6 @@ const Shop: Page = () => {
     );
   }
 
-  const filteredProducts = products.filter(({ mainCategory, tags, name }) => {
-    if (selectedCategory && selectedCategory !== mainCategory) {
-      return false;
-    }
-
-    if (!searchFilter) {
-      return true;
-    }
-
-    const searchOn: string[] = [...tags, name].map(s => s.toLowerCase());
-    const searchMatch = searchOn.some(searchOn =>
-      searchFilter.length <= 2
-        ? searchOn.startsWith(searchFilter)
-        : searchOn.includes(searchFilter),
-    );
-
-    return searchMatch;
-  });
-
   return (
     <div className={styles.shopPageContainer}>
       <div className={styles.searchInputs}>
@@ -77,36 +81,38 @@ const Shop: Page = () => {
           throttle={300}
         />
       </div>
-      <div className={styles.productListContainer}>
-        <AnimatePresence>
-          {filteredProducts.length
-            ? filteredProducts.map(product =>
-                <motion.div
-                  layout
-                  transition={{
-                    duration: 0.2,
-                    ease: 'easeOut',
-                  }}
-                  initial={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
-                  animate={{ scale: loadedProducts.has(product.groupId) ?  1 : undefined }}
-                  exit={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
-                  className={styles.productContainer}
-                  key={product.groupId}
-                >
-                  <Product
-                    {...product}
-                    onImageLoad={
-                      () => setLoadedProducts(
-                        prev => new Set([...prev.values(), product.groupId])
-                      )
-                    }
-                    hasLoadedBefore={loadedProducts.has(product.groupId)}
-                  />
-                </motion.div>
-              )
-            : <p className={styles.noResultsText}>No Results</p>
-          }
-        </AnimatePresence>
+      <div className={styles.productsOuterContainer}>
+        <div className={styles.productsInnerContainer}>
+          <AnimatePresence>
+            {filteredProducts.length
+              ? filteredProducts.map(product =>
+                  <motion.div
+                    layout
+                    transition={{
+                      duration: 0.2,
+                      ease: 'easeOut',
+                    }}
+                    initial={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
+                    animate={{ scale: loadedProducts.has(product.groupId) ?  1 : undefined }}
+                    exit={{ scale: loadedProducts.has(product.groupId) ?  0 : undefined }}
+                    className={styles.productContainer}
+                    key={product.groupId}
+                  >
+                    <Product
+                      {...product}
+                      onImageLoad={
+                        () => setLoadedProducts(
+                          prev => new Set([...prev.values(), product.groupId])
+                        )
+                      }
+                      hasLoadedBefore={loadedProducts.has(product.groupId)}
+                    />
+                  </motion.div>
+                )
+              : <p className={styles.noResultsText}>No Results</p>
+            }
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );

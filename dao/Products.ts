@@ -6,9 +6,8 @@ const COL_NAME = 'name';
 const ALIAS_GROUP_NAME = 'group_name';
 const COL_DESCRIPTION = 'description';
 const COL_PRIORITY = 'priority';
+const ALIAS_GROUP_PRIORITY = 'group_priority';
 const COL_IMG_URL = 'img_url';
-const COL_IMG_WIDTH = 'img_width';
-const COL_IMG_HEIGHT = 'img_height';
 const COL_IS_UNAVAILABLE = 'is_unavailable';
 const COL_TYPE = 'type';
 
@@ -17,6 +16,7 @@ const ALIAS_PRODUCT_NAME = 'product_name';
 const COL_PRICE = 'price';
 const COL_OFFER = 'offer';
 const ALIAS_PRODUCT_UNAVAILBALE = 'product_is_unavailable';
+const ALIAS_PRODUCT_PRIORITY = 'product_priority';
 
 const COL_TAG_NAME = 'tag_name';
 
@@ -26,15 +26,14 @@ interface JoinedProductRow {
     [ALIAS_GROUP_NAME]: string;
     [ALIAS_PRODUCT_NAME]: string;
     [COL_DESCRIPTION]: string;
-    [COL_PRIORITY]: number;
+    [ALIAS_GROUP_PRIORITY]: number;
     [COL_IMG_URL]: string;
-    [COL_IMG_WIDTH]: number;
-    [COL_IMG_HEIGHT]: number;
     [ALIAS_PRODUCT_UNAVAILBALE]: boolean;
     [COL_PRICE]: number;
     [COL_OFFER]: number;
     [COL_TAG_NAME]: string;
     [COL_TYPE]: string;
+    [ALIAS_PRODUCT_PRIORITY]: number;
 };
 
 export default class Products extends AbstractDao {
@@ -46,29 +45,28 @@ export default class Products extends AbstractDao {
         const results = (await this.pgClient.query<JoinedProductRow>(
             this.knexClient(Products.GROUP_TABLE_NAME)
                 .select({
-                    [COL_GROUP_ID]: `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`
+                    [COL_GROUP_ID]: `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,
                 })
                 .select(COL_PRODUCT_ID)
                 .select({
-                    [ALIAS_GROUP_NAME]: `${Products.GROUP_TABLE_NAME}.${COL_NAME}`
+                    [ALIAS_GROUP_NAME]: `${Products.GROUP_TABLE_NAME}.${COL_NAME}`,
                 })
                 .select({
-                    [ALIAS_PRODUCT_NAME]: `${Products.PRODUCT_TABLE_NAME}.${COL_NAME}`
+                    [ALIAS_PRODUCT_NAME]: `${Products.PRODUCT_TABLE_NAME}.${COL_NAME}`,
                 })
                 .select(COL_DESCRIPTION)
-                .select(COL_PRIORITY)
+                .select({
+                    [ALIAS_GROUP_PRIORITY]: `${Products.GROUP_TABLE_NAME}.${COL_PRIORITY}`,
+                })
+                .select({
+                    [ALIAS_PRODUCT_PRIORITY]: `${Products.PRODUCT_TABLE_NAME}.${COL_PRIORITY}`,
+                })
                 .select({
                     [COL_IMG_URL]: `${Products.GROUP_TABLE_NAME}.${COL_IMG_URL}`,
                 })
                 .select({
-                    [COL_IMG_WIDTH]: `${Products.GROUP_TABLE_NAME}.${COL_IMG_WIDTH}`,
-                })
-                .select({
-                    [COL_IMG_HEIGHT]: `${Products.GROUP_TABLE_NAME}.${COL_IMG_HEIGHT}`,
-                })
-                .select({
                     [ALIAS_PRODUCT_UNAVAILBALE]:
-                        `${Products.PRODUCT_TABLE_NAME}.${COL_IS_UNAVAILABLE}`
+                        `${Products.PRODUCT_TABLE_NAME}.${COL_IS_UNAVAILABLE}`,
                 })
                 .select(COL_PRICE)
                 .select(COL_OFFER)
@@ -85,7 +83,6 @@ export default class Products extends AbstractDao {
                     `${Products.TAGS_TABLE_NAME}.${COL_GROUP_ID}`,
                 )
                 .where(`${Products.GROUP_TABLE_NAME}.${COL_IS_UNAVAILABLE}`, false)
-                .orderBy(COL_PRIORITY, 'desc')
                 .toString(),
         )).rows;
 
@@ -102,10 +99,8 @@ export default class Products extends AbstractDao {
                     {
                         groupId,
                         name: row[ALIAS_GROUP_NAME],
-                        priority: row[COL_PRIORITY],
+                        priority: row[ALIAS_GROUP_PRIORITY],
                         imageUrl: row[COL_IMG_URL],
-                        imageWidth: row[COL_IMG_WIDTH],
-                        imageHeight: row[COL_IMG_HEIGHT],
                         products: [
                             {
                                 productId: row[COL_PRODUCT_ID],
@@ -115,9 +110,10 @@ export default class Products extends AbstractDao {
                                 offer: row[COL_OFFER],
                                 isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
                                 actualPrice,
+                                priority: row[ALIAS_PRODUCT_PRIORITY],
                             },
                         ],
-                        tags: [ row[COL_TAG_NAME] ],
+                        tags: [ row[COL_TAG_NAME] ].filter(Boolean),
                         mainCategory: row[COL_TYPE],
                         description: row[COL_DESCRIPTION],
                     },
@@ -130,7 +126,7 @@ export default class Products extends AbstractDao {
             const nextTagName = row[COL_TAG_NAME];
             const nextProductId = row[COL_PRODUCT_ID];
 
-            if (!existingGroupDetails.tags.includes(nextTagName)) {
+            if (nextTagName && !existingGroupDetails.tags.includes(nextTagName)) {
                 existingGroupDetails.tags.push(nextTagName);
             }
 
@@ -146,6 +142,7 @@ export default class Products extends AbstractDao {
                     offer: row[COL_OFFER],
                     isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
                     actualPrice,
+                    priority: row[ALIAS_PRODUCT_PRIORITY],
                 });
             }
         }

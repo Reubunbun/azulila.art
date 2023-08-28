@@ -79,6 +79,7 @@ export type Product = {
     offer: number;
     actualPrice: number;
     isUnavailable: boolean;
+    priority: number;
 };
 
 export type ProductGroup = {
@@ -86,8 +87,6 @@ export type ProductGroup = {
     name: string;
     priority: number;
     imageUrl: string;
-    imageWidth: number;
-    imageHeight: number;
     products: Product[];
     tags: string[];
     mainCategory: string;

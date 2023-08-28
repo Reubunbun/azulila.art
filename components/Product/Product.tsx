@@ -106,7 +106,10 @@ const Product: FC<Props> = props => {
             <p className={styles.imageHoverText}>
               <span className={styles.bold}>{name}</span>
               <br className={styles.lineBreak}/>
-              {` ${minPrice}$ - ${maxPrice}$`}
+              {minPrice === maxPrice
+                ? ` ${minPrice}$`
+                : ` ${minPrice}$ - ${maxPrice}$`
+              }
             </p>
           </div>
         </motion.div>
