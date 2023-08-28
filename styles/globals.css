@@ -73,6 +73,13 @@ p, b, a, label, span, input[type="text"], input[type="number"], ::placeholder {
   color: var(--font-highlight);
 }
 
+.link {
+  color: var(--font-highlight);
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 400;
+}
+
 button {
   padding-bottom: .5rem;
   cursor: pointer;
