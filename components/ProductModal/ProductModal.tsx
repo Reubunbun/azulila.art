@@ -96,6 +96,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                     type='number'
                     min={1}
                     max={Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock)}
+                    step={1}
                     value={quantity}
                     onChange={e => {
                       let quantityToSet = Number(e.target.value);

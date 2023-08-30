@@ -67,6 +67,7 @@ const BasketItem: FC<Props> = ({
             className={sharedStyles.numericalInput}
             type='number'
             value={quantity}
+            step={1}
             onChange={e => dispatchProduct({
               type: 'QUANTITY',
               payload: { id: productId, quantity: Number(e.target.value) },
