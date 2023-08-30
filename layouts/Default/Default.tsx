@@ -93,7 +93,7 @@ const DefaultLayout: FC<Props> = ({
   return (
     <>
       <Head>
-        <title>Azulilah | {title}</title>
+        <title>{`Azulilah | ${title}`}</title>
         <meta
           name="description"
           content={description}
