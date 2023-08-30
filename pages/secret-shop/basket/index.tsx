@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import type { Page } from 'interfaces';
 import { motion } from 'framer-motion';
@@ -10,6 +9,8 @@ import styles from './basket.module.css';
 const Basket: Page = () => {
   const router = useRouter();
   const { basket } = useShopContext();
+
+  const checkout = async () => {};
 
   if (!basket.products.length) {
     return (
@@ -47,6 +48,10 @@ const Basket: Page = () => {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+        <div className={styles.checkoutContainer}>
+          <p>Subtotal - {basket.actualTotalPrice}$</p>
+          <button onClick={() => router.push('/secret-shop/basket/checkout')}>Checkout</button>
         </div>
       </div>
     </>

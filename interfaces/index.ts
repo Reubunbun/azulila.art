@@ -78,7 +78,7 @@ export type Product = {
     price: number;
     offer: number;
     actualPrice: number;
-    isUnavailable: boolean;
+    stock: number;
     priority: number;
 };
 

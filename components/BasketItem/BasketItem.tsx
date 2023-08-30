@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 import { type BasketItem, useShopContext } from 'context/ShopContext';
+import sharedStyles from 'styles/shop-shared.module.css';
 import styles from './BasketItem.module.css';
 
 interface Props extends BasketItem {
@@ -63,6 +64,7 @@ const BasketItem: FC<Props> = ({
         </div>
         <div className={styles.quantityContainer}>
           <input
+            className={sharedStyles.numericalInput}
             type='number'
             value={quantity}
             onChange={e => dispatchProduct({

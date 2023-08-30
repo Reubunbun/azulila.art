@@ -27,6 +27,7 @@ const ModalBackdrop: FC<Props> = ({children, close}) => {
       animate={{opacity: 1}}
       exit={{opacity: 0}}
       unselectable='on'
+      key='modal'
     >
       {children}
     </motion.div>

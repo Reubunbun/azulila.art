@@ -12,15 +12,8 @@
 }
 
 .searchInput {
-    width: 100%;
-    background-color: #ffe3f1 !important;
-    border: var(--border-width) solid var(--font-base) !important;
-    border-radius: var(--border-radius);
-    padding-top: var(--padding) !important;
-    padding-bottom: var(--padding) !important;
     padding-left: calc(var(--search-icon-width) + calc(var(--padding) * 2)) !important;
     padding-right: calc(var(--close-icon-width)) !important;
-
     transition: all .1s ease-in;
 }
 

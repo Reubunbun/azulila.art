@@ -1,0 +1,60 @@
+.textInput {
+    width: 100%;
+    background-color: #ffe3f1 !important;
+    border: 2px solid var(--font-base) !important;
+    border-radius: .6rem;
+    padding: .25rem;
+}
+
+.numericalInput {
+    width: 100%;
+    padding-left: .5rem !important;
+    background-color: #ffe3f1 !important;
+    border-radius: .6rem;
+}
+
+.select {
+    --dd-accent-fg: var(--font-highlight);
+    --dd-accent-bg: #ffaad4;
+    --dd-base-fg: var(--font-highlight);
+
+    margin-top: 0.1rem;
+    width: 100%;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    color: var(--dd-base-fg);
+    border: 1px solid var(--dd-base-fg);
+    line-height: 1;
+    outline: 0;
+    padding: 0.65em 2.5em 0.55em 0.75em;
+    border-radius: .5rem;
+    background-color: #ffe3f1;
+    background-image:
+        linear-gradient(var(--dd-base-fg), var(--dd-base-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-bg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-bg) 50%),
+        linear-gradient(var(--dd-accent-bg) 42%, var(--dd-accent-fg) 42%);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: 1px 100%, 20px 22px, 20px 22px, 20px 100%;
+    background-position: right 20px center, right bottom, right bottom, right bottom;
+}
+
+.select:hover {
+    background-image:
+        linear-gradient(var(--dd-accent-fg), var(--dd-accent-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(var(--dd-accent-fg) 42%, var(--dd-accent-bg) 42%);
+}
+
+.select:active {
+    background-image:
+        linear-gradient(var(--dd-accent-fg), var(--dd-accent-fg)),
+        linear-gradient(-135deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(-225deg, transparent 50%, var(--dd-accent-fg) 50%),
+        linear-gradient(var(--dd-accent-fg) 42%, var(--dd-accent-bg) 42%);
+    color: var(--dd-accent-bg);
+    border-color: var(--dd-accent-fg);
+    background-color: var(--dd-accent-fg);
+}

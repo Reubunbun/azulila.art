@@ -1,6 +1,7 @@
 import { type FC, type ChangeEvent, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
+import sharedStyles from 'styles/shop-shared.module.css';
 import styles from './SearchBar.module.css';
 
 interface Props {
@@ -28,7 +29,14 @@ const SearchBar: FC<Props> = ({ onSearchChange }) => {
   return (
     <div className={styles.containerSearchBar}>
       <input
-        className={`${styles.searchInput} ${isFocused ? styles.focused : ''}`}
+        className={`${
+            sharedStyles.textInput
+          } ${
+            styles.searchInput
+          } ${
+            isFocused ? styles.focused : ''
+          }`
+        }
         type='text'
         value={searchValue}
         onChange={inputChange}

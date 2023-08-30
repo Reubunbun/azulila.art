@@ -41,11 +41,7 @@
 }
 
 .quantityContainer input {
-    width: 100%;
-
-    padding-left: .5rem;
-    background-color: #ffe3f1;
-    border-radius: var(--b-radius);
+    border-radius: var(--b-radius) !important;
 }
 
 .priceText {

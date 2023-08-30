@@ -10,14 +10,27 @@ import { ScreenType } from 'interfaces';
 interface Path {
   display: string;
   pathname: string;
+  highlightPaths: Array<string>;
 };
 
 const BASKET_PATH = '/secret-shop/basket';
 
 const ALL_PATHS: Path[] = [
-  { display: 'Back To Main Site', pathname: '/work' },
-  { display: 'Products', pathname: '/secret-shop' },
-  { display: 'Basket', pathname: BASKET_PATH },
+  {
+    display: 'Back To Main Site',
+    pathname: '/work',
+    highlightPaths: [],
+  },
+  {
+    display: 'Products',
+    pathname: '/secret-shop',
+    highlightPaths: ['/secret-shop'],
+  },
+  {
+    display: 'Basket',
+    pathname: BASKET_PATH,
+    highlightPaths: [BASKET_PATH, `${BASKET_PATH}/checkout`],
+  },
 ];
 
 const ShopNavBar: FC = () => {
@@ -66,7 +79,7 @@ const ShopNavBar: FC = () => {
           <h1>Azulilah Shop</h1>
         </div>
         <motion.ul className={styles.linksList}>
-          {ALL_PATHS.map(({ pathname, display }) =>
+          {ALL_PATHS.map(({ pathname, display, highlightPaths }) =>
             <li key={pathname}>
               <div
                 className={styles.linkItem}
@@ -83,7 +96,7 @@ const ShopNavBar: FC = () => {
                       : ''
                   }`}
                 </p>
-                {router.pathname === pathname &&
+                {highlightPaths.includes(router.pathname) &&
                   <motion.div
                     transition={{
                       duration: 0.8,

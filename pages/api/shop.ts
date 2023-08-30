@@ -11,6 +11,10 @@ async function get(
     const daoProducts = new DaoProducts(pgClient);
     const productGroups = await daoProducts.getAll();
     for (const productGroup of productGroups) {
+        for (const product of productGroup.products) {
+            product.price = Number((product.price / 100).toFixed(2));
+            product.actualPrice = Number((product.actualPrice / 100).toFixed(2));
+        }
         productGroup.products.sort((a, b) => b.priority - a.priority);
     }
     return res.status(200).json({

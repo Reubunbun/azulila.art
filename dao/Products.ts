@@ -15,7 +15,7 @@ const COL_PRODUCT_ID = 'product_id';
 const ALIAS_PRODUCT_NAME = 'product_name';
 const COL_PRICE = 'price';
 const COL_OFFER = 'offer';
-const ALIAS_PRODUCT_UNAVAILBALE = 'product_is_unavailable';
+const COL_STOCK = 'stock';
 const ALIAS_PRODUCT_PRIORITY = 'product_priority';
 
 const COL_TAG_NAME = 'tag_name';
@@ -28,7 +28,7 @@ interface JoinedProductRow {
     [COL_DESCRIPTION]: string;
     [ALIAS_GROUP_PRIORITY]: number;
     [COL_IMG_URL]: string;
-    [ALIAS_PRODUCT_UNAVAILBALE]: boolean;
+    [COL_STOCK]: number;
     [COL_PRICE]: number;
     [COL_OFFER]: number;
     [COL_TAG_NAME]: string;
@@ -64,10 +64,7 @@ export default class Products extends AbstractDao {
                 .select({
                     [COL_IMG_URL]: `${Products.GROUP_TABLE_NAME}.${COL_IMG_URL}`,
                 })
-                .select({
-                    [ALIAS_PRODUCT_UNAVAILBALE]:
-                        `${Products.PRODUCT_TABLE_NAME}.${COL_IS_UNAVAILABLE}`,
-                })
+                .select(COL_STOCK)
                 .select(COL_PRICE)
                 .select(COL_OFFER)
                 .select(COL_TAG_NAME)
@@ -108,7 +105,7 @@ export default class Products extends AbstractDao {
                                 name: row[ALIAS_PRODUCT_NAME],
                                 price,
                                 offer: row[COL_OFFER],
-                                isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
+                                stock: row[COL_STOCK],
                                 actualPrice,
                                 priority: row[ALIAS_PRODUCT_PRIORITY],
                             },
@@ -140,7 +137,7 @@ export default class Products extends AbstractDao {
                     name: row[ALIAS_PRODUCT_NAME],
                     price,
                     offer: row[COL_OFFER],
-                    isUnavailable: row[ALIAS_PRODUCT_UNAVAILBALE],
+                    stock: row[COL_STOCK],
                     actualPrice,
                     priority: row[ALIAS_PRODUCT_PRIORITY],
                 });

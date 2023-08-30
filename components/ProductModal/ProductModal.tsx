@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import type { ProductGroup, Product } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
 import ModalBackdrop from 'components/ModalBackdrop/ModalBackdrop';
+import sharedStyles from 'styles/shop-shared.module.css';
 import styles from './ProductModal.module.css';
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 
 const strikethroughText = (input: string) =>
   [...input].map(char => `${char}\u0336`).join('')
+
+const MAX_ALLOWED_QUANTITY = Infinity;
 
 const ProductModal: FC<Props> = ({ productGroup, close }) => {
   const [selectedProductId, setSelectedProductId] = useState<number>(
@@ -62,12 +65,15 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
               {productGroup.products.length > 1 &&
                 <div className={styles.containerSelect}>
                   <p>Select Option:</p>
-                  <select onChange={e => setSelectedProductId(Number(e.target.value))}>
+                  <select
+                    className={sharedStyles.select}
+                    onChange={e => setSelectedProductId(Number(e.target.value))}
+                  >
                     {productGroup.products.map(product =>
                       <option
                         key={product.productId}
                         value={product.productId}
-                        disabled={product.isUnavailable}
+                        disabled={product.stock <= 0}
                       >
                         {
                           `${product.name} - ${
@@ -86,10 +92,23 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                 <div className={styles.containerQuantity}>
                   <p>Quantity:</p>
                   <input
+                    className={sharedStyles.numericalInput}
                     type='number'
                     min={1}
+                    max={Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock)}
                     value={quantity}
-                    onChange={e => setQuantity(Number(e.target.value))}
+                    onChange={e => {
+                      let quantityToSet = Number(e.target.value);
+                      const maxAllowed = Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock);
+                      if (quantityToSet > maxAllowed) {
+                        quantityToSet = maxAllowed;
+                      }
+                      if (quantityToSet < 1) {
+                        quantityToSet = 1;
+                      }
+
+                      setQuantity(quantityToSet);
+                    }}
                   />
                 </div>
                 <div>

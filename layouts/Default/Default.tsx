@@ -1,4 +1,4 @@
-import { type ReactNode, type FC, useState, useEffect, useRef } from 'react';
+import { type ReactNode, type FC, useState, useEffect, useRef, Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
@@ -137,7 +137,16 @@ const DefaultLayout: FC<Props> = ({
         </CustomAnimatePresence>
 
         <main
-          className={`${dontStickHeader ? styles.dontStick : ''} ${removeMainPadding ? styles.removePadding : ''} ${removeMainBackground ? styles.removeBg : ''} ${removeMainMargin ? styles.removeMargin : ''}`}
+          className={`${
+              dontStickHeader ? styles.dontStick : ''
+            } ${
+              removeMainPadding ? styles.removePadding : ''
+            } ${
+              removeMainBackground ? styles.removeBg : ''
+            } ${
+              removeMainMargin ? styles.removeMargin : ''
+            }`
+          }
           onClick={() => {
             if (navOpen) {
               setNavOpen(false);
@@ -183,11 +192,8 @@ const DefaultLayout: FC<Props> = ({
           <b>This website was created by Reuben Price - reuben.luke.p@gmail.com</b>
         </p>
       </footer>
-      <CustomAnimatePresence
-        initial={false}
-        exitBeforeEnter
-      >
-        {modalContent || <></>}
+      <CustomAnimatePresence >
+        {modalContent || <Fragment key='empty'></Fragment>}
       </CustomAnimatePresence>
     </>
   );

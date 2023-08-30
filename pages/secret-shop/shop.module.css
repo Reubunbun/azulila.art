@@ -34,7 +34,9 @@
 }
 
 .noResultsText {
+    width: 100%;
     font-weight: 600;
+    text-align: center;
     font-size: clamp(1.2rem, 0.3325rem + 3.8554vw, 2.8rem);
 }
 
