@@ -1,3 +1,7 @@
+.infoBg {
+    background-color: #fca7bc7a;
+}
+
 .textInput {
     width: 100%;
     background-color: #ffe3f1 !important;
@@ -57,4 +61,17 @@
     color: var(--dd-accent-bg);
     border-color: var(--dd-accent-fg);
     background-color: var(--dd-accent-fg);
+}
+
+.checkoutButton {
+    padding-left: .8rem;
+    padding-right: .8rem;
+    padding-bottom: .8rem;
+    margin-top: .5rem;
+    background-color: var(--font-base);
+    color: #ffe3f1;
+    border: 1px solid var(--font-base);
+    border-radius: .2rem;
+    font-size: clamp(1.8rem, 1.4747rem + 1.4458vw, 2.4rem);
+    transition: all .3s ease-out;
 }

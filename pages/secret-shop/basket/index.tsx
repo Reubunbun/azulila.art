@@ -5,12 +5,11 @@ import { useShopContext } from 'context/ShopContext';
 import AnimatePresence from 'components/CustomAnimatePresence/CustomAnimatePresence';
 import BasketItem from 'components/BasketItem/BasketItem';
 import styles from './basket.module.css';
+import sharedStyles from 'styles/shop-shared.module.css';
 
 const Basket: Page = () => {
   const router = useRouter();
   const { basket } = useShopContext();
-
-  const checkout = async () => {};
 
   if (!basket.products.length) {
     return (
@@ -49,9 +48,14 @@ const Basket: Page = () => {
             )}
           </AnimatePresence>
         </div>
-        <div className={styles.checkoutContainer}>
+        <div className={`${styles.checkoutContainer} ${sharedStyles.infoBg}`}>
           <p>Subtotal - {basket.actualTotalPrice}$</p>
-          <button onClick={() => router.push('/secret-shop/basket/checkout')}>Checkout</button>
+          <button
+            className={sharedStyles.checkoutButton}
+            onClick={() => router.push('/secret-shop/basket/checkout')}
+          >
+            Checkout
+          </button>
         </div>
       </div>
     </>

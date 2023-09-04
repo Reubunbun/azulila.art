@@ -99,6 +99,10 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                     step={1}
                     value={quantity}
                     onChange={e => {
+                      if (/[^0-9]/.test(e.target.value)) {
+                        return;
+                      }
+
                       let quantityToSet = Number(e.target.value);
                       const maxAllowed = Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock);
                       if (quantityToSet > maxAllowed) {

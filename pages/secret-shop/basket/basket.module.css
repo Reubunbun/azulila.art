@@ -7,7 +7,6 @@
 }
 
 .checkoutContainer {
-    background-color: #fca7bc7a;
     border-bottom: 2px solid #ffe3f1;
     padding-top: .75rem;
     padding-bottom: .75rem;
@@ -21,19 +20,6 @@
     width: 100%;
     text-align: center;
     font-size: clamp(1.3rem, 1.0289rem + 1.2048vw, 1.8rem);
-}
-
-.checkoutContainer button {
-    padding-left: .8rem;
-    padding-right: .8rem;
-    padding-bottom: .8rem;
-    margin-top: .5rem;
-    background-color: var(--font-base);
-    color: #ffe3f1;
-    border: 1px solid var(--font-base);
-    border-radius: .2rem;
-    font-size: clamp(1.8rem, 1.4747rem + 1.4458vw, 2.4rem);
-    transition: all .3s ease-out;
 }
 
 .checkoutContainer button:hover {

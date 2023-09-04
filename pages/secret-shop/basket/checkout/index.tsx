@@ -22,15 +22,21 @@ const Checkout: Page = () => {
   const [zipCode, setZipCode] = useState<string>('');
   const [country, setCountry] = useState<string>('United States');
 
+  const [couponCode, setCouponCode] = useState<string>('');
+
+  const shippingCost = country === 'United States' ? 5 : 15;
+
   useEffect(() => {
     if (basket.products.length === 0) {
       router.push('/secret-shop');
     }
   }, [basket, router]);
 
+  const checkout = async () => {};
+
   return (
-    <div>
-      <div>
+    <div className={sharedStyles.infoBg}>
+      <div className={styles.containerLink}>
         <span
           onClick={() => router.push('/secret-shop/basket')}
           className='link'
@@ -40,6 +46,7 @@ const Checkout: Page = () => {
       </div>
       <div className={styles.containerAllInputs}>
         <div className={styles.containerContactInfo}>
+          <h2>Contact Information</h2>
           <div className={styles.containerTextInput}>
             <p>First Name:</p>
             <input
@@ -72,6 +79,7 @@ const Checkout: Page = () => {
           </div>
         </div>
         <div className={styles.containerAddressInfo}>
+          <h2>Shipping</h2>
           <div className={styles.containerTextInput}>
             <p>Line 1:</p>
             <input
@@ -145,6 +153,54 @@ const Checkout: Page = () => {
                 </option>
               )}
             </select>
+          </div>
+        </div>
+        <div className={styles.containerOffer}>
+          <h2>Coupon Code:</h2>
+          <input
+            className={sharedStyles.textInput}
+            type='text'
+            value={couponCode}
+            onChange={e => setCouponCode(e.target.value)}
+          />
+        </div>
+        <div className={styles.containerSummary}>
+          <h2>Summary</h2>
+          {basket.products.map(product =>
+            <div
+              key={product.groupId}
+              className={`${styles.summaryProduct} ${styles.summaryItem}`}
+            >
+              <div>
+                <p className={styles.groupName}>{product.groupName}</p>
+                <p>{product.productName} x{product.quantity}</p>
+              </div>
+              <p className={styles.price}>{product.actualTotalPrice}$</p>
+            </div>
+          )}
+          <div className={styles.summaryItem}>
+            <div>
+              <p className={styles.subTotal}>Subtotal:</p>
+              <p>Shipping:</p>
+            </div>
+            <div>
+              <p className={`${styles.subTotal} ${styles.price}`}>
+                {basket.actualTotalPrice}$
+              </p>
+              <p className={styles.price}>{shippingCost}$</p>
+            </div>
+          </div>
+          <div style={{borderBottom: 'none'}} className={styles.summaryItem}>
+            <p>Total:</p>
+            <p className={styles.price}>{basket.actualTotalPrice + shippingCost}$</p>
+          </div>
+          <div style={{borderBottom: 'none'}} className={styles.containerFinalButton}>
+            <button
+              className={sharedStyles.checkoutButton}
+              onClick={checkout}
+            >
+              Finalize Checkout
+            </button>
           </div>
         </div>
       </div>

@@ -1,3 +1,68 @@
+.containerLink {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.containerAllInputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .containerAllInputs p {
     margin: 0;
+}
+
+.containerAllInputs h2 {
+    font-weight: 400;
+    color: var(--font-base);
+    font-size: clamp(1.5rem, 1.1205rem + 1.6867vw, 2.2rem);
+    line-height: unset;
+    padding-bottom: 0;
+    text-shadow: unset;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.containerAllInputs > div {
+    border-top: 2px solid var(--font-base);
+    margin-top: 2rem;
+    width: 90vw;
+}
+
+.containerTextInput {
+    margin-bottom: .5rem;
+}
+
+.containerTextInput p {
+    font-weight: 600;
+    margin-bottom: .25rem;
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--font-base);
+}
+
+.subTotal {
+    margin-bottom: .25rem !important;
+}
+
+.summaryProduct .groupName {
+    font-weight: 600;
+}
+
+.price {
+    text-align: right;
+}
+
+.containerFinalButton {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

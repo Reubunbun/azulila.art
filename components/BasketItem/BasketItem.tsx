@@ -26,7 +26,7 @@ const BasketItem: FC<Props> = ({
 
   return (
     <div
-      className={styles.itemWrapper}
+      className={`${styles.itemWrapper} ${sharedStyles.infoBg}`}
       style={{
         borderTop: '2px solid #ffe3f1',
         borderBottom: isLast ? '2px solid #ffe3f1' : undefined,
@@ -67,11 +67,17 @@ const BasketItem: FC<Props> = ({
             className={sharedStyles.numericalInput}
             type='number'
             value={quantity}
-            step={1}
-            onChange={e => dispatchProduct({
-              type: 'QUANTITY',
-              payload: { id: productId, quantity: Number(e.target.value) },
-            })}
+            onChange={e => {
+              const newQuantity = e.target.value;
+              if (/[^0-9]/.test(newQuantity)) {
+                return;
+              }
+
+              dispatchProduct({
+                type: 'QUANTITY',
+                payload: { id: productId, quantity: Number(newQuantity) },
+              });
+            }}
           />
           <p className={styles.priceText}>
             {isSale
