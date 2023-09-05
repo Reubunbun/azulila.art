@@ -35,7 +35,7 @@ const Checkout: Page = () => {
   const checkout = async () => {};
 
   return (
-    <div className={sharedStyles.infoBg}>
+    <div className={`${styles.formWrapper} ${sharedStyles.infoBg}`}>
       <div className={styles.containerLink}>
         <span
           onClick={() => router.push('/secret-shop/basket')}
@@ -110,49 +110,55 @@ const Checkout: Page = () => {
               placeholder='Example Place'
             />
           </div>
-          <div className={styles.containerTextInput}>
-            <p>City:</p>
-            <input
-              className={sharedStyles.textInput}
-              type='text'
-              value={city}
-              onChange={e => setCity(e.target.value)}
-              placeholder='City'
-            />
-          </div>
-          <div className={styles.containerTextInput}>
-            <p>State / Province:</p>
-            <input
-              className={sharedStyles.textInput}
-              type='text'
-              value={state}
-              onChange={e => setState(e.target.value)}
-              placeholder='State'
-            />
-          </div>
-          <div className={styles.containerTextInput}>
-            <p>Zip / Postal Code:</p>
-            <input
-              className={sharedStyles.textInput}
-              type='text'
-              value={zipCode}
-              onChange={e => setZipCode(e.target.value)}
-              placeholder='12345'
-            />
-          </div>
-          <div className={styles.containerTextInput}>
-            <p>Country:</p>
-            <select
-              className={sharedStyles.select}
-              value={country}
-              onChange={e => setCountry(e.target.value)}
-            >
-              {COUNTRIES.map(countryName =>
-                <option key={countryName} value={countryName}>
-                  {countryName}
-                </option>
-              )}
-            </select>
+          <div className={styles.containerSmallInputs}>
+            <div>
+              <div className={styles.containerTextInput}>
+                <p>City:</p>
+                <input
+                  className={sharedStyles.textInput}
+                  type='text'
+                  value={city}
+                  onChange={e => setCity(e.target.value)}
+                  placeholder='City'
+                />
+              </div>
+              <div className={styles.containerTextInput}>
+                <p>State / Province:</p>
+                <input
+                  className={sharedStyles.textInput}
+                  type='text'
+                  value={state}
+                  onChange={e => setState(e.target.value)}
+                  placeholder='State'
+                />
+              </div>
+            </div>
+            <div>
+              <div className={styles.containerTextInput}>
+                <p>Zip / Postal Code:</p>
+                <input
+                  className={sharedStyles.textInput}
+                  type='text'
+                  value={zipCode}
+                  onChange={e => setZipCode(e.target.value)}
+                  placeholder='12345'
+                />
+              </div>
+              <div className={styles.containerTextInput}>
+                <p>Country:</p>
+                <select
+                  className={`${sharedStyles.select} ${sharedStyles.dark}`}
+                  value={country}
+                  onChange={e => setCountry(e.target.value)}
+                >
+                  {COUNTRIES.map(countryName =>
+                    <option key={countryName} value={countryName}>
+                      {countryName}
+                    </option>
+                  )}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
         <div className={styles.containerOffer}>
@@ -178,23 +184,24 @@ const Checkout: Page = () => {
               <p className={styles.price}>{product.actualTotalPrice}$</p>
             </div>
           )}
-          <div className={styles.summaryItem}>
+          <div
+            style={{marginTop: '1rem'}}
+            className={`${styles.summaryItem} ${styles.containerTotals}`}
+          >
             <div>
-              <p className={styles.subTotal}>Subtotal:</p>
+              <p>Subtotal:</p>
               <p>Shipping:</p>
+              <p>Total:</p>
             </div>
             <div>
               <p className={`${styles.subTotal} ${styles.price}`}>
                 {basket.actualTotalPrice}$
               </p>
               <p className={styles.price}>{shippingCost}$</p>
+              <p className={styles.price}>{basket.actualTotalPrice + shippingCost}$</p>
             </div>
           </div>
-          <div style={{borderBottom: 'none'}} className={styles.summaryItem}>
-            <p>Total:</p>
-            <p className={styles.price}>{basket.actualTotalPrice + shippingCost}$</p>
-          </div>
-          <div style={{borderBottom: 'none'}} className={styles.containerFinalButton}>
+          <div className={styles.containerFinalButton}>
             <button
               className={sharedStyles.checkoutButton}
               onClick={checkout}

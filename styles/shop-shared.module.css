@@ -44,6 +44,12 @@
     background-position: right 20px center, right bottom, right bottom, right bottom;
 }
 
+.select.dark {
+    --dd-accent-fg: var(--font-base);
+    --dd-base-fg: var(--font-base);
+    border-width: 2px;
+}
+
 .select:hover {
     background-image:
         linear-gradient(var(--dd-accent-fg), var(--dd-accent-fg)),
@@ -74,4 +80,10 @@
     border-radius: .2rem;
     font-size: clamp(1.8rem, 1.4747rem + 1.4458vw, 2.4rem);
     transition: all .3s ease-out;
+}
+
+.checkoutButton:hover {
+    background-color: #ffe3f1;
+    color: var(--font-base);
+    border: 1px solid #ffe3f1;
 }
