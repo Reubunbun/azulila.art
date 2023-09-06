@@ -25,6 +25,7 @@
     "react-google-recaptcha": "^2.1.0",
     "react-intersection-observer": "^9.0.0",
     "react-lazy-load": "^4.0.1",
+    "stripe": "^13.4.0",
     "util": "^0.12.4"
   },
   "devDependencies": {

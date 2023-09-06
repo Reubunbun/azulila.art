@@ -98,6 +98,21 @@ export type ProductsResult = {
     categories: string[];
 };
 
+export type PurchaseRequest = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    line1: string;
+    line2: string | null;
+    line3: string | null;
+    city: string;
+    zipCode: string;
+    state: string;
+    country: string;
+    coupon: string | null;
+    products: { productId: number, quantity: number }[],
+}
+
 /**
  * ENUMS
  */

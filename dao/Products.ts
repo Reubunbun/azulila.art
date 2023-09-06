@@ -36,6 +36,10 @@ interface JoinedProductRow {
     [ALIAS_PRODUCT_PRIORITY]: number;
 };
 
+type FullProductInfo = Omit<JoinedProductRow, 'tag_name'> & {
+    [COL_IS_UNAVAILABLE]: boolean;
+};
+
 export default class Products extends AbstractDao {
     static readonly GROUP_TABLE_NAME: string = 'tania_product_group';
     static readonly PRODUCT_TABLE_NAME: string = 'tania_product';
@@ -145,5 +149,45 @@ export default class Products extends AbstractDao {
         }
 
         return Array.from(productGroupsById.values());
+    }
+
+    async getMultipleByIds(
+        productIds: number[],
+    ) : Promise<FullProductInfo[]> {
+        return (await this.pgClient.query<FullProductInfo>(
+            this.knexClient(Products.GROUP_TABLE_NAME)
+                .select({
+                    [COL_GROUP_ID]: `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,
+                })
+                .select(COL_PRODUCT_ID)
+                .select({
+                    [ALIAS_GROUP_NAME]: `${Products.GROUP_TABLE_NAME}.${COL_NAME}`,
+                })
+                .select({
+                    [ALIAS_PRODUCT_NAME]: `${Products.PRODUCT_TABLE_NAME}.${COL_NAME}`,
+                })
+                .select(COL_DESCRIPTION)
+                .select({
+                    [ALIAS_GROUP_PRIORITY]: `${Products.GROUP_TABLE_NAME}.${COL_PRIORITY}`,
+                })
+                .select({
+                    [ALIAS_PRODUCT_PRIORITY]: `${Products.PRODUCT_TABLE_NAME}.${COL_PRIORITY}`,
+                })
+                .select({
+                    [COL_IMG_URL]: `${Products.GROUP_TABLE_NAME}.${COL_IMG_URL}`,
+                })
+                .select(COL_STOCK)
+                .select(COL_PRICE)
+                .select(COL_OFFER)
+                .select(COL_TYPE)
+                .select(COL_IS_UNAVAILABLE)
+                .leftJoin(
+                    Products.PRODUCT_TABLE_NAME,
+                    `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,
+                    `${Products.PRODUCT_TABLE_NAME}.${COL_GROUP_ID}`,
+                )
+                .whereIn(COL_PRODUCT_ID, productIds)
+                .toString(),
+        )).rows;
     }
 }

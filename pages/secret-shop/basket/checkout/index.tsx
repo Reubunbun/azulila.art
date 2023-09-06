@@ -1,6 +1,8 @@
 import { type Page } from 'interfaces';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { type PurchaseRequest } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
 import { COUNTRIES } from 'helpers/countries';
 import sharedStyles from 'styles/shop-shared.module.css';
@@ -32,7 +34,25 @@ const Checkout: Page = () => {
     }
   }, [basket, router]);
 
-  const checkout = async () => {};
+  const checkout = async () => {
+    await axios.post('/api/shop', {
+      firstName,
+      lastName,
+      email,
+      line1,
+      line2: line2 || null,
+      line3: line3 || null,
+      city,
+      state,
+      zipCode,
+      country,
+      coupon: couponCode,
+      products: basket.products.map(product => ({
+        productId: product.productId,
+        quantity: product.quantity,
+      })),
+    } as PurchaseRequest);
+  };
 
   return (
     <div className={`${styles.formWrapper} ${sharedStyles.infoBg}`}>
