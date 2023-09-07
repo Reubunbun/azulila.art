@@ -49,7 +49,7 @@ const Basket: Page = () => {
           </AnimatePresence>
         </div>
         <div className={`${styles.checkoutContainer} ${sharedStyles.infoBg}`}>
-          <p>Subtotal - {basket.actualTotalPrice}$</p>
+          <p>Subtotal - {basket.totalPrice}$</p>
           <button
             className={sharedStyles.checkoutButton}
             onClick={() => router.push('/secret-shop/basket/checkout')}

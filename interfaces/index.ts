@@ -76,8 +76,6 @@ export type Product = {
     groupId: number;
     name: string;
     price: number;
-    offer: number;
-    actualPrice: number;
     stock: number;
     priority: number;
 };
@@ -104,13 +102,40 @@ export type PurchaseRequest = {
     email: string;
     line1: string;
     line2: string | null;
-    line3: string | null;
     city: string;
     zipCode: string;
     state: string;
     country: string;
-    coupon: string | null;
     products: { productId: number, quantity: number }[],
+}
+
+export type PurchaseResponse = {
+    url: string;
+};
+
+export type ContactInfo = {
+    name: string;
+    email: string;
+    line1: string;
+    line2: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+};
+
+export type ProductInfo = Array<{
+    productId: number;
+    quantity: number;
+}>;
+
+export type PurchaseSuccessResponse = {
+    contactInfo: ContactInfo;
+    productInfo: {
+        groupName: string;
+        productName: string;
+        quantity: number;
+    }[];
 }
 
 /**

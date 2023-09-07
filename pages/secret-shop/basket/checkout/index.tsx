@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { type PurchaseRequest } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
-import { COUNTRIES } from 'helpers/countries';
+import { CODE_TO_COUNTRY } from 'helpers/countries';
 import sharedStyles from 'styles/shop-shared.module.css';
 import styles from './checkout.module.css';
 
@@ -18,15 +18,12 @@ const Checkout: Page = () => {
 
   const [line1, setLine1] = useState<string>('');
   const [line2, setLine2] = useState<string>('');
-  const [line3, setLine3] = useState<string>('');
   const [city, setCity] = useState<string>('');
   const [state, setState] = useState<string>('');
   const [zipCode, setZipCode] = useState<string>('');
-  const [country, setCountry] = useState<string>('United States');
+  const [country, setCountry] = useState<string>('US');
 
-  const [couponCode, setCouponCode] = useState<string>('');
-
-  const shippingCost = country === 'United States' ? 5 : 15;
+  const shippingCost = country === 'US' ? 5 : 15;
 
   useEffect(() => {
     if (basket.products.length === 0) {
@@ -35,23 +32,23 @@ const Checkout: Page = () => {
   }, [basket, router]);
 
   const checkout = async () => {
-    await axios.post('/api/shop', {
+    const response = await axios.post('/api/shop', {
       firstName,
       lastName,
       email,
       line1,
       line2: line2 || null,
-      line3: line3 || null,
       city,
       state,
       zipCode,
       country,
-      coupon: couponCode,
       products: basket.products.map(product => ({
         productId: product.productId,
         quantity: product.quantity,
       })),
     } as PurchaseRequest);
+
+    window.location.href = response.data.url;
   };
 
   return (
@@ -120,16 +117,6 @@ const Checkout: Page = () => {
               placeholder='123 Example Street'
             />
           </div>
-          <div className={styles.containerTextInput}>
-            <p>Line 3 (Optional):</p>
-            <input
-              className={sharedStyles.textInput}
-              type='text'
-              value={line3}
-              onChange={e => setLine3(e.target.value)}
-              placeholder='Example Place'
-            />
-          </div>
           <div className={styles.containerSmallInputs}>
             <div>
               <div className={styles.containerTextInput}>
@@ -171,8 +158,8 @@ const Checkout: Page = () => {
                   value={country}
                   onChange={e => setCountry(e.target.value)}
                 >
-                  {COUNTRIES.map(countryName =>
-                    <option key={countryName} value={countryName}>
+                  {Object.entries(CODE_TO_COUNTRY).map(([code, countryName]) =>
+                    <option key={code} value={code}>
                       {countryName}
                     </option>
                   )}
@@ -180,15 +167,6 @@ const Checkout: Page = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className={styles.containerOffer}>
-          <h2>Coupon Code:</h2>
-          <input
-            className={sharedStyles.textInput}
-            type='text'
-            value={couponCode}
-            onChange={e => setCouponCode(e.target.value)}
-          />
         </div>
         <div className={styles.containerSummary}>
           <h2>Summary</h2>
@@ -201,7 +179,7 @@ const Checkout: Page = () => {
                 <p className={styles.groupName}>{product.groupName}</p>
                 <p>{product.productName} x{product.quantity}</p>
               </div>
-              <p className={styles.price}>{product.actualTotalPrice}$</p>
+              <p className={styles.price}>{product.totalPrice}$</p>
             </div>
           )}
           <div
@@ -215,10 +193,10 @@ const Checkout: Page = () => {
             </div>
             <div>
               <p className={`${styles.subTotal} ${styles.price}`}>
-                {basket.actualTotalPrice}$
+                {basket.totalPrice}$
               </p>
               <p className={styles.price}>{shippingCost}$</p>
-              <p className={styles.price}>{basket.actualTotalPrice + shippingCost}$</p>
+              <p className={styles.price}>{basket.totalPrice + shippingCost}$</p>
             </div>
           </div>
           <div className={styles.containerFinalButton}>

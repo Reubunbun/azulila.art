@@ -1,5 +1,5 @@
 import { type Page } from 'interfaces';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useShopContext } from 'context/ShopContext';
 import { type ProductGroup } from 'interfaces';

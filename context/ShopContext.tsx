@@ -47,15 +47,12 @@ export interface BasketItem {
   groupName: string;
   productName: string;
   price: number;
-  actualPrice: number;
   totalPrice: number;
-  actualTotalPrice: number;
   quantity: number;
 };
 
 interface Basket {
   totalPrice: number;
-  actualTotalPrice: number;
   products: BasketItem[],
 }
 
@@ -75,7 +72,6 @@ const ShopContext = createContext<ShopContextType>({
   dispatchProduct: () => {},
   basket: {
     totalPrice: 0,
-    actualTotalPrice: 0,
     products: [],
   },
   selectedProducts: {},
@@ -87,7 +83,6 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const [selectedProducts, dispatch] = useReducer(reducer, {});
   const [basket, setBasket] = useState<Basket>({
     totalPrice: 0,
-    actualTotalPrice: 0,
     products: [],
   });
 
@@ -106,7 +101,6 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const basket: Basket = {
       totalPrice: 0,
-      actualTotalPrice: 0,
       products: [],
     };
 
@@ -135,7 +129,6 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
       const quantity = selectedProducts[productId];
 
       const totalPrice = foundProduct.price * quantity;
-      const actualTotalPrice = foundProduct.actualPrice * quantity;
 
       basket.products.push({
         groupId: foundGroup.groupId,
@@ -144,14 +137,11 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
         groupName: foundGroup.name,
         productName: foundProduct.name,
         price: foundProduct.price,
-        actualPrice: foundProduct.actualPrice,
         totalPrice,
-        actualTotalPrice,
         quantity,
       });
 
       basket.totalPrice += totalPrice;
-      basket.actualTotalPrice += actualTotalPrice;
     }
 
     setBasket(basket);

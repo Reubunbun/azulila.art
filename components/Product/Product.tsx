@@ -27,7 +27,7 @@ const Product: FC<Props> = props => {
   const localImgRef = useRef<HTMLImageElement>(null);
   const { setModalContent } = useUIContext();
 
-  const allPrices = products.map(product => product.actualPrice);
+  const allPrices = products.map(product => product.price);
   const minPrice = Math.min(...allPrices).toFixed(2);
   const maxPrice = Math.max(...allPrices).toFixed(2);
 

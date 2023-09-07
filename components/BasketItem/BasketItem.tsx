@@ -14,15 +14,12 @@ const BasketItem: FC<Props> = ({
   productId,
   productName,
   price,
-  actualPrice,
   totalPrice,
-  actualTotalPrice,
   quantity,
   isFirst,
   isLast,
 }) => {
   const { dispatchProduct } = useShopContext();
-  const isSale = price !== actualPrice;
 
   return (
     <div
@@ -45,12 +42,7 @@ const BasketItem: FC<Props> = ({
         <div className={styles.productInfoWrapper}>
           <p className={styles.groupNameText}>{groupName}</p>
           <p>
-            {productName} -
-            {isSale
-              ? <span> <s>{price}$</s></span>
-              : <></>
-            }
-            {` ${actualPrice}`}$
+            {productName} - {price}$
           </p>
           <span
             className='link'
@@ -80,11 +72,7 @@ const BasketItem: FC<Props> = ({
             }}
           />
           <p className={styles.priceText}>
-            {isSale
-              ? <span className={styles.priceText}><s>{totalPrice}$</s> </span>
-              : <></>
-            }
-            {actualTotalPrice}$
+            {totalPrice}$
           </p>
         </div>
       </div>

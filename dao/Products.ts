@@ -14,7 +14,6 @@ const COL_TYPE = 'type';
 const COL_PRODUCT_ID = 'product_id';
 const ALIAS_PRODUCT_NAME = 'product_name';
 const COL_PRICE = 'price';
-const COL_OFFER = 'offer';
 const COL_STOCK = 'stock';
 const ALIAS_PRODUCT_PRIORITY = 'product_priority';
 
@@ -30,7 +29,6 @@ interface JoinedProductRow {
     [COL_IMG_URL]: string;
     [COL_STOCK]: number;
     [COL_PRICE]: number;
-    [COL_OFFER]: number;
     [COL_TAG_NAME]: string;
     [COL_TYPE]: string;
     [ALIAS_PRODUCT_PRIORITY]: number;
@@ -70,7 +68,6 @@ export default class Products extends AbstractDao {
                 })
                 .select(COL_STOCK)
                 .select(COL_PRICE)
-                .select(COL_OFFER)
                 .select(COL_TAG_NAME)
                 .select(COL_TYPE)
                 .leftJoin(
@@ -91,8 +88,6 @@ export default class Products extends AbstractDao {
         for (const row of results) {
             const groupId = row[COL_GROUP_ID];
             const price = row[COL_PRICE];
-            const offerAsPercent = (row[COL_OFFER] / 100);
-            const actualPrice = price - (price * offerAsPercent);
 
             if (!productGroupsById.has(groupId)) {
                 productGroupsById.set(
@@ -108,9 +103,7 @@ export default class Products extends AbstractDao {
                                 groupId,
                                 name: row[ALIAS_PRODUCT_NAME],
                                 price,
-                                offer: row[COL_OFFER],
                                 stock: row[COL_STOCK],
-                                actualPrice,
                                 priority: row[ALIAS_PRODUCT_PRIORITY],
                             },
                         ],
@@ -140,9 +133,7 @@ export default class Products extends AbstractDao {
                     groupId,
                     name: row[ALIAS_PRODUCT_NAME],
                     price,
-                    offer: row[COL_OFFER],
                     stock: row[COL_STOCK],
-                    actualPrice,
                     priority: row[ALIAS_PRODUCT_PRIORITY],
                 });
             }
@@ -178,7 +169,6 @@ export default class Products extends AbstractDao {
                 })
                 .select(COL_STOCK)
                 .select(COL_PRICE)
-                .select(COL_OFFER)
                 .select(COL_TYPE)
                 .select(COL_IS_UNAVAILABLE)
                 .leftJoin(

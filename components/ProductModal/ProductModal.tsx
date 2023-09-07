@@ -75,14 +75,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                         value={product.productId}
                         disabled={product.stock <= 0}
                       >
-                        {
-                          `${product.name} - ${
-                            `${
-                                product.offer
-                                  ? strikethroughText(`${product.price}$`)
-                                  : ''
-                              } ${product.actualPrice}$`.trim()}`
-                          }
+                        {`${product.name} - ${product.price}$`}
                       </option>
                     )}
                   </select>
@@ -118,11 +111,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                 </div>
                 <div>
                   <p className={styles.price}>
-                    {selectedProduct.offer
-                      ? <span><s>{selectedProduct.price * quantity}$</s> </span>
-                      : <></>
-                    }
-                    {selectedProduct.actualPrice * quantity}$
+                    {selectedProduct.price * quantity}$
                   </p>
                 </div>
               </div>
