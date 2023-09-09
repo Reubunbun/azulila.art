@@ -1,4 +1,4 @@
-import { type FC, type ChangeEvent, useState } from 'react';
+import { type FC, type ChangeEvent, useState, useRef } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import sharedStyles from 'styles/shop-shared.module.css';
@@ -14,6 +14,7 @@ const SearchBar: FC<Props> = ({ onSearchChange }) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
@@ -27,8 +28,12 @@ const SearchBar: FC<Props> = ({ onSearchChange }) => {
   };
 
   return (
-    <div className={styles.containerSearchBar}>
+    <div
+      className={styles.containerSearchBar}
+      onClick={() => inputRef.current?.focus()}
+    >
       <input
+        ref={inputRef}
         className={`${
             sharedStyles.textInput
           } ${
@@ -52,9 +57,11 @@ const SearchBar: FC<Props> = ({ onSearchChange }) => {
         <CloseIcon
           color='inherit'
           className={styles.closeIcon}
-          onClick={() => {
+          onClick={e => {
             setSearchValue('');
             onSearchChange('');
+            inputRef.current?.blur();
+            e.stopPropagation();
           }}
         />
       }

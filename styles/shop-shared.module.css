@@ -87,3 +87,15 @@
     color: var(--font-base);
     border: 1px solid #ffe3f1;
 }
+
+@media only screen and (min-width: 1921px) {
+    .numericalInput,
+    .textInput {
+        font-size: 1.5rem !important;
+        box-shadow: unset !important;
+    }
+
+    .textInput:focus {
+        box-shadow: 0 0 0 2pt var(--font-base) !important;
+    }
+}

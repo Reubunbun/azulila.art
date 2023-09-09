@@ -1,5 +1,6 @@
 import { type FC, useState } from 'react';
 import { motion } from 'framer-motion';
+import CloseIcon from '@mui/icons-material/Close';
 import type { ProductGroup, Product } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
 import ModalBackdrop from 'components/ModalBackdrop/ModalBackdrop';
@@ -10,9 +11,6 @@ interface Props {
   productGroup: ProductGroup,
   close: () => void,
 }
-
-const strikethroughText = (input: string) =>
-  [...input].map(char => `${char}\u0336`).join('')
 
 const MAX_ALLOWED_QUANTITY = Infinity;
 
@@ -50,7 +48,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
             onClick={close}
             className={styles.closeBtn}
           >
-            <p>X</p>
+            <CloseIcon color='inherit' />
           </button>
         </div>
         <div className={styles.containerDesktopSplit}>

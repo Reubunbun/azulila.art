@@ -27,7 +27,7 @@ const Basket: Page = () => {
   return (
     <>
       <p className={styles.productInfoText}>
-        You have {basket.products.length} products in your basket:
+        You have {basket.products.length} {basket.products.length === 1 ? 'product' : 'products'} in your basket:
       </p>
       <div className={styles.productsOuterContainer}>
         <div className={styles.productsInnerContainer}>

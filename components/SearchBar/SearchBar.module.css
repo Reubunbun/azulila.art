@@ -64,3 +64,13 @@
 .closeIcon:hover {
     color: var(--font-highlight);
 }
+
+@media only screen and (min-width: 1921px) {
+    .containerSearchBar {
+        width: 700px;
+    }
+
+    .searchInput {
+        font-size: clamp(1.2rem, -2.1000rem + 2.7500vw, 2.3rem) !important;
+    }
+}

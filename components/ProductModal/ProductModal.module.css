@@ -29,6 +29,8 @@
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: #d84054;
+    color: black;
+    padding: 0;
     border: none;
     border-top-right-radius: var(--border-radius);
     border-bottom-left-radius: var(--border-radius);
@@ -39,11 +41,9 @@
     background-color: #fd4b63
 }
 
-.containerCloseBtn p {
-    color: black;
-    font-size: 2em;
-    font-weight: 600;
-    margin: 0;
+.closeBtn svg {
+    width: 1.75em;
+    height: 1.75em;
 }
 
 .containerMainContent {
@@ -155,5 +155,31 @@
         max-height: calc(100% - var(--close-section-height));
         border-radius: var(--input-radius);
         border: 4px solid var(--font-highlight);
+    }
+}
+
+@media only screen and (min-width: 1921px) {
+    .containerProductModal {
+        width: 100rem;
+    }
+
+    .containerMainContent h1 {
+        font-size: 3.5rem;
+    }
+
+    .productDescription {
+        font-size: 1.7rem;
+        line-height: 2rem;
+    }
+
+    .containerQuantity p,
+    .containerSelect p,
+    .containerQuantity input[type="number"] {
+        font-size: 1.25rem;
+        margin-bottom: .2rem;
+    }
+
+    .containerBasketButton button {
+        font-size: 2.25rem !important;
     }
 }
