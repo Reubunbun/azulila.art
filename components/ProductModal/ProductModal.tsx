@@ -1,4 +1,4 @@
-import { type FC, useState } from 'react';
+import { type FC, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import CloseIcon from '@mui/icons-material/Close';
 import type { ProductGroup, Product } from 'interfaces';
@@ -19,6 +19,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
     productGroup.products[0].productId,
   );
   const [quantity, setQuantity] = useState<number>(1);
+  const warningDiv = useRef<HTMLDivElement>(null);
 
   const selectedProduct: Product = productGroup.products.find(
     product => selectedProductId === product.productId,
@@ -27,6 +28,16 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
   const { dispatchProduct } = useShopContext();
 
   const addProductToBasket = () => {
+    if (quantity < 1 || quantity > selectedProduct.stock) {
+      if (!warningDiv.current) return;
+
+      warningDiv.current.classList.remove('warning');
+      void warningDiv.current.offsetWidth;
+      warningDiv.current.classList.add('warning');
+
+      return;
+    }
+
     dispatchProduct({
       type: 'ADD-PRODUCT',
       payload: { id: selectedProduct.productId, quantity: quantity },
@@ -79,31 +90,28 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
                   </select>
                 </div>
               }
+              <div className={styles.containerWarnings} ref={warningDiv}>
+                <p style={{ display: quantity === 0 ? undefined : 'none' }}>
+                  You must purchase at least one
+                </p>
+                <p style={{ display: quantity > selectedProduct.stock ? undefined : 'none' }}>
+                  Sorry, there is only {selectedProduct.stock} left in stock, please select a lower number
+                </p>
+              </div>
               <div className={styles.containerQuantityAndPrice}>
                 <div className={styles.containerQuantity}>
                   <p>Quantity:</p>
                   <input
                     className={sharedStyles.numericalInput}
-                    type='number'
-                    min={1}
+                    type='text'
                     max={Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock)}
-                    step={1}
                     value={quantity}
                     onChange={e => {
                       if (/[^0-9]/.test(e.target.value)) {
                         return;
                       }
 
-                      let quantityToSet = Number(e.target.value);
-                      const maxAllowed = Math.min(MAX_ALLOWED_QUANTITY, selectedProduct.stock);
-                      if (quantityToSet > maxAllowed) {
-                        quantityToSet = maxAllowed;
-                      }
-                      if (quantityToSet < 1) {
-                        quantityToSet = 1;
-                      }
-
-                      setQuantity(quantityToSet);
+                      setQuantity(Number(e.target.value));
                     }}
                   />
                 </div>

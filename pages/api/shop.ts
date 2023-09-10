@@ -7,12 +7,9 @@ import type {
     PurchaseSuccessResponse,
 } from 'interfaces';
 import { Client as PGClient } from 'pg';
-import Stripe from 'stripe';
 import { CODE_TO_COUNTRY } from 'helpers/countries';
 import DaoProducts from 'dao/Products';
 import DaoPurchases from 'dao/Purchases';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET!, { apiVersion: '2023-08-16' });
 
 async function get(
     req: NextApiRequest,
@@ -58,103 +55,6 @@ async function post(
         products.map(({ productId }) => productId),
     );
 
-    const itemsForStripe: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
-
-    for (const product of productsWithInfo) {
-        if (product.is_unavailable) {
-            return res.status(500).json({
-                message: `Product (${product.group_name}) is no longer available`,
-            });
-        }
-
-        const quantityForProduct = products
-            .find(({ productId }) => productId === product.product_id)
-            ?.quantity;
-
-        if (quantityForProduct === undefined) {
-            return res.status(500).json({
-                message: 'Something went wrong',
-            });
-        }
-
-        const nameToDisplay = product.group_name === product.product_name
-            ?  product.product_name
-            : `${product.group_name} - ${product.product_name}`;
-
-        if (product.stock < quantityForProduct) {
-            if (quantityForProduct === 1) {
-                return res.status(500).json({
-                    message: `Product (${nameToDisplay}) is no longer in stock`,
-                });
-            }
-
-            return res.status(500).json({
-                message: `You wanted to purchase ${quantityForProduct} of "${nameToDisplay}", but there is now only ${product.stock} available`,
-            });
-        }
-
-        itemsForStripe.push({
-            price_data: {
-                currency: 'usd',
-                unit_amount: product.price,
-                product_data: { name: nameToDisplay },
-            },
-            quantity: quantityForProduct,
-        })
-    }
-
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: [ 'card', 'paypal' ],
-        mode: 'payment',
-        success_url: `${process.env.DOMAIN}/secret-shop/success?id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.DOMAIN}/secret-shop/cancel?id={CHEKOUT_SESSION_ID}`,
-        line_items: itemsForStripe,
-        shipping_options: [{
-            shipping_rate: country === 'US'
-                ? 'shr_1NnQrKB1kXMeBzkB8keTH3Dz'
-                : 'shr_1NnQryB1kXMeBzkBGiEdXKil'
-        }],
-        customer_email: email,
-        payment_intent_data: {
-            shipping: {
-                name: `${firstName} ${lastName}`,
-                address: {
-                    country,
-                    state,
-                    city,
-                    line1,
-                    line2: line2 || '',
-                    postal_code: zipCode,
-                },
-            },
-        },
-    }).catch(console.error);
-
-    if (!session || !session.url) {
-        return res.status(500).json({
-            message: 'Checkout session could not be created',
-        });
-    }
-
-    const daoPurchases = new DaoPurchases(pgClient);
-    await daoPurchases.create(
-        session.id,
-        {
-            name: `${firstName} ${lastName}`,
-            email,
-            line1,
-            line2: line2 || '',
-            city,
-            state,
-            zip: zipCode,
-            country: CODE_TO_COUNTRY[country],
-        },
-        products,
-    );
-
-    return res.status(200).json({
-        url: session.url,
-    });
 }
 
 async function put(

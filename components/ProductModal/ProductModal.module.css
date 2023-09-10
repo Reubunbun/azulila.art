@@ -89,12 +89,19 @@
 }
 
 .containerQuantityAndPrice {
-    margin-top: 1rem;
     display: flex;
     width: var(--selection-width);
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+}
+
+.containerWarnings {
+    width: var(--selection-width);
+    margin-top: 1rem;
+}
+.containerWarnings p {
+    color: var(--font-warning);
 }
 
 .containerQuantity {
@@ -104,7 +111,7 @@
     gap: .4rem;
 }
 
-.containerQuantity input[type="number"] {
+.containerQuantity input[type="text"] {
     width: 5rem !important;
 }
 

@@ -1,6 +1,7 @@
 import { type Page } from 'interfaces';
 import { type RefObject, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { PayPalButtons } from '@paypal/react-paypal-js';
 import axios from 'axios';
 import { type PurchaseRequest } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
@@ -323,12 +324,7 @@ const Checkout: Page = () => {
             </div>
           </div>
           <div className={styles.containerFinalButton}>
-            <button
-              className={sharedStyles.checkoutButton}
-              onClick={checkout}
-            >
-              Finalize Checkout
-            </button>
+            <PayPalButtons />
           </div>
         </div>
       </div>

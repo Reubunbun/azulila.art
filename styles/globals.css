@@ -165,9 +165,7 @@ textarea {
   resize: vertical;
 }
 
-input[type="text"].warning,
-input[type="number"].warning,
-textarea.warning {
+*.warning {
   animation: inputError .82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
