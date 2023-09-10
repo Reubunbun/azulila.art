@@ -7,9 +7,22 @@ import type {
     PurchaseSuccessResponse,
 } from 'interfaces';
 import { Client as PGClient } from 'pg';
-import { CODE_TO_COUNTRY } from 'helpers/countries';
+import paypal from '@paypal/checkout-server-sdk';
 import DaoProducts from 'dao/Products';
 import DaoPurchases from 'dao/Purchases';
+
+const Environment = process.env.NODE_ENV === 'development'
+    ? paypal.core.SandboxEnvironment
+    : paypal.core.SandboxEnvironment;
+
+const paypalClient = new paypal.core.PayPalHttpClient(
+    new Environment(
+        process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID!,
+        process.env.PAYPAL_SECRET!
+    ),
+);
+const CURRENCY_CODE = 'USD';
+const toPPAmount = (amount: number) => (amount / 100).toFixed(2);
 
 async function get(
     req: NextApiRequest,
@@ -55,6 +68,100 @@ async function post(
         products.map(({ productId }) => productId),
     );
 
+    const shipping = country === 'US' ? 500 : 1500;
+    const productTotal = productsWithInfo.reduce(
+        (sum, product) =>
+            sum +
+            (
+                product.price *
+                products.find(p => p.productId === product.product_id)?.quantity!
+            ),
+        0,
+    );
+
+    const request = new paypal.orders.OrdersCreateRequest();
+    request.prefer('return=representation');
+    request.requestBody({
+        intent: 'CAPTURE',
+        purchase_units: [
+            {
+                amount: {
+                    currency_code: CURRENCY_CODE,
+                    value: toPPAmount(shipping + productTotal),
+                    breakdown: {
+                        item_total: {
+                            currency_code: CURRENCY_CODE,
+                            value: toPPAmount(productTotal),
+                        },
+                        shipping: {
+                            currency_code: CURRENCY_CODE,
+                            value: toPPAmount(shipping),
+                        },
+                        discount: {
+                            currency_code: CURRENCY_CODE,
+                            value: '0',
+                        },
+                        handling: {
+                            currency_code: CURRENCY_CODE,
+                            value: '0',
+                        },
+                        insurance: {
+                            currency_code: CURRENCY_CODE,
+                            value: '0',
+                        },
+                        shipping_discount: {
+                            currency_code: CURRENCY_CODE,
+                            value: '0',
+                        },
+                        tax_total: {
+                            currency_code: CURRENCY_CODE,
+                            value: '0',
+                        },
+                    },
+                },
+                items: productsWithInfo.map(product => {
+                    const quantity = products
+                        .find(reqProduct => reqProduct.productId === product.product_id)
+                        ?.quantity!;
+
+                    return {
+                        name: product.group_name === product.product_name
+                            ? product.product_name
+                            : `${product.group_name} - ${product.product_name}`,
+                        unit_amount: {
+                            currency_code: CURRENCY_CODE,
+                            value: toPPAmount(product.price),
+                        },
+                        quantity: `${quantity}`,
+                        category: 'PHYSICAL_GOODS',
+                    };
+                }),
+                shipping: {
+                    address: {
+                        address_line_1: line1,
+                        address_line_2: line2 || '',
+                        admin_area_1: state,
+                        admin_area_2: city,
+                        country_code: country,
+                        postal_code: zipCode,
+                    },
+                    name: {
+                        full_name: `${firstName} ${lastName}`,
+                    },
+                    type: 'SHIPPING',
+                },
+            }
+        ],
+    });
+
+    try {
+        const order = await paypalClient.execute(request);
+        console.log(JSON.stringify(order, null, 2));
+        return res.status(200).json({ id: order.result.id });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({ message: (e as Error).message });
+    }
 }
 
 async function put(

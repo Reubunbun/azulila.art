@@ -110,7 +110,7 @@ export type PurchaseRequest = {
 }
 
 export type PurchaseResponse = {
-    url: string;
+    id: string;
 };
 
 export type ContactInfo = {

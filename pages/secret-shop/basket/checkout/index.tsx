@@ -1,9 +1,9 @@
 import { type Page } from 'interfaces';
-import { type RefObject, useState, useEffect, useRef } from 'react';
+import { type RefObject, type MouseEventHandler, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 import axios from 'axios';
-import { type PurchaseRequest } from 'interfaces';
+import type { PurchaseRequest, PurchaseResponse } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
 import { CODE_TO_COUNTRY } from 'helpers/countries';
 import sharedStyles from 'styles/shop-shared.module.css';
@@ -48,6 +48,8 @@ const Checkout: Page = () => {
 
   const [country, setCountry] = useState<string>('US');
 
+  const [isValid, setIsValid] = useState<boolean>(false);
+
   const shippingCost = country === 'US' ? 5 : 15;
 
   useEffect(() => {
@@ -56,7 +58,20 @@ const Checkout: Page = () => {
     }
   }, [basket, router]);
 
-  const checkout = async () => {
+  useEffect(() => {
+    setIsValid(Boolean(
+      firstName &&
+      lastName &&
+      email &&
+      /^[\w\.-]+@[\w\.-]+\.\w+$/.test(email) &&
+      line1 &&
+      city &&
+      zipCode &&
+      state
+    ));
+  }, [firstName, lastName, email, line1, city, zipCode, state]);
+
+  const checkout: MouseEventHandler<HTMLDivElement> = async e => {
     if (
       !firstNameRef.current ||
       !lastNameRef.current ||
@@ -91,7 +106,7 @@ const Checkout: Page = () => {
     }
 
     const emailIsValid = /^[\w\.-]+@[\w\.-]+\.\w+$/.test(email);
-    if (!emailIsValid) {
+    if (email && !emailIsValid) {
       if (!scrollToRef) scrollToRef = emailRef;
 
       emailWarningRef.current.style.display = 'block';
@@ -111,16 +126,16 @@ const Checkout: Page = () => {
       createInputWarning(cityRef, 'Missing city');
     }
 
-    if (!state) {
-      if (!scrollToRef) scrollToRef = stateRef;
-
-      createInputWarning(stateRef, 'Missing state or province');
-    }
-
     if (!zipCode) {
       if (!scrollToRef) scrollToRef = zipCodeRef;
 
       createInputWarning(zipCodeRef, 'Missing zip or postal code');
+    }
+
+    if (!state) {
+      if (!scrollToRef) scrollToRef = stateRef;
+
+      createInputWarning(stateRef, 'Missing state or province');
     }
 
     if (
@@ -142,8 +157,10 @@ const Checkout: Page = () => {
 
       return;
     };
+  };
 
-    const response = await axios.post('/api/shop', {
+  const createOrder = () => {
+    return axios.post<PurchaseResponse>('/api/shop', {
       firstName,
       lastName,
       email,
@@ -157,9 +174,8 @@ const Checkout: Page = () => {
         productId: product.productId,
         quantity: product.quantity,
       })),
-    } as PurchaseRequest);
-
-    window.location.href = response.data.url;
+    } as PurchaseRequest)
+      .then(resp => resp.data.id);
   };
 
   return (
@@ -296,7 +312,7 @@ const Checkout: Page = () => {
           <h2>Summary</h2>
           {basket.products.map(product =>
             <div
-              key={product.groupId}
+              key={product.productId}
               className={`${styles.summaryProduct} ${styles.summaryItem}`}
             >
               <div>
@@ -323,8 +339,20 @@ const Checkout: Page = () => {
               <p className={styles.price}>{basket.totalPrice + shippingCost}$</p>
             </div>
           </div>
-          <div className={styles.containerFinalButton}>
-            <PayPalButtons />
+          <div
+            className={styles.containerPaypal}
+            onClick={checkout}
+            style={{ cursor: isValid ? undefined : 'pointer' }}
+          >
+            <div style={{ pointerEvents: isValid ? undefined : 'none' }} >
+              <PayPalButtons
+                createOrder={createOrder}
+                onApprove={async (data, actions) => {
+                  actions.order?.capture();
+                }}
+                forceReRender={[ isValid ]}
+              />
+            </div>
           </div>
         </div>
       </div>
