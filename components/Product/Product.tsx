@@ -88,8 +88,6 @@ const Product: FC<Props> = props => {
       }
     }, 500);
 
-    const timeoutId = setTimeout(() => {}, 3000);
-
     return () => clearInterval(intervalId);
   }, [hasLoaded]);
 

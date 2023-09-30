@@ -1,15 +1,16 @@
 import type { Page, PurchaseSuccessResponse } from 'interfaces';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Success: Page = () => {
   const [purchaseInfo, setPurchaseInfo] = useState<PurchaseSuccessResponse | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const stripeReference = (new URL(document.location.href)).searchParams.get('id');
-    axios.put<PurchaseSuccessResponse>(
-      '/api/shop',
-      { stripeReference: stripeReference, status: 'SUCCESS' },
+    const { id } = router.query;
+    axios.get<PurchaseSuccessResponse>(
+      `/api/order/${id}`,
     )
       .then(resp => setPurchaseInfo(resp.data));
   }, []);

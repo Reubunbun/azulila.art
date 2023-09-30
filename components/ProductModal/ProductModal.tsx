@@ -66,9 +66,9 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
           <div className={styles.containerMainContent}>
             <div>
               <h1>{productGroup.name}</h1>
-              <p className={styles.productDescription}>
+              <pre className={styles.productDescription}>
                 {productGroup.description}
-              </p>
+              </pre>
             </div>
             <div>
               {productGroup.products.length > 1 &&

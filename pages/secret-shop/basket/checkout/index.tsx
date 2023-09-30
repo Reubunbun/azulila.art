@@ -2,6 +2,7 @@ import { type Page } from 'interfaces';
 import { type RefObject, type MouseEventHandler, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { PayPalButtons } from '@paypal/react-paypal-js';
+import type { OnApproveData, OnApproveActions } from '@paypal/paypal-js'
 import axios from 'axios';
 import type { PurchaseRequest, PurchaseResponse } from 'interfaces';
 import { useShopContext } from 'context/ShopContext';
@@ -36,6 +37,7 @@ const Checkout: Page = () => {
   const line1Ref = useRef<HTMLInputElement>(null);
 
   const [line2, setLine2] = useState<string>('');
+  const line2Ref = useRef<HTMLInputElement>(null);
 
   const [city, setCity] = useState<string>('');
   const cityRef = useRef<HTMLInputElement>(null);
@@ -47,6 +49,7 @@ const Checkout: Page = () => {
   const zipCodeRef = useRef<HTMLInputElement>(null);
 
   const [country, setCountry] = useState<string>('US');
+  const countryRef = useRef<HTMLSelectElement>(null);
 
   const [isValid, setIsValid] = useState<boolean>(false);
 
@@ -160,22 +163,27 @@ const Checkout: Page = () => {
   };
 
   const createOrder = () => {
-    return axios.post<PurchaseResponse>('/api/shop', {
-      firstName,
-      lastName,
-      email,
-      line1,
-      line2: line2 || null,
-      city,
-      state,
-      zipCode,
-      country,
+    return axios.post<PurchaseResponse>('/api/order', {
+      firstName: firstNameRef.current?.value,
+      lastName: lastNameRef.current?.value,
+      email: emailRef.current?.value,
+      line1: line1Ref.current?.value,
+      line2: line2Ref.current?.value || null,
+      city: cityRef.current?.value,
+      state: stateRef.current?.value,
+      zipCode: zipCodeRef.current?.value,
+      country: countryRef.current?.value,
       products: basket.products.map(product => ({
         productId: product.productId,
         quantity: product.quantity,
       })),
     } as PurchaseRequest)
       .then(resp => resp.data.id);
+  };
+
+  const captureOrder = async (data: OnApproveData, actions: OnApproveActions) => {
+    await axios.put('/api/order', { paypalReference: data.orderID });
+    router.push(`/secret-shop/order-confirm/${data.orderID}`);
   };
 
   return (
@@ -247,6 +255,7 @@ const Checkout: Page = () => {
           <div className={styles.containerTextInput}>
             <p>Line 2 (Optional):</p>
             <input
+              ref={line2Ref}
               className={sharedStyles.textInput}
               type='text'
               value={line2}
@@ -297,6 +306,7 @@ const Checkout: Page = () => {
                   className={`${sharedStyles.select} ${sharedStyles.dark}`}
                   value={country}
                   onChange={e => setCountry(e.target.value)}
+                  ref={countryRef}
                 >
                   {Object.entries(CODE_TO_COUNTRY).map(([code, countryName]) =>
                     <option key={code} value={code}>
@@ -347,10 +357,7 @@ const Checkout: Page = () => {
             <div style={{ pointerEvents: isValid ? undefined : 'none' }} >
               <PayPalButtons
                 createOrder={createOrder}
-                onApprove={async (data, actions) => {
-                  actions.order?.capture();
-                }}
-                forceReRender={[ isValid ]}
+                onApprove={captureOrder}
               />
             </div>
           </div>

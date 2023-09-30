@@ -6,7 +6,9 @@
 
     --close-section-height: 8%;
 
-    background-color: var(--bg);
+    --font-highlight: var(--font-base);
+
+    background-color: #ffd6e0;
     width: min(95%, 80rem);
     height: 75dvh;
     border-radius: var(--border-radius);

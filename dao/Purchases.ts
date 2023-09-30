@@ -6,7 +6,7 @@ const COL_CONTACT_INFO = 'contact_info';
 const COL_PRODUCT_INFO = 'product_info';
 const COL_TIME_OF_PURCHASE = 'time_of_purchase';
 const COL_STATUS = 'status';
-const COL_STRIPE_REFERENCE = 'stripe_reference';
+const COL_PAYPAL_REFERENCE = 'paypal_reference';
 
 type PurchaseInfo = {
     contactInfo: ContactInfo;
@@ -15,14 +15,14 @@ type PurchaseInfo = {
 
 export default class Purchases extends AbstractDao {
     async create(
-        stripeReference: string,
+        paypalReference: string,
         contactInfo: ContactInfo,
         productInfo: ProductInfo,
     ) : Promise<void> {
         await this.pgClient.query(
             this.knexClient(TABLE_NAME)
                 .insert({
-                    [COL_STRIPE_REFERENCE]: stripeReference,
+                    [COL_PAYPAL_REFERENCE]: paypalReference,
                     [COL_CONTACT_INFO]: JSON.stringify(contactInfo),
                     [COL_PRODUCT_INFO]: JSON.stringify(productInfo),
                     [COL_TIME_OF_PURCHASE]: Math.floor(Date.now() / 1000),
@@ -32,24 +32,24 @@ export default class Purchases extends AbstractDao {
         );
     }
 
-    async updateStatusByStripeReference(
-        stripeReference: string,
+    async updateStatusByPaypalReference(
+        paypalReference: string,
         status: string,
     ) : Promise<void> {
         await this.pgClient.query(
             this.knexClient(TABLE_NAME)
                 .update({ [COL_STATUS]: status })
-                .where(COL_STRIPE_REFERENCE, stripeReference)
+                .where(COL_PAYPAL_REFERENCE, paypalReference)
                 .toString(),
         );
     }
 
-    async getPurchaseInfoByStripReference(stripeReference: string) : Promise<PurchaseInfo> {
+    async getPurchaseInfoByPaypalReference(paypalReference: string) : Promise<PurchaseInfo> {
         const results = (await this.pgClient.query(
             this.knexClient(TABLE_NAME)
                 .select(COL_CONTACT_INFO)
                 .select(COL_PRODUCT_INFO)
-                .where(COL_STRIPE_REFERENCE, stripeReference)
+                .where(COL_PAYPAL_REFERENCE, paypalReference)
                 .toString(),
         )).rows;
 
