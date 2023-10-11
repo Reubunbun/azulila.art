@@ -71,8 +71,10 @@
 }
 
 .productDescription {
-    font-size: clamp(1rem, 0.8916rem + 0.4819vw, 1.2rem);;
+    font-size: clamp(1rem, 0.8916rem + 0.4819vw, 1.2rem);
     line-height: clamp(1rem, 0.6476rem + 1.5663vw, 1.65rem);
+    width: 100%;
+    white-space: pre-wrap;
 }
 
 .containerSelect p {

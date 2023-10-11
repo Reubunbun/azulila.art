@@ -18,7 +18,8 @@ type SelectedProducts = Record<ProductId, Quantity>;
 type ProductAction =
   | { type: 'ADD-PRODUCT', payload: { id: ProductId, quantity: Quantity } }
   | { type: 'RREMOVE-PRODUCT', payload: ProductId }
-  | { type: 'QUANTITY', payload: { id: ProductId, quantity: Quantity } };
+  | { type: 'QUANTITY', payload: { id: ProductId, quantity: Quantity } }
+  | { type: 'RESET' };
 
 const reducer = (state: SelectedProducts, action: ProductAction) : SelectedProducts => {
   switch (action.type) {
@@ -35,6 +36,8 @@ const reducer = (state: SelectedProducts, action: ProductAction) : SelectedProdu
         ...state,
         [action.payload.id]: action.payload.quantity,
       };
+    case 'RESET':
+      return {};
     default:
       return state;
   }

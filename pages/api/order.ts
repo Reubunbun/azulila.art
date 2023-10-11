@@ -8,8 +8,13 @@ import type {
 } from 'interfaces';
 import { Client as PGClient } from 'pg';
 import paypal from '@paypal/checkout-server-sdk';
+import Handlebars from 'handlebars';
+import aws from 'aws-sdk';
+import fs from 'fs';
+import path from 'path';
 import DaoProducts from 'dao/Products';
 import DaoPurchases from 'dao/Purchases';
+import { CODE_TO_COUNTRY } from 'helpers/countries';
 
 const Environment = process.env.NODE_ENV === 'development'
     ? paypal.core.SandboxEnvironment
@@ -23,44 +28,6 @@ const paypalClient = new paypal.core.PayPalHttpClient(
 );
 const CURRENCY_CODE = 'USD';
 const toPPAmount = (amount: number) => (amount / 100).toFixed(2);
-
-async function get(
-    req: NextApiRequest,
-    res: NextApiResponse<GenericError | PurchaseSuccessResponse>,
-    pgClient: PGClient,
-) {
-    const { query: { id } } = req;
-
-    if (!id || Array.isArray(id)) {
-        return res.status(400).json({ message: 'Missing order id' });
-    }
-
-    const daoPurchases = new DaoPurchases(pgClient);
-
-    const purchaseInfo = await daoPurchases.getPurchaseInfoByPaypalReference(id)
-        .catch(console.error);
-    if (!purchaseInfo) {
-        return res.status(500).json({ message: 'Could not get purchase info' });
-    }
-
-    const daoProducts = new DaoProducts(pgClient);
-    const productsWithInfo = await daoProducts.getMultipleByIds(
-        purchaseInfo.productInfo.map(({ productId }) => productId),
-    );
-
-    return res.status(200).json({
-        contactInfo: purchaseInfo.contactInfo,
-        productInfo: purchaseInfo.productInfo.map(({ quantity, productId }) => {
-            const product = productsWithInfo
-                .find(nextProduct => nextProduct.product_id === productId)!;
-            return {
-                quantity,
-                groupName: product.group_name,
-                productName: product.product_name,
-            };
-        }),
-    });
-}
 
 async function post(
     req: NextApiRequest,
@@ -201,7 +168,7 @@ async function post(
 
 async function put(
     req: NextApiRequest,
-    res: NextApiResponse<GenericError | PurchaseSuccessResponse>,
+    res: NextApiResponse<GenericError | void>,
     pgClient: PGClient,
 ) {
     const { paypalReference } = req.body;
@@ -222,45 +189,84 @@ async function put(
         purchaseInfo.productInfo.map(({ productId }) => productId),
     );
 
-    return res.status(200).json({
-        contactInfo: purchaseInfo.contactInfo,
-        productInfo: purchaseInfo.productInfo.map(({ quantity, productId }) => {
-            const product = productsWithInfo
-                .find(nextProduct => nextProduct.product_id === productId)!;
+    const shipping = purchaseInfo.contactInfo.country === 'US' ? 5 : 15;
+    const productTotal = purchaseInfo.productInfo.reduce(
+        (sum, product) =>
+            sum +
+            (
+                product.quantity *
+                productsWithInfo.find(p => p.product_id === product.productId)?.price!
+            ),
+        0,
+    ) / 100;
+
+    const rawTemplate = fs.readFileSync(
+        path.resolve('./templates', 'order.handlebars'),
+        'utf-8',
+    );
+    const html = Handlebars.compile(rawTemplate)({
+        ItemTotal: productTotal.toFixed(2),
+        ShippingTotal: shipping,
+        TotalPrice: (shipping + productTotal).toFixed(2),
+        Email: purchaseInfo.contactInfo.email,
+        PaypalReference: paypalReference,
+        Name: purchaseInfo.contactInfo.name,
+        Line1: purchaseInfo.contactInfo.line1,
+        Line2: purchaseInfo.contactInfo.line2,
+        City: purchaseInfo.contactInfo.city,
+        State: purchaseInfo.contactInfo.state,
+        Zip: purchaseInfo.contactInfo.zip,
+        Country: CODE_TO_COUNTRY[purchaseInfo.contactInfo.country],
+        Items: purchaseInfo.productInfo.map(({ productId, quantity }) => {
+            const product = productsWithInfo.find(product => productId === product.product_id)!;
 
             return {
-                quantity,
-                groupName: product.group_name,
-                productName: product.product_name,
+                Name: product.group_name === product.product_name
+                    ? product.group_name
+                    : `${product.group_name} - ${product.product_name}`,
+                Price: ((product.price * quantity) / 100).toFixed(2),
+                Quantity: quantity,
             };
         })
     });
+
+    const sesClient = new aws.SES({
+        region: 'eu-west-1',
+        accessKeyId: process.env.AWSAccessKeyId,
+        secretAccessKey: process.env.AWSSecretKey,
+    });
+
+    try {
+        await sesClient.sendEmail({
+            Destination: {
+                ToAddresses: ['reuben.luke.p@gmail.com', 'azulilah.art@gmail.com'],
+            },
+            Message: {
+            Body: {
+                Html: {
+                Charset: 'UTF-8',
+                Data: html,
+                },
+            },
+            Subject: {
+                Charset: 'UTF-8',
+                Data: `New Shop Order via Azulilah Website!`
+            },
+            },
+            Source: 'reuben.luke.p@gmail.com',
+        }).promise();
+    } catch (err) {
+        console.log('SES error', err);
+        return res.status(500).json({message: 'Failed to send email'});
+    }
+
+    return res.status(201).json();
 }
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<GenericError | ProductsResult | PurchaseResponse | PurchaseSuccessResponse>,
+    res: NextApiResponse<GenericError | ProductsResult | PurchaseResponse | PurchaseSuccessResponse | void>,
 ) {
-    if (req.method === 'GET') {
-        const pgClient = new PGClient({
-            user: process.env.DB_USER,
-            host: process.env.DB_HOST,
-            database: process.env.DB_NAME,
-            password: process.env.DB_PASSWORD,
-            port: Number(process.env.DB_PORT),
-            ssl: { rejectUnauthorized: false },
-        });
-        try {
-            await pgClient.connect();
-            return await get(req, res, pgClient);
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json({message: 'Unknown Server Error'});
-        } finally {
-            await pgClient.end();
-        }
-    }
-
     if (req.method === 'POST') {
         const pgClient = new PGClient({
             user: process.env.DB_USER,
