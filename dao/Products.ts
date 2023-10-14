@@ -180,4 +180,37 @@ export default class Products extends AbstractDao {
                 .toString(),
         )).rows;
     }
+
+    async getStockForMultipleProducts(
+        productIds: number[],
+    ) : Promise<Record<number, number>> {
+        const productsAndStocks = (
+            await this.pgClient.query<Pick<JoinedProductRow, 'product_id' | 'stock'>>(
+                this.knexClient(Products.PRODUCT_TABLE_NAME)
+                    .select(COL_PRODUCT_ID)
+                    .select(COL_STOCK)
+                    .whereIn(COL_PRODUCT_ID, productIds)
+                    .toString(),
+            )
+        ).rows;
+
+        return productsAndStocks.reduce(
+            (prev, curr) => ({
+                ...prev,
+                [curr[COL_PRODUCT_ID]]: curr[COL_STOCK],
+            }),
+            {} as Record<number, number>
+        );
+    }
+
+    async reduceStockForProduct(productId: number, quantity: number) : Promise<void> {
+        await this.pgClient.query(
+            this.knexClient(Products.PRODUCT_TABLE_NAME)
+                .update({
+                    [COL_STOCK]: this.knexClient.raw(`${COL_STOCK} - ${quantity}`),
+                })
+                .where(COL_PRODUCT_ID, productId)
+                .toString(),
+        );
+    }
 }

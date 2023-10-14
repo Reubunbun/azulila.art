@@ -29,6 +29,12 @@ const paypalClient = new paypal.core.PayPalHttpClient(
 const CURRENCY_CODE = 'USD';
 const toPPAmount = (amount: number) => (amount / 100).toFixed(2);
 
+const sesClient = new aws.SES({
+    region: 'eu-west-1',
+    accessKeyId: process.env.AWSAccessKeyId,
+    secretAccessKey: process.env.AWSSecretKey,
+});
+
 async function post(
     req: NextApiRequest,
     res: NextApiResponse<GenericError | PurchaseResponse>,
@@ -47,10 +53,40 @@ async function post(
         products,
     } = req.body as PurchaseRequest;
 
+    const allProductIds = products.map(({ productId }) => productId);
+
     const daoProducts = new DaoProducts(pgClient);
-    const productsWithInfo = await daoProducts.getMultipleByIds(
-        products.map(({ productId }) => productId),
+
+    const stockByProductId = await daoProducts.getStockForMultipleProducts(
+        allProductIds,
     );
+
+    const productsWithInfo = await daoProducts.getMultipleByIds(
+        allProductIds,
+    );
+
+    const productsOutOfStock: {name: string, stock: number}[] = [];
+    for (const product of productsWithInfo) {
+        const quantity = products
+            .find(reqProduct => reqProduct.productId === product.product_id)
+            ?.quantity!;
+
+        if (stockByProductId[product.product_id] < quantity) {
+            productsOutOfStock.push({
+                name: product.group_name === product.product_name
+                    ? product.group_name
+                    : `${product.group_name} - ${product.product_name}`,
+                stock: stockByProductId[product.product_id],
+            });
+        }
+    }
+
+    if (productsOutOfStock.length) {
+        return res.status(410).json({
+            message: 'Not enough stock remaining for some items, please adjust your basket:\n'
+                + productsOutOfStock.map(({ name, stock }) => `${name}: stock remaining ${stock}`).join('\n'),
+        });
+    }
 
     const shipping = country === 'US' ? 500 : 1500;
     const productTotal = productsWithInfo.reduce(
@@ -181,83 +217,99 @@ async function put(
     console.log('CAPTURED');
     console.log(JSON.stringify(response, null, 2));
 
-    await daoPurchases.updateStatusByPaypalReference(paypalReference, 'SUCCESS');
-
-    const purchaseInfo = await daoPurchases.getPurchaseInfoByPaypalReference(paypalReference);
-    const daoProducts = new DaoProducts(pgClient);
-    const productsWithInfo = await daoProducts.getMultipleByIds(
-        purchaseInfo.productInfo.map(({ productId }) => productId),
-    );
-
-    const shipping = purchaseInfo.contactInfo.country === 'US' ? 5 : 15;
-    const productTotal = purchaseInfo.productInfo.reduce(
-        (sum, product) =>
-            sum +
-            (
-                product.quantity *
-                productsWithInfo.find(p => p.product_id === product.productId)?.price!
-            ),
-        0,
-    ) / 100;
-
-    const rawTemplate = fs.readFileSync(
-        path.resolve('./templates', 'order.handlebars'),
-        'utf-8',
-    );
-    const html = Handlebars.compile(rawTemplate)({
-        ItemTotal: productTotal.toFixed(2),
-        ShippingTotal: shipping,
-        TotalPrice: (shipping + productTotal).toFixed(2),
-        Email: purchaseInfo.contactInfo.email,
-        PaypalReference: paypalReference,
-        Name: purchaseInfo.contactInfo.name,
-        Line1: purchaseInfo.contactInfo.line1,
-        Line2: purchaseInfo.contactInfo.line2,
-        City: purchaseInfo.contactInfo.city,
-        State: purchaseInfo.contactInfo.state,
-        Zip: purchaseInfo.contactInfo.zip,
-        Country: CODE_TO_COUNTRY[purchaseInfo.contactInfo.country],
-        Items: purchaseInfo.productInfo.map(({ productId, quantity }) => {
-            const product = productsWithInfo.find(product => productId === product.product_id)!;
-
-            return {
-                Name: product.group_name === product.product_name
-                    ? product.group_name
-                    : `${product.group_name} - ${product.product_name}`,
-                Price: ((product.price * quantity) / 100).toFixed(2),
-                Quantity: quantity,
-            };
-        })
-    });
-
-    const sesClient = new aws.SES({
-        region: 'eu-west-1',
-        accessKeyId: process.env.AWSAccessKeyId,
-        secretAccessKey: process.env.AWSSecretKey,
-    });
-
     try {
+        await daoPurchases.updateStatusByPaypalReference(paypalReference, 'SUCCESS');
+
+        const purchaseInfo = await daoPurchases.getPurchaseInfoByPaypalReference(paypalReference);
+
+        const daoProducts = new DaoProducts(pgClient);
+
+        for (const product of purchaseInfo.productInfo) {
+            await daoProducts.reduceStockForProduct(product.productId, product.quantity);
+        }
+
+        const productsWithInfo = await daoProducts.getMultipleByIds(
+            purchaseInfo.productInfo.map(({ productId }) => productId),
+        );
+
+        const shipping = purchaseInfo.contactInfo.country === 'US' ? 5 : 15;
+        const productTotal = purchaseInfo.productInfo.reduce(
+            (sum, product) =>
+                sum +
+                (
+                    product.quantity *
+                    productsWithInfo.find(p => p.product_id === product.productId)?.price!
+                ),
+            0,
+        ) / 100;
+
+        const rawTemplate = fs.readFileSync(
+            path.resolve('./templates', 'order.handlebars'),
+            'utf-8',
+        );
+        const html = Handlebars.compile(rawTemplate)({
+            ItemTotal: productTotal.toFixed(2),
+            ShippingTotal: shipping,
+            TotalPrice: (shipping + productTotal).toFixed(2),
+            Email: purchaseInfo.contactInfo.email,
+            PaypalReference: paypalReference,
+            Name: purchaseInfo.contactInfo.name,
+            Line1: purchaseInfo.contactInfo.line1,
+            Line2: purchaseInfo.contactInfo.line2,
+            City: purchaseInfo.contactInfo.city,
+            State: purchaseInfo.contactInfo.state,
+            Zip: purchaseInfo.contactInfo.zip,
+            Country: CODE_TO_COUNTRY[purchaseInfo.contactInfo.country],
+            Items: purchaseInfo.productInfo.map(({ productId, quantity }) => {
+                const product = productsWithInfo.find(product => productId === product.product_id)!;
+
+                return {
+                    Name: product.group_name === product.product_name
+                        ? product.group_name
+                        : `${product.group_name} - ${product.product_name}`,
+                    Price: ((product.price * quantity) / 100).toFixed(2),
+                    Quantity: quantity,
+                };
+            })
+        });
+
         await sesClient.sendEmail({
             Destination: {
-                ToAddresses: ['reuben.luke.p@gmail.com', 'azulilah.art@gmail.com'],
+                ToAddresses: ['reuben.luke.p@gmail.com', /* 'azulilah.art@gmail.com' */],
             },
             Message: {
-            Body: {
-                Html: {
-                Charset: 'UTF-8',
-                Data: html,
+                Body: {
+                    Html: {
+                        Charset: 'UTF-8',
+                        Data: html,
+                    },
                 },
-            },
-            Subject: {
-                Charset: 'UTF-8',
-                Data: `New Shop Order via Azulilah Website!`
-            },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: `New Shop Order via Azulilah Website!`
+                },
             },
             Source: 'reuben.luke.p@gmail.com',
         }).promise();
     } catch (err) {
-        console.log('SES error', err);
-        return res.status(500).json({message: 'Failed to send email'});
+        await sesClient.sendEmail({
+            Destination: {
+                ToAddresses: ['reuben.luke.p@gmail.com'],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Charset: 'UTF-8',
+                        Data: `There was some non fatal error in order PUT: ${(err as any).message}`,
+                    },
+                },
+                Subject: {
+                    Charset: 'UTF-8',
+                    Data: `Error in azulilah.art order PUT`
+                },
+            },
+            Source: 'reuben.luke.p@gmail.com',
+        }).promise().catch(console.error);
     }
 
     return res.status(201).json();
@@ -281,6 +333,24 @@ export default async function handler(
             return await post(req, res, pgClient);
         } catch (err) {
             console.log(err);
+            await sesClient.sendEmail({
+                Destination: {
+                    ToAddresses: ['reuben.luke.p@gmail.com'],
+                },
+                Message: {
+                    Body: {
+                        Html: {
+                            Charset: 'UTF-8',
+                            Data: `Method: POST <br> Error: ${(err as any).message}`,
+                        },
+                    },
+                    Subject: {
+                        Charset: 'UTF-8',
+                        Data: 'Error in azulilah orders api'
+                    },
+                },
+                Source: 'reuben.luke.p@gmail.com',
+            }).promise().catch(console.error);
             return res.status(500).json({message: 'Unknown Server Error'});
         } finally {
             await pgClient.end();
@@ -301,6 +371,24 @@ export default async function handler(
             return await put(req, res, pgClient);
         } catch (err) {
             console.log(err);
+            await sesClient.sendEmail({
+                Destination: {
+                    ToAddresses: ['reuben.luke.p@gmail.com'],
+                },
+                Message: {
+                    Body: {
+                        Html: {
+                            Charset: 'UTF-8',
+                            Data: `Method: PUT <br> Error: ${(err as any).message}`,
+                        },
+                    },
+                    Subject: {
+                        Charset: 'UTF-8',
+                        Data: 'Error in azulilah orders api'
+                    },
+                },
+                Source: 'reuben.luke.p@gmail.com',
+            }).promise().catch(console.error);
             return res.status(500).json({message: 'Unknown Server Error'});
         } finally {
             await pgClient.end();
