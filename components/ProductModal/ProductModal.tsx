@@ -74,7 +74,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
               </pre>
             </div>
             <div>
-              {productGroup.products.filter(p => p.stock > 0).length > 1
+              {productGroup.products.filter(p => p.stock > 0).length > 0
                 ? <>
                     <div className={styles.containerSelect}>
                       <p>Select Option:</p>
@@ -129,7 +129,7 @@ const ProductModal: FC<Props> = ({ productGroup, close }) => {
               }
             </div>
             <div>
-              {productGroup.products.filter(p => p.stock > 0).length > 1 &&
+              {productGroup.products.filter(p => p.stock > 0).length > 0 &&
                 <div className={styles.containerBasketButton}>
                   <button className='commission-btn' onClick={addProductToBasket}>
                     Add To Basket
