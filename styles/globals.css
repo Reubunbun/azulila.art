@@ -12,6 +12,8 @@
   --main-header-height: 20dvh;
   --shop-header-height: 12dvh;
   --header-height: var(--main-header-height);
+  --default-main-margin-top: 5.5rem;
+  --main-margin-top: var(--default-main-margin-top);
   --main-margin-offset: 0rem;
   --mov-nav-link-height: 3rem;
   --links-open-height: calc(var(--num-links) * var(--mov-nav-link-height));

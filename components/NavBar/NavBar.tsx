@@ -160,6 +160,8 @@ const NavBar: FC<Props> = ({dontStick}) => {
 
       if (!rootElement) return;
 
+      rootElement.style.setProperty('--main-margin-top', 'var(--default-main-margin-top)');
+
       const navHeight = getComputedStyle(rootElement)
         .getPropertyValue('--main-header-height');
       rootElement.style.setProperty('--header-height', navHeight);

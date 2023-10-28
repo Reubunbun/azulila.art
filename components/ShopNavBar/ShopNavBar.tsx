@@ -50,6 +50,7 @@ const ShopNavBar: FC = () => {
     if (!navRef.current) return;
 
     if (screenType === ScreenType.mobile) {
+      rootElement.style.setProperty('--main-margin-top', '0rem');
       rootElement.style.setProperty('--header-height', '0px');
       rootElement.style.setProperty('--num-links', '0');
       rootElement.style.setProperty(
@@ -57,6 +58,7 @@ const ShopNavBar: FC = () => {
         `${navRef.current.getBoundingClientRect().height}px`,
       );
     } else {
+      rootElement.style.setProperty('--main-margin-top', '1rem');
       const shopNavHeight = getComputedStyle(rootElement)
         .getPropertyValue('--shop-header-height');
       rootElement.style.setProperty('--header-height', shopNavHeight);
