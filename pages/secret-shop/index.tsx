@@ -1,7 +1,9 @@
 import { type Page } from 'interfaces';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { useShopContext } from 'context/ShopContext';
+import { useUIContext } from 'context/UIContext';
 import { type ProductGroup } from 'interfaces';
 import SearchBar from 'components/SearchBar/SearchBar';
 import Filters from 'components/Filters/Filters';
@@ -11,6 +13,7 @@ import Product from 'components/Product/Product';
 import styles from './shop.module.css';
 
 const Shop: Page = () => {
+  const router = useRouter();
   const {
     madeInitialRequest,
     fetchProducts,
@@ -22,9 +25,15 @@ const Shop: Page = () => {
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [loadedProducts, setLoadedProducts] = useState<Set<number>>(new Set());
   const [filteredProducts, setFilteredProducts] = useState<ProductGroup[]>(products);
+  const { setAlertContent } = useUIContext();
 
   useEffect(() => {
     fetchProducts().catch(() => setNetworkError(true));
+    setAlertContent(
+      <p>
+        Looking for commissions? <span onClick={() => router.push('/commission')} className='link'>Go here!</span>
+      </p>
+    );
   }, [fetchProducts]);
 
   useEffect(() => {

@@ -53,7 +53,7 @@ const NavBar: FC<Props> = ({dontStick}) => {
   );
 
   const { pageProgress: lastCommissionPath } = useCommissionContext();
-  const { navOpen, setNavOpen } = useUIContext();
+  const { navOpen, setNavOpen, setAlertContent } = useUIContext();
 
   // Scroll animation values
   const { scrollY } = useViewportScroll();
@@ -166,6 +166,8 @@ const NavBar: FC<Props> = ({dontStick}) => {
         .getPropertyValue('--main-header-height');
       rootElement.style.setProperty('--header-height', navHeight);
     }
+
+    setAlertContent(null);
   }, []);
 
   useEffect(() => {

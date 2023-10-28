@@ -2,6 +2,7 @@ import { type ReactNode, type FC, useState, useEffect, useRef, Fragment } from '
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Head from 'next/head';
+import CloseIcon from '@mui/icons-material/Close';
 import { useUIContext } from 'context/UIContext';
 import NavBar from 'components/NavBar/NavBar';
 import ShopNavBar from 'components/ShopNavBar/ShopNavBar';
@@ -44,7 +45,7 @@ const DefaultLayout: FC<Props> = ({
   const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(CLASS_FADE_OUT);
-  const { modalContent, navOpen, setNavOpen } = useUIContext();
+  const { modalContent, navOpen, setNavOpen, alertContent, setAlertContent } = useUIContext();
   const lastScrollPos = useRef<number>(0);
 
   useEffect(() => {
@@ -162,7 +163,27 @@ const DefaultLayout: FC<Props> = ({
             }}
             className={`${styles.transitionContainer} ${styles[mainTransitionStage]}`}
           >
-            {displayChildren}
+            <CustomAnimatePresence>
+              {alertContent &&
+                <motion.div
+                  className={styles.alertContainer}
+                  initial={{opacity: 1}}
+                  exit={{opacity: 0}}
+                >
+                  {alertContent}
+                  <div
+                    className={styles.closeBtn}
+                    onClick={() =>  setAlertContent(null)}
+                  >
+                    <CloseIcon color='inherit' />
+                  </div>
+                </motion.div>
+              }
+            </CustomAnimatePresence>
+
+            <div className={styles.actualContent}>
+              {displayChildren}
+            </div>
           </div>
         </main>
       </div>

@@ -13,6 +13,8 @@ interface UIContextType {
   setModalContent: Dispatch<SetStateAction<ReactNode | null>>;
   navOpen: boolean;
   setNavOpen: Dispatch<SetStateAction<boolean>>;
+  alertContent: ReactNode | null;
+  setAlertContent: Dispatch<SetStateAction<ReactNode | null>>;
 };
 
 const UIContext = createContext<UIContextType>(undefined!);
@@ -20,6 +22,7 @@ const UIContext = createContext<UIContextType>(undefined!);
 export const UIStateProvider: FC<{children: ReactNode}> = ({ children }) => {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [navOpen, setNavOpen] = useState<boolean>(false);
+  const [alertContent, setAlertContent] = useState<ReactNode | null>(null);
 
   return (
     <UIContext.Provider value={{
@@ -27,6 +30,8 @@ export const UIStateProvider: FC<{children: ReactNode}> = ({ children }) => {
       setModalContent,
       navOpen,
       setNavOpen,
+      alertContent,
+      setAlertContent
     }}>
       {children}
     </UIContext.Provider>

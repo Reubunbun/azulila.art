@@ -14,12 +14,6 @@
 .pageContent main {
     margin-top: calc(var(--header-height) + var(--main-margin-offset));
     transition: margin 0.5s ease-in-out;
-    padding: .4rem 0;
-    background: linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0)  0%,
-        var(--bg-transparent) 20%
-    );
 }
 
 .pageContent main.removeMargin {
@@ -30,13 +24,40 @@
     padding: 0;
 }
 
-.pageContent main.removeBg {
+.pageContent main.removeBg .actualContent {
     background: none;
     border: none;
 }
 
 .pageContent main.removePadding {
     padding: 0 !important;
+}
+
+.pageContent .alertContainer {
+    border: 2px solid var(--font-highlight);
+    background-color: #f33f8736;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--font-base);
+    position: relative;
+}
+.pageContent .alertContainer p, .pageContent .alertContainer span {
+    font-weight: 600;
+}
+.pageContent .alertContainer .closeBtn {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    cursor: pointer;
+}
+
+.pageContent .actualContent {
+    background: linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0)  0%,
+        var(--bg-transparent) 20%
+    );
 }
 
 .footer .containerSocials {
@@ -74,21 +95,48 @@
     .pageContent main {
         transition: unset;
         margin-top: calc(var(--header-height) + var(--main-margin-top));
+    }
+
+    .pageContent .alertContainer {
+        margin-bottom: 1rem;
+        margin-left: 5rem;
+        margin-right: 5rem;
+        border-radius: 1.5rem;
+    }
+
+    .pageContent .alertContainer .closeBtn {
+        right: calc(3px + 1.5rem);
+    }
+
+    .pageContent .alertContainer .closeBtn svg {
+        width: 1.3em;
+        height: 1.3em;
+    }
+
+    .pageContent .actualContent {
+        border: 3px solid var(--font-highlight);
         border-radius: 3rem;
         padding: 2rem 0;
         margin-left: 5rem;
         margin-right: 5rem;
-        border: 3px solid var(--font-highlight);
         background: var(--bg-transparent);
         padding: 1rem;
     }
 
-    .pageContent main.removeBg {
+    .pageContent main.removeBg .actualContent {
         background: none !important;
         border: none !important;
     }
 
-    .pageContent main.dontStick {
+    .pageContent main.removeMargin .actualContent {
+        transition: margin-top .5s ease-in-out;
+        margin-top: 0rem;
+        margin-left: 0rem !important;
+        margin-right: 0rem !important;
+        padding: 0;
+    }
+
+    .pageContent main.dontStick .actualContent {
         margin-top: unset;
     }
 
