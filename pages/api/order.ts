@@ -18,7 +18,7 @@ import { CODE_TO_COUNTRY } from 'helpers/countries';
 
 const Environment = process.env.NODE_ENV === 'development'
     ? paypal.core.SandboxEnvironment
-    : paypal.core.SandboxEnvironment;
+    : paypal.core.LiveEnvironment;
 
 const paypalClient = new paypal.core.PayPalHttpClient(
     new Environment(
@@ -88,7 +88,7 @@ async function post(
         });
     }
 
-    const shipping = country === 'US' ? 500 : 1500;
+    const shipping = 1;// country === 'US' ? 500 : 1500;
     const productTotal = productsWithInfo.reduce(
         (sum, product) =>
             sum +
