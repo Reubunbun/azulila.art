@@ -42,28 +42,44 @@ const ShopNavBar: FC = () => {
   const refBasketLink = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    if (typeof document === 'undefined') return;
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
 
-    const rootElement = document.querySelector<HTMLElement>(':root');
-    if (!rootElement) return;
+    console.log('in ue');
 
-    if (!navRef.current) return;
+    const cb = () => {
+      const rootElement = document.querySelector<HTMLElement>(':root');
+      if (!rootElement) return;
 
-    if (screenType === ScreenType.mobile) {
-      rootElement.style.setProperty('--main-margin-top', '0rem');
-      rootElement.style.setProperty('--header-height', '0px');
-      rootElement.style.setProperty('--num-links', '0');
-      rootElement.style.setProperty(
-        '--main-margin-offset',
-        `${navRef.current.getBoundingClientRect().height}px`,
-      );
-    } else {
-      rootElement.style.setProperty('--main-margin-top', '1rem');
-      const shopNavHeight = getComputedStyle(rootElement)
-        .getPropertyValue('--shop-header-height');
-      rootElement.style.setProperty('--header-height', shopNavHeight);
-    }
-  }, [screenType]);
+      if (!navRef.current) return;
+
+      if (window.innerWidth < 1024) {
+        rootElement.style.setProperty('--main-margin-top', '0rem');
+        rootElement.style.setProperty('--header-height', '0px');
+        rootElement.style.setProperty('--num-links', '0');
+        rootElement.style.setProperty(
+          '--main-margin-offset',
+          `${navRef.current.getBoundingClientRect().height}px`,
+        );
+      } else if (window.innerWidth < 1650) {
+        rootElement.style.setProperty('--main-margin-top', '5rem');
+        const shopNavHeight = getComputedStyle(rootElement)
+          .getPropertyValue('--shop-header-height');
+        rootElement.style.setProperty('--header-height', shopNavHeight);
+      } else {
+        rootElement.style.setProperty('--main-margin-top', '1rem');
+        const shopNavHeight = getComputedStyle(rootElement)
+          .getPropertyValue('--shop-header-height');
+        rootElement.style.setProperty('--header-height', shopNavHeight);
+      }
+    };
+
+    cb();
+
+    window.addEventListener('resize', cb);
+    return () => {
+      window.removeEventListener('resize', cb)
+    };
+  }, []);
 
   useEffect(() => {
     if (!refBasketLink.current || numInBasket === 0) return;
