@@ -57,7 +57,7 @@ const Checkout: Page = () => {
 
   const [error, setError] = useState<RequestError | null>(null);
 
-  const shippingCost = country === 'US' ? 5 : 15;
+  const shippingCost = country === 'US' ? basket.shippingUS : basket.shippingInt;
 
   useEffect(() => {
     if (basket.products.length === 0) {

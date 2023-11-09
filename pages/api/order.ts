@@ -66,7 +66,14 @@ async function post(
     );
 
     const productsOutOfStock: {name: string, stock: number}[] = [];
+
+    const allUSShipping = [];
+    const allIntShipping = [];
+
     for (const product of productsWithInfo) {
+        allUSShipping.push(product.shipping_us);
+        allIntShipping.push(product.shipping_int);
+
         const quantity = products
             .find(reqProduct => reqProduct.productId === product.product_id)
             ?.quantity!;
@@ -88,7 +95,10 @@ async function post(
         });
     }
 
-    const shipping = 1;// country === 'US' ? 500 : 1500;
+    const shipping = country === 'US'
+        ? Math.max(...allUSShipping)
+        : Math.max(...allIntShipping);
+
     const productTotal = productsWithInfo.reduce(
         (sum, product) =>
             sum +
@@ -232,7 +242,18 @@ async function put(
             purchaseInfo.productInfo.map(({ productId }) => productId),
         );
 
-        const shipping = purchaseInfo.contactInfo.country === 'US' ? 5 : 15;
+        const allUSShipping = [];
+        const allIntShipping = [];
+
+        for (const product of productsWithInfo) {
+            allUSShipping.push(product.shipping_us);
+            allIntShipping.push(product.shipping_int);
+        }
+
+        const shipping = purchaseInfo.contactInfo.country === 'US'
+            ? Number((Math.max(...allUSShipping) / 100).toFixed(2))
+            : Number((Math.max(...allIntShipping) / 100).toFixed(2));
+
         const productTotal = purchaseInfo.productInfo.reduce(
             (sum, product) =>
                 sum +

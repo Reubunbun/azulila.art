@@ -89,6 +89,8 @@ export type ProductGroup = {
     tags: string[];
     mainCategory: string;
     description: string;
+    shippingUS: number;
+    shippingInt: number;
 };
 
 export type ProductsResult = {

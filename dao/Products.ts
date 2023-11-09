@@ -10,6 +10,8 @@ const ALIAS_GROUP_PRIORITY = 'group_priority';
 const COL_IMG_URL = 'img_url';
 const COL_IS_UNAVAILABLE = 'is_unavailable';
 const COL_TYPE = 'type';
+const COL_SHIPPING_US = 'shipping_us';
+const COL_SHIPPING_INT = 'shipping_int';
 
 const COL_PRODUCT_ID = 'product_id';
 const ALIAS_PRODUCT_NAME = 'product_name';
@@ -31,6 +33,8 @@ interface JoinedProductRow {
     [COL_PRICE]: number;
     [COL_TAG_NAME]: string;
     [COL_TYPE]: string;
+    [COL_SHIPPING_US]: number;
+    [COL_SHIPPING_INT]: number;
     [ALIAS_PRODUCT_PRIORITY]: number;
 };
 
@@ -70,6 +74,8 @@ export default class Products extends AbstractDao {
                 .select(COL_PRICE)
                 .select(COL_TAG_NAME)
                 .select(COL_TYPE)
+                .select(COL_SHIPPING_US)
+                .select(COL_SHIPPING_INT)
                 .leftJoin(
                     Products.PRODUCT_TABLE_NAME,
                     `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,
@@ -110,6 +116,8 @@ export default class Products extends AbstractDao {
                         tags: [ row[COL_TAG_NAME] ].filter(Boolean),
                         mainCategory: row[COL_TYPE],
                         description: row[COL_DESCRIPTION],
+                        shippingInt: row[COL_SHIPPING_INT],
+                        shippingUS: row[COL_SHIPPING_US],
                     },
                 );
 
@@ -171,6 +179,8 @@ export default class Products extends AbstractDao {
                 .select(COL_PRICE)
                 .select(COL_TYPE)
                 .select(COL_IS_UNAVAILABLE)
+                .select(COL_SHIPPING_US)
+                .select(COL_SHIPPING_INT)
                 .leftJoin(
                     Products.PRODUCT_TABLE_NAME,
                     `${Products.GROUP_TABLE_NAME}.${COL_GROUP_ID}`,

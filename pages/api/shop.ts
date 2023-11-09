@@ -19,6 +19,8 @@ async function get(
         for (const product of productGroup.products) {
             product.price = Number((product.price / 100).toFixed(2));
         }
+        productGroup.shippingInt = Number((productGroup.shippingInt / 100).toFixed(2));
+        productGroup.shippingUS = Number((productGroup.shippingUS / 100).toFixed(2));
         productGroup.products.sort((a, b) => b.priority - a.priority);
     }
     return res.status(200).json({

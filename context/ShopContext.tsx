@@ -56,6 +56,8 @@ export interface BasketItem {
 
 interface Basket {
   totalPrice: number;
+  shippingUS: number;
+  shippingInt: number;
   products: BasketItem[],
 }
 
@@ -75,6 +77,8 @@ const ShopContext = createContext<ShopContextType>({
   dispatchProduct: () => {},
   basket: {
     totalPrice: 0,
+    shippingUS: 0,
+    shippingInt: 0,
     products: [],
   },
   selectedProducts: {},
@@ -86,6 +90,8 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
   const [selectedProducts, dispatch] = useReducer(reducer, {});
   const [basket, setBasket] = useState<Basket>({
     totalPrice: 0,
+    shippingUS: 0,
+    shippingInt: 0,
     products: [],
   });
 
@@ -104,6 +110,8 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
   useEffect(() => {
     const basket: Basket = {
       totalPrice: 0,
+      shippingUS: 0,
+      shippingInt: 0,
       products: [],
     };
 
@@ -112,6 +120,9 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
     }
 
     const selectedProductIds = Object.keys(selectedProducts).map(Number);
+    const allUSShipping = [];
+    const allIntShipping = [];
+
     for (const productId of selectedProductIds) {
       const foundGroup = shopServerData.products.find(group =>
         group.products.some(product => product.productId === productId),
@@ -120,6 +131,9 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
       if (!foundGroup) {
         throw new Error(`Couldn't find group containing product with id: ${productId}`);
       }
+
+      allUSShipping.push(foundGroup.shippingUS);
+      allIntShipping.push(foundGroup.shippingInt);
 
       const foundProduct = foundGroup.products.find(
         product => product.productId === productId,
@@ -146,6 +160,9 @@ export const ShopStateProvider: FC<{ children: ReactNode }> = ({ children }) => 
 
       basket.totalPrice += totalPrice;
     }
+
+    basket.shippingUS = Math.max(...allUSShipping);
+    basket.shippingInt = Math.max(...allIntShipping);
 
     setBasket(basket);
   }, [selectedProducts, shopServerData]);
