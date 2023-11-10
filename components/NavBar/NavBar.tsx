@@ -32,7 +32,7 @@ const ALL_PATHS: Path[] = [
   {display: 'About', pathname: '/about'},
   {display: 'Commission', pathname: '/commission'},
   {display: 'Contact', pathname: '/contact'},
-  {display: 'Shop', pathname: 'https://form.jotform.com/azulilahart/shop', external: true},
+  {display: 'Shop', pathname: '/shop'},
 ];
 
 const comparePath = (currUrl: string, pathname: string) : boolean => (
@@ -166,9 +166,11 @@ const NavBar: FC<Props> = ({dontStick}) => {
         .getPropertyValue('--main-header-height');
       rootElement.style.setProperty('--header-height', navHeight);
     }
-
-    setAlertContent(null);
   }, []);
+
+  useEffect(() => {
+    setAlertContent(null);
+  });
 
   useEffect(() => {
     if (typeof document === 'undefined') {

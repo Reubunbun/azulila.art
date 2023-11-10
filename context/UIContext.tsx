@@ -5,7 +5,8 @@ import {
   type SetStateAction,
   createContext,
   useState,
-  useContext
+  useContext,
+  useEffect
 } from 'react';
 
 interface UIContextType {
@@ -14,7 +15,8 @@ interface UIContextType {
   navOpen: boolean;
   setNavOpen: Dispatch<SetStateAction<boolean>>;
   alertContent: ReactNode | null;
-  setAlertContent: Dispatch<SetStateAction<ReactNode | null>>;
+  setAlertContent: (alertContent: ReactNode | null) => void;
+  setClosedAlert: Dispatch<SetStateAction<boolean>>;
 };
 
 const UIContext = createContext<UIContextType>(undefined!);
@@ -22,7 +24,17 @@ const UIContext = createContext<UIContextType>(undefined!);
 export const UIStateProvider: FC<{children: ReactNode}> = ({ children }) => {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const [navOpen, setNavOpen] = useState<boolean>(false);
-  const [alertContent, setAlertContent] = useState<ReactNode | null>(null);
+  const [alertContent, setAlert] = useState<ReactNode | null>(null);
+  const [closedAlert, setClosedAlert] = useState(false);
+
+  const setAlertContent = (alertContent: ReactNode | null) => {
+    if (closedAlert) return;
+    setAlert(alertContent);
+  }
+
+  useEffect(() => {
+    if (closedAlert) setAlert(null);
+  }, [closedAlert]);
 
   return (
     <UIContext.Provider value={{
@@ -31,7 +43,8 @@ export const UIStateProvider: FC<{children: ReactNode}> = ({ children }) => {
       navOpen,
       setNavOpen,
       alertContent,
-      setAlertContent
+      setAlertContent,
+      setClosedAlert
     }}>
       {children}
     </UIContext.Provider>

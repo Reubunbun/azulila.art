@@ -61,7 +61,7 @@ const Checkout: Page = () => {
 
   useEffect(() => {
     if (basket.products.length === 0) {
-      router.push('/secret-shop');
+      router.push('/shop');
     }
   }, [basket, router]);
 
@@ -208,7 +208,7 @@ const Checkout: Page = () => {
     } catch (err) {
       setError({ type: 'Generic' });
     }
-    router.push(`/secret-shop/order-confirm/${data.orderID}`);
+    router.push(`/shop/order-confirm/${data.orderID}`);
   };
 
   return (
@@ -224,7 +224,7 @@ const Checkout: Page = () => {
       <div className={`${styles.formWrapper} ${sharedStyles.infoBg}`}>
         <div className={styles.containerLink}>
           <span
-            onClick={() => router.push('/secret-shop/basket')}
+            onClick={() => router.push('/shop/basket')}
             className='link'
           >
             Back to cart

@@ -13,7 +13,7 @@ interface Path {
   highlightPaths: Array<string>;
 };
 
-const BASKET_PATH = '/secret-shop/basket';
+const BASKET_PATH = '/shop/basket';
 
 const ALL_PATHS: Path[] = [
   {
@@ -23,8 +23,8 @@ const ALL_PATHS: Path[] = [
   },
   {
     display: 'Products',
-    pathname: '/secret-shop',
-    highlightPaths: ['/secret-shop'],
+    pathname: '/shop',
+    highlightPaths: ['/shop'],
   },
   {
     display: 'Basket',

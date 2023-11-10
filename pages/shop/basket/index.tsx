@@ -24,7 +24,7 @@ const Basket: Page = () => {
         textAlign: 'center',
         fontSize: '1.5em'
       }}>
-        Theres&apos;s nothing in your basket, head to <span className='link' onClick={() => router.push('/secret-shop')}>products</span> to start shopping!
+        Theres&apos;s nothing in your basket, head to <span className='link' onClick={() => router.push('/shop')}>products</span> to start shopping!
       </p>
     );
   }
@@ -62,7 +62,7 @@ const Basket: Page = () => {
       return;
     }
 
-    router.push('/secret-shop/basket/checkout');
+    router.push('/shop/basket/checkout');
   }
 
   return (

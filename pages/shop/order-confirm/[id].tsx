@@ -29,7 +29,7 @@ const Success: Page = () => {
     <div className={styles.containerConfirmation}>
       <span
         className='link'
-        onClick={() => router.push('/secret-shop')}
+        onClick={() => router.push('/shop')}
       >
         Back to products
       </span>

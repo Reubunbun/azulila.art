@@ -45,7 +45,7 @@ const DefaultLayout: FC<Props> = ({
   const router = useRouter();
   const [displayChildren, setDisplayChildren] = useState(children);
   const [mainTransitionStage, setMainTransitionStage] = useState(CLASS_FADE_OUT);
-  const { modalContent, navOpen, setNavOpen, alertContent, setAlertContent } = useUIContext();
+  const { modalContent, navOpen, setNavOpen, alertContent, setClosedAlert } = useUIContext();
   const lastScrollPos = useRef<number>(0);
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const DefaultLayout: FC<Props> = ({
           >
             {noNav
               ? <></>
-              : router.pathname.startsWith('/secret-shop')
+              : router.pathname.startsWith('/shop')
                   ? <ShopNavBar />
                   : <NavBar dontStick={dontStickHeader} />
             }
@@ -173,7 +173,7 @@ const DefaultLayout: FC<Props> = ({
                   {alertContent}
                   <div
                     className={styles.closeBtn}
-                    onClick={() =>  setAlertContent(null)}
+                    onClick={() =>  setClosedAlert(true)}
                   >
                     <CloseIcon color='inherit' />
                   </div>
